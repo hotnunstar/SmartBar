@@ -1,0 +1,3 @@
+Fazer referência à integração de SETR no projeto
+
+Alterar a descrição da base de dados a implementar - referênciar a troca e o porquê
