@@ -19,7 +19,7 @@ CdU2.07 - Consulta Saldo - Os utilizadores terão acesso ao seu saldo currente
 
 
 
-
+Pendente, em preparação, entregue, concluído, anulado
 
 
 
