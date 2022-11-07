@@ -1,0 +1,4 @@
+Um vendedor tem os atributos: Email, IdVendedor, Password, Nome. Um Vendedor pode fazer 0 ou vários pedidos.
+Um pedido que contem os seguintes atributos: Estado, Produtos, IdPedido, Valor e a Data pode ter
+1 ou mais Produtos, e cada produto tem os seguintes atributos: Stock, IdProduto, NomeProduto, Preço e Imagem.
+Cada Pedido vai pertencer ao Histórico em que o seu atributo vai ser os pedidos
