@@ -1,0 +1,2 @@
+Código cor de fundo da app - #0F4F33
+Usar branco para letras e contornos - #FFFFFF
