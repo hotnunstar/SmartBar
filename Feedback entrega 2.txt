@@ -1,0 +1,12 @@
+Mover convocatórias para anexos
+
+Trocar indice de figuras para depois do indice e referência-lo no indice geral
+
+Fazer referência às figuras do relatório no texto
+
+Colocar texto introdutório nos diagramas
+
+Alterar a forma da descrição dos diagramas de casos de uso com mais especificações
+
+Retificar a parte do histórico no diagrama modelo de dados
+
