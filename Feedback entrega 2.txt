@@ -1,12 +1,9 @@
-Mover convocatórias para anexos
+Referênciar indice de figuras no indice geral - Perguntar ao stor
 
-Trocar indice de figuras para depois do indice e referência-lo no indice geral
+Fazer referência às figuras do relatório no texto - Ver se é assim que ele quer
 
-Fazer referência às figuras do relatório no texto
+Retificar diagrama entidade relação
 
-Colocar texto introdutório nos diagramas
 
-Alterar a forma da descrição dos diagramas de casos de uso com mais especificações
 
-Retificar a parte do histórico no diagrama modelo de dados
 
