@@ -1,4 +1,4 @@
-Diagrama Entidades
+Diagrama Atividades
 O diagrama de Entidades é composto por três atores que interagem com toda aplicação, sendo eles o cliente, o sistema e o vendedor.
 Para inciar aplicação tanto o cliente como o vendedor tem como sua primeira atividade fazer o login, o sistema confirma a cessão iniciada e com um nó de decisão o sistema confirma a cessão inciada ou em caso de falha o mesmos voltam á mesma atividade login para confirmar os dados inseridos.
 Confirmado o sucesso de login por parte do sistema, desperta então os devidos garfos para representar os fluxos do respetivo cliente e vendedor.
