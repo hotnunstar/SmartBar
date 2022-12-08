@@ -1,6 +1,10 @@
+Genérico ===========================================================
 LoadPage- Página Inicial antes de ser remetida para o Login.
 
 LoginPage- Página onde o colaborador/cliente irá efetuar o login
+
+
+Cliente===========================================================
 
 MainPageCart- Página onde o cliente poderá ver os produtos adicionados no carrinho,
 	      mudar quantidades, e até mesmo eliminar produtos do seu carrinho.
@@ -18,6 +22,7 @@ MainPageMenus- Página onde o cliente terá acesso a todos os produtos disponive
 MainPageNotifications- Página onde o cliente será informado sobre as alterações do estado do seu pedido.
 
 MainPageProfile- Página onde teremos acesso ao saldo, nome, apelido e email.
+
 
 Staff===========================================================
 
