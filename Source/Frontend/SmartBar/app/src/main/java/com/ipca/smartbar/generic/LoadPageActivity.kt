@@ -1,12 +1,12 @@
-package com.ipca.smartbar
+package com.ipca.smartbar.generic
 
-import android.animation.Animator
 import android.content.Intent
 import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.ipca.smartbar.R
 
 
 class LoadPageActivity : AppCompatActivity() {
@@ -17,7 +17,7 @@ class LoadPageActivity : AppCompatActivity() {
 
 
         val logoIPCA = findViewById<ImageView>(R.id.imageViewLogoIPCA)
-        val animScaleIn = AnimationUtils.loadAnimation(this,R.anim.scale_in)
+        val animScaleIn = AnimationUtils.loadAnimation(this, R.anim.scale_in)
         logoIPCA.startAnimation(animScaleIn)
 
         animScaleIn.setAnimationListener(object: Animation.AnimationListener {

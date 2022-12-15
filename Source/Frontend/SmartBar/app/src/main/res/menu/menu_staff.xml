@@ -3,22 +3,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_profile"
+        android:id="@+id/action_profile_staff"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="Profile"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_requests"
+        android:id="@+id/action_requests_staff"
         android:icon="@drawable/ic_baseline_restaurant_24"
         android:title="Requests"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_historic"
+        android:id="@+id/action_historic_staff"
         android:icon="@drawable/ic_baseline_access_time_24"
         android:title="Historic"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_product_settings"
+        android:id="@+id/action_product_settings_staff"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="ProductSettings"
         app:showAsAction="always" />

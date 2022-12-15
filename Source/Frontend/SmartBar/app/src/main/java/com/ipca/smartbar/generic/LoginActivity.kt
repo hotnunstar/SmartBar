@@ -1,9 +1,13 @@
-package com.ipca.smartbar
+package com.ipca.smartbar.generic
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import com.ipca.smartbar.R
+import com.ipca.smartbar.client.ClientMainActivity
+import com.ipca.smartbar.staff.StaffMainActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -29,8 +33,19 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        // TEMPORÁRIO
         val onButtonLoginPressed: ((View)->Unit)= {
             Toast.makeText(applicationContext,side,Toast.LENGTH_LONG).show()
+            if(side == "CLIENTE")
+            {
+                val intent = Intent(this@LoginActivity, ClientMainActivity::class.java)
+                startActivity(intent)
+            }
+            if(side == "COLABORADOR")
+            {
+                val intent = Intent(this@LoginActivity, StaffMainActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
