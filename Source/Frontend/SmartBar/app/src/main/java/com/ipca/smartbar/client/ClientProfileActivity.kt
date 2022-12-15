@@ -7,10 +7,10 @@ import android.view.Menu
 import android.view.MenuItem
 import com.ipca.smartbar.R
 
-class ClientMainActivity : AppCompatActivity() {
+class ClientProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_client_main)
+        setContentView(R.layout.activity_client_profile)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -22,7 +22,7 @@ class ClientMainActivity : AppCompatActivity() {
         super.onOptionsItemSelected(item)
         return when(item.itemId) {
             R.id.action_profile_client -> {
-                val intent = Intent(this@ClientMainActivity, ClientProfileActivity::class.java)
+                val intent = Intent(this@ClientProfileActivity, ClientProfileActivity::class.java)
                 startActivity(intent)
                 true
             }
@@ -31,17 +31,17 @@ class ClientMainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_cart_client -> {
-                val intent = Intent(this@ClientMainActivity, ClientProfileActivity::class.java)
+                val intent = Intent(this@ClientProfileActivity, ClientProfileActivity::class.java)
                 startActivity(intent)
                 true
             }
             R.id.action_historic_client -> {
-                val intent = Intent(this@ClientMainActivity, ClientHistoricActivity::class.java)
+                val intent = Intent(this@ClientProfileActivity, ClientHistoricActivity::class.java)
                 startActivity(intent)
                 true
             }
             R.id.action_notifications_client -> {
-                val intent = Intent(this@ClientMainActivity, ClientNotificationsActivity::class.java)
+                val intent = Intent(this@ClientProfileActivity, ClientNotificationsActivity::class.java)
                 startActivity(intent)
                 true
             }
