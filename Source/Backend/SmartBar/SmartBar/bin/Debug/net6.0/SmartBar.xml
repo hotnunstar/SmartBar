@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SmartBar</name>
+    </assembly>
+    <members>
+        <member name="M:SmartBar.Controllers.WeatherForecastController.Get">
+            <summary>
+            Obtém todos os valores Weather Forecast
+            </summary>
+            <returns>Os valores do Wather Forecast</returns>
+        </member>
+        <member name="T:SmartBar.Models.LoginModel">
+            <summary>
+            Modelo do login
+            </summary>
+        </member>
+        <member name="M:SmartBar.Models.LoginModel.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Construtor do Modelo do Login
+            </summary>
+            <param name="UserType"></param>
+            <param name="Email"></param>
+            <param name="Password"></param>
+        </member>
+        <member name="P:SmartBar.Models.LoginModel.UserType">
+            <summary>
+            Tipo de utilizador (Cliente ou Staff)
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.LoginModel.Email">
+            <summary>
+            Email do utilizador
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.LoginModel.Password">
+            <summary>
+            Password do utilizador
+            </summary>
+        </member>
+    </members>
+</doc>
