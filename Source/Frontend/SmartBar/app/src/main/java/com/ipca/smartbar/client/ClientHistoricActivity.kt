@@ -27,7 +27,7 @@ class ClientHistoricActivity : AppCompatActivity() {
                 true
             }
             R.id.action_products_client -> {
-                TODO("CRIAR FRAGMENTS PARA OS DIFERENTES TIPOS DE PRODUTOS")
+
                 true
             }
             R.id.action_cart_client -> {
