@@ -80,15 +80,32 @@ class ClientProductsActivity : AppCompatActivity() {
 
                 }
 
-                R.id.action_products_packaged ->
-                    //todo ir para fragment
+                R.id.action_products_packaged ->{
+                    val fragment = PackagedFragment()
+                    supportFragmentManager.beginTransaction().
+                    replace(R.id.content_frame,fragment).
+                    addToBackStack(null).
+                    commitAllowingStateLoss()
                     true
-                R.id.action_products_hot_drink ->
-                    //todo ir para fragment
+                }
+
+
+                R.id.action_products_hot_drink -> {
+                    val fragment = HotDrinkFragment()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, fragment)
+                        .addToBackStack(null).commitAllowingStateLoss()
                     true
-                R.id.action_products_cold_drink ->
-                    //todo ir para fragment
+                }
+                R.id.action_products_cold_drink ->{
+                    val fragment = ColdDrinkFragment()
+                    supportFragmentManager.beginTransaction().
+                    replace(R.id.content_frame,fragment).
+                    addToBackStack(null).
+                    commitAllowingStateLoss()
                     true
+                }
+
 
                 else -> true
             }
