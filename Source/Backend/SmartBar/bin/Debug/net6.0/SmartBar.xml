@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SmartBar</name>
+    </assembly>
+    <members>
+        <member name="T:SmartBar.Models.ColaboratorModel">
+            <summary>
+            Modelo do colaborador
+            </summary>
+        </member>
+        <member name="M:SmartBar.Models.ColaboratorModel.#ctor">
+            <summary>
+            Construtor do colaborador vazio
+            </summary>
+        </member>
+        <member name="M:SmartBar.Models.ColaboratorModel.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Construtor do colaborador default
+            </summary>
+            <param name="Id"></param>
+            <param name="Email"></param>
+            <param name="Password"></param>
+            <param name="Name"></param>
+        </member>
+        <member name="P:SmartBar.Models.ColaboratorModel.Id">
+            <summary>
+            ID do Bar
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.ColaboratorModel.Email">
+            <summary>
+            Email de acesso bar
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.ColaboratorModel.Password">
+            <summary>
+            Password de acesso do bar
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.ColaboratorModel.Name">
+            <summary>
+            Nome de apresentação do bar
+            </summary>
+        </member>
+        <member name="T:SmartBar.Models.LoginModel">
+            <summary>
+            Modelo do login
+            </summary>
+        </member>
+        <member name="M:SmartBar.Models.LoginModel.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Construtor do Modelo do Login
+            </summary>
+            <param name="UserType"></param>
+            <param name="Email"></param>
+            <param name="Password"></param>
+        </member>
+        <member name="P:SmartBar.Models.LoginModel.UserType">
+            <summary>
+            Tipo de utilizador (Cliente ou Staff)
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.LoginModel.Email">
+            <summary>
+            Email do utilizador
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.LoginModel.Password">
+            <summary>
+            Password do utilizador
+            </summary>
+        </member>
+    </members>
+</doc>
