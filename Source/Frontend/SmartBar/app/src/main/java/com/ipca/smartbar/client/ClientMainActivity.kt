@@ -7,10 +7,10 @@ import android.view.Menu
 import android.view.MenuItem
 import com.ipca.smartbar.R
 
-class ClientNotificationsActivity : AppCompatActivity() {
+class ClientMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_client_notifications)
+        setContentView(R.layout.activity_client_main)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -22,27 +22,27 @@ class ClientNotificationsActivity : AppCompatActivity() {
         super.onOptionsItemSelected(item)
         return when(item.itemId) {
             R.id.action_profile_client -> {
-                val intent = Intent(this@ClientNotificationsActivity, ClientProfileActivity::class.java)
+                val intent = Intent(this@ClientMainActivity, ClientProfileActivity::class.java)
                 startActivity(intent)
                 true
             }
             R.id.action_products_client -> {
-                val intent = Intent(this@ClientNotificationsActivity, ClientProductsActivity::class.java)
+                val intent = Intent(this@ClientMainActivity, ClientProductsActivity::class.java)
                 startActivity(intent)
                 true
             }
             R.id.action_cart_client -> {
-                val intent = Intent(this@ClientNotificationsActivity, ClientCartActivity::class.java)
+                val intent = Intent(this@ClientMainActivity, ClientCartActivity::class.java)
                 startActivity(intent)
                 true
             }
             R.id.action_historic_client -> {
-                val intent = Intent(this@ClientNotificationsActivity, ClientHistoricActivity::class.java)
+                val intent = Intent(this@ClientMainActivity, ClientHistoricActivity::class.java)
                 startActivity(intent)
                 true
             }
             R.id.action_notifications_client -> {
-                val intent = Intent(this@ClientNotificationsActivity, ClientNotificationsActivity::class.java)
+                val intent = Intent(this@ClientMainActivity, ClientNotificationsActivity::class.java)
                 startActivity(intent)
                 true
             }
@@ -53,3 +53,4 @@ class ClientNotificationsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 }
+

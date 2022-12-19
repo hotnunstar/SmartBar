@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="61a981ed-5442-479e-9bda-cc7604ae9f70" name="Changes" comment="" />
+    <list default="true" id="61a981ed-5442-479e-9bda-cc7604ae9f70" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Source/Frontend/SmartBar/app/src/main/res/layout/row_historic.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Frontend/SmartBar/app/src/main/java/com/ipca/smartbar/client/Client.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Frontend/SmartBar/app/src/main/java/com/ipca/smartbar/client/Client.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Frontend/SmartBar/app/src/main/java/com/ipca/smartbar/client/ClientHistoricActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Frontend/SmartBar/app/src/main/java/com/ipca/smartbar/client/ClientHistoricActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Frontend/SmartBar/app/src/main/res/layout/activity_client_historic.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Frontend/SmartBar/app/src/main/res/layout/activity_client_historic.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Frontend/SmartBar/app/src/main/res/layout/activity_client_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Frontend/SmartBar/app/src/main/res/layout/activity_client_profile.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

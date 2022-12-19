@@ -1,6 +1,7 @@
 package com.ipca.smartbar.client
 
 import android.provider.ContactsContract.CommonDataKinds.Email
+import java.time.Instant
 
 class Client {
     var balance: Double? = null
@@ -13,3 +14,4 @@ class Client {
         this.email = email
     }
 }
+
