@@ -6,18 +6,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import com.ipca.smartbar.R
-import com.ipca.smartbar.client.ClientMainActivity
+import com.ipca.smartbar.client.ClientProductsActivity
 import com.ipca.smartbar.staff.StaffMainActivity
 
 class LoginActivity : AppCompatActivity() {
 
     private val spinnerOptions = arrayOf("CLIENTE", "COLABORADOR")
+    private val LoginModel: LoginModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-        var side = ""
 
         var spinner = findViewById<Spinner>(R.id.spinnerChooseSide)
         val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, spinnerOptions)
@@ -25,23 +24,26 @@ class LoginActivity : AppCompatActivity() {
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                side = spinnerOptions[position]
+                LoginModel?.userType = spinnerOptions[position]
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                side = spinnerOptions[0]
+                LoginModel?.userType = spinnerOptions[0]
             }
         }
 
-        // TEMPORÁRIO
+        var loginEmail = findViewById<EditText>(R.id.editTextLoginEmail)
+        var loginPassword = findViewById<EditText>(R.id.editTextLoginPassword)
+        LoginModel?.email = loginEmail.toString()
+        LoginModel?.password = loginPassword.toString()
+
         val onButtonLoginPressed: ((View)->Unit)= {
-            Toast.makeText(applicationContext,side,Toast.LENGTH_LONG).show()
-            if(side == "CLIENTE")
+            if(LoginModel?.userType == "CLIENTE")
             {
-                val intent = Intent(this@LoginActivity, ClientMainActivity::class.java)
+                val intent = Intent(this@LoginActivity, ClientProductsActivity::class.java)
                 startActivity(intent)
             }
-            if(side == "COLABORADOR")
+            if(LoginModel?.userType == "COLABORADOR")
             {
                 val intent = Intent(this@LoginActivity, StaffMainActivity::class.java)
                 startActivity(intent)
@@ -50,5 +52,9 @@ class LoginActivity : AppCompatActivity() {
 
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
         buttonLogin.setOnClickListener(onButtonLoginPressed)
+    }
+
+    companion object {
+        const val TAG = "LoginActivity"
     }
 }
