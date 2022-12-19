@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import com.ipca.smartbar.R
-import com.ipca.smartbar.client.ClientMainActivity
+import com.ipca.smartbar.client.ClientProductsActivity
 import com.ipca.smartbar.staff.StaffMainActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         val onButtonLoginPressed: ((View)->Unit)= {
             if(LoginModel?.userType == "CLIENTE")
             {
-                val intent = Intent(this@LoginActivity, ClientMainActivity::class.java)
+                val intent = Intent(this@LoginActivity, ClientProductsActivity::class.java)
                 startActivity(intent)
             }
             if(LoginModel?.userType == "COLABORADOR")
