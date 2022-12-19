@@ -8,6 +8,9 @@ using System.Text;
 
 namespace SmartBar.Controllers
 {
+    /// <summary>
+    /// Controlador de autenticação
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -16,6 +19,12 @@ namespace SmartBar.Controllers
         private readonly UserService _userService;
         private readonly ColaboratorService _colaboratorService;
 
+        /// <summary>
+        /// Contrutor do controlador de autenticação
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="userService"></param>
+        /// <param name="colaboratorService"></param>
         public AuthController(IConfiguration config, UserService userService, ColaboratorService colaboratorService)
         {
             _config = config;
@@ -23,6 +32,11 @@ namespace SmartBar.Controllers
             _colaboratorService = colaboratorService;
         }
 
+        /// <summary>
+        /// HttpPOST do login
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns>Token ou NotFound</returns>
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel login)
         {

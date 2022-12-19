@@ -6,26 +6,45 @@ using SmartBar.Services;
 
 namespace SmartBar.Controllers
 {
+
+    /// <summary>
+    /// Controlador de colaboradores
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ColaboratorController : ControllerBase
     {
         private readonly ColaboratorService _colaboratorService;
+        /// <summary>
+        /// Construtor do controlador de colaboradores
+        /// </summary>
+        /// <param name="colaboratorService"></param>
         public ColaboratorController(ColaboratorService colaboratorService) => _colaboratorService = colaboratorService;
 
+        /// <summary>
+        /// Obter determinado colaborador
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns>Null ou Colaborador</returns>
         [HttpGet]
         public async Task<ColaboratorModel> GetColaborator(string? email, string? password)
         {
             if (email != null && password != null)
             {
                 password = Functions.EncodePasswordToBase64(password);
-                var user = await _colaboratorService.GetAsync(email);
-                if (user == null || user.Password != password) return null;
-                else return user;
+                var colaborator = await _colaboratorService.GetAsync(email);
+                if (colaborator == null || colaborator.Password != password) return null;
+                else return colaborator;
             }
             return null;
         }
 
+        /// <summary>
+        /// Inserir um colaborador
+        /// </summary>
+        /// <param name="colaborator"></param>
+        /// <returns>BadRequest ou Colaborador</returns>
         [HttpPost]
         public async Task<IActionResult> PostColaborator(ColaboratorModel colaborator)
         {

@@ -23,7 +23,7 @@
         }
 
         /// <summary>
-        /// Tipo de utilizador (Cliente ou Staff)
+        /// Tipo de utilizador (Cliente ou Colaborador)
         /// </summary>
         public string UserType { get { return userType; } set { userType = value; } }
 
