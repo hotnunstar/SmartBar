@@ -31,7 +31,7 @@ class ClientNotificationsActivity : AppCompatActivity() {
                 true
             }
             R.id.action_cart_client -> {
-                val intent = Intent(this@ClientNotificationsActivity, ClientProfileActivity::class.java)
+                val intent = Intent(this@ClientNotificationsActivity, ClientCartActivity::class.java)
                 startActivity(intent)
                 true
             }

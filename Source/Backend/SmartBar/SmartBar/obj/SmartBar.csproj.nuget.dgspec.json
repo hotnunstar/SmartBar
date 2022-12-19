@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Pessoal\\Projects\\ProjetoAplicado\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar\\SmartBar.csproj": {}
+    "C:\\ProjetoAplicado\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar\\SmartBar.csproj": {}
   },
   "projects": {
-    "D:\\Pessoal\\Projects\\ProjetoAplicado\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar\\SmartBar.csproj": {
+    "C:\\ProjetoAplicado\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar\\SmartBar.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Pessoal\\Projects\\ProjetoAplicado\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar\\SmartBar.csproj",
+        "projectUniqueName": "C:\\ProjetoAplicado\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar\\SmartBar.csproj",
         "projectName": "SmartBar",
-        "projectPath": "D:\\Pessoal\\Projects\\ProjetoAplicado\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar\\SmartBar.csproj",
-        "packagesPath": "C:\\Users\\nu-no\\.nuget\\packages\\",
-        "outputPath": "D:\\Pessoal\\Projects\\ProjetoAplicado\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar\\obj\\",
+        "projectPath": "C:\\ProjetoAplicado\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar\\SmartBar.csproj",
+        "packagesPath": "C:\\Users\\Watchmen\\.nuget\\packages\\",
+        "outputPath": "C:\\ProjetoAplicado\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\nu-no\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Watchmen\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -59,8 +59,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -72,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

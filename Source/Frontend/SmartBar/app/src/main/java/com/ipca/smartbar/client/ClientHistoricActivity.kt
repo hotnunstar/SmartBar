@@ -1,16 +1,35 @@
 package com.ipca.smartbar.client
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.ListView
+import android.widget.TextView
+import androidx.annotation.RequiresApi
 import com.ipca.smartbar.R
+import java.time.LocalDateTime
 
 class ClientHistoricActivity : AppCompatActivity() {
+
+    val historic = arrayListOf<Historic>()
+
+    val adapter = HistoricAdapter()
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_client_historic)
+
+        historic.add(Historic("100", LocalDateTime.now(), 10.0,1))
+
+        val listViewHistoric = findViewById<ListView>(R.id.listViewHistoric)
+        listViewHistoric.adapter = adapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -31,7 +50,7 @@ class ClientHistoricActivity : AppCompatActivity() {
                 true
             }
             R.id.action_cart_client -> {
-                val intent = Intent(this@ClientHistoricActivity, ClientProfileActivity::class.java)
+                val intent = Intent(this@ClientHistoricActivity, ClientCartActivity::class.java)
                 startActivity(intent)
                 true
             }
@@ -50,5 +69,32 @@ class ClientHistoricActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    inner class HistoricAdapter : BaseAdapter() {
+        override fun getCount(): Int {
+            return historic.size
+        }
+
+        override fun getItem(position: Int): Any {
+            return historic[position]
+        }
+
+        override fun getItemId(position: Int): Long {
+            return 0L
+        }
+
+        override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
+            val rootView = layoutInflater.inflate(R.layout.row_historic, parent, false)
+            val textViewPedidoHist = rootView.findViewById<TextView>(R.id.textViewPedidoHist)
+            val textViewData = rootView.findViewById<TextView>(R.id.textViewData)
+            val textViewTotalPrice = rootView.findViewById<TextView>(R.id.textViewTotalPrice)
+
+            textViewPedidoHist.text = historic[position].idPedido
+            textViewData.text = historic[position].data.toString()
+            textViewTotalPrice.text = historic[position].valor.toString()
+
+            return rootView
+        }
     }
 }
