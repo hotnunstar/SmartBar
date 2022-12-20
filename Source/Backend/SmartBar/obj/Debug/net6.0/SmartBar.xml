@@ -50,12 +50,6 @@
             <param name="colaborator"></param>
             <returns>BadRequest ou Colaborador</returns>
         </member>
-        <member name="M:SmartBar.Controllers.ProductController.#ctor(SmartBar.Services.ProductService)">
-            <summary>
-            Construtor do controlador de produtos
-            </summary>
-            <param name="productService"></param>
-        </member>
         <member name="T:SmartBar.Controllers.UserController">
             <summary>
             Controlador de clientes
@@ -186,7 +180,7 @@
             Construtor vazio de um produto
             </summary>
         </member>
-        <member name="M:SmartBar.Models.ProductModel.#ctor(System.String,System.String,System.Decimal,System.Int32)">
+        <member name="M:SmartBar.Models.ProductModel.#ctor(System.String,System.String,System.Byte[],System.Decimal,System.Int32)">
             <summary>
             Construtor default de um produto
             </summary>
@@ -204,6 +198,11 @@
         <member name="P:SmartBar.Models.ProductModel.Name">
             <summary>
             Nome do produto
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.ProductModel.Picture">
+            <summary>
+            Imagem do produto
             </summary>
         </member>
         <member name="P:SmartBar.Models.ProductModel.Price">
@@ -402,13 +401,6 @@
             </summary>
             <param name="id"></param>
             <returns>O produto, se existir</returns>
-        </member>
-        <member name="M:SmartBar.Services.ProductService.GetAsyncByName(System.String)">
-            <summary>
-            Obter determinado produto através do nome
-            </summary>
-            <param name="name"></param>
-            <returns>O produto se existir</returns>
         </member>
         <member name="M:SmartBar.Services.ProductService.CreateAsync(SmartBar.Models.ProductModel)">
             <summary>
