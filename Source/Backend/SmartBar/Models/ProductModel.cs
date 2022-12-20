@@ -57,11 +57,11 @@ namespace SmartBar.Models
         /// <summary>
         /// Preço do produto
         /// </summary>
-        decimal Price { get { return price; } set { price = value; } }
+        public decimal Price { get { return price; } set { price = value; } }
 
         /// <summary>
         /// Stock do produto
         /// </summary>
-        int Stock { get { return stock; } set { stock = value; } }
+        public int Stock { get { return stock; } set { stock = value; } }
     }
 }

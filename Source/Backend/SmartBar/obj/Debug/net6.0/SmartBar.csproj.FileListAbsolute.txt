@@ -86,3 +86,8 @@ D:\Pessoal\Projects\ProjetoAplicado\SmartBar\Source\Backend\SmartBar\bin\Debug\n
 D:\Pessoal\Projects\ProjetoAplicado\SmartBar\Source\Backend\SmartBar\bin\Debug\net6.0\runtimes\linux\native\libmongocrypt.so
 D:\Pessoal\Projects\ProjetoAplicado\SmartBar\Source\Backend\SmartBar\bin\Debug\net6.0\runtimes\osx\native\libmongocrypt.dylib
 D:\Pessoal\Projects\ProjetoAplicado\SmartBar\Source\Backend\SmartBar\bin\Debug\net6.0\runtimes\win\native\mongocrypt.dll
+D:\Pessoal\Projects\ProjetoAplicado\SmartBar\Source\Backend\SmartBar\obj\Debug\net6.0\staticwebassets\msbuild.SmartBar.Microsoft.AspNetCore.StaticWebAssets.props
+D:\Pessoal\Projects\ProjetoAplicado\SmartBar\Source\Backend\SmartBar\obj\Debug\net6.0\staticwebassets\msbuild.build.SmartBar.props
+D:\Pessoal\Projects\ProjetoAplicado\SmartBar\Source\Backend\SmartBar\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.SmartBar.props
+D:\Pessoal\Projects\ProjetoAplicado\SmartBar\Source\Backend\SmartBar\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.SmartBar.props
+D:\Pessoal\Projects\ProjetoAplicado\SmartBar\Source\Backend\SmartBar\obj\Debug\net6.0\staticwebassets.pack.json
