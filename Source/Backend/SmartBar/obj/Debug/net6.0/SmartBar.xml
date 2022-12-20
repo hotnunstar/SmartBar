@@ -4,6 +4,111 @@
         <name>SmartBar</name>
     </assembly>
     <members>
+        <member name="T:SmartBar.Controllers.AuthController">
+            <summary>
+            Controlador de autenticação
+            </summary>
+        </member>
+        <member name="M:SmartBar.Controllers.AuthController.#ctor(Microsoft.Extensions.Configuration.IConfiguration,SmartBar.Services.UserService,SmartBar.Services.ColaboratorService)">
+            <summary>
+            Contrutor do controlador de autenticação
+            </summary>
+            <param name="config"></param>
+            <param name="userService"></param>
+            <param name="colaboratorService"></param>
+        </member>
+        <member name="M:SmartBar.Controllers.AuthController.Login(SmartBar.Models.LoginModel)">
+            <summary>
+            HttpPOST do login
+            </summary>
+            <param name="login"></param>
+            <returns>Token ou NotFound</returns>
+        </member>
+        <member name="T:SmartBar.Controllers.ColaboratorController">
+            <summary>
+            Controlador de colaboradores
+            </summary>
+        </member>
+        <member name="M:SmartBar.Controllers.ColaboratorController.#ctor(SmartBar.Services.ColaboratorService)">
+            <summary>
+            Construtor do controlador de colaboradores
+            </summary>
+            <param name="colaboratorService"></param>
+        </member>
+        <member name="M:SmartBar.Controllers.ColaboratorController.GetColaborator(System.String,System.String)">
+            <summary>
+            Obter determinado colaborador
+            </summary>
+            <param name="email"></param>
+            <param name="password"></param>
+            <returns>Null ou Colaborador</returns>
+        </member>
+        <member name="M:SmartBar.Controllers.ColaboratorController.PostColaborator(SmartBar.Models.ColaboratorModel)">
+            <summary>
+            Inserir um colaborador
+            </summary>
+            <param name="colaborator"></param>
+            <returns>BadRequest ou Colaborador</returns>
+        </member>
+        <member name="M:SmartBar.Controllers.ProductController.#ctor(SmartBar.Services.ProductService)">
+            <summary>
+            Construtor do controlador de produtos
+            </summary>
+            <param name="productService"></param>
+        </member>
+        <member name="T:SmartBar.Controllers.UserController">
+            <summary>
+            Controlador de clientes
+            </summary>
+        </member>
+        <member name="M:SmartBar.Controllers.UserController.#ctor(SmartBar.Services.UserService)">
+            <summary>
+            Construtor do controlador de clientes
+            </summary>
+            <param name="userService"></param>
+        </member>
+        <member name="M:SmartBar.Controllers.UserController.GetUser(System.String,System.String)">
+            <summary>
+            Obter determinado utilizador
+            </summary>
+            <param name="email"></param>
+            <param name="password"></param>
+            <returns>Null ou Utilizador</returns>
+        </member>
+        <member name="M:SmartBar.Controllers.UserController.PostUser(SmartBar.Models.UserModel)">
+            <summary>
+            Inserir um cliente
+            </summary>
+            <param name="user"></param>
+            <returns>BadRequest ou Cliente</returns>
+        </member>
+        <member name="T:SmartBar.Helpers.Functions">
+            <summary>
+            Funções auxiliares
+            </summary>
+        </member>
+        <member name="M:SmartBar.Helpers.Functions.CheckEmail(System.String)">
+            <summary>
+            Verificar se determinado email está num formato correto
+            </summary>
+            <param name="email"></param>
+            <returns>True ou False</returns>
+        </member>
+        <member name="M:SmartBar.Helpers.Functions.EncodePasswordToBase64(System.String)">
+            <summary>
+            Encriptar passwords
+            </summary>
+            <param name="password"></param>
+            <returns>Password encriptada</returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:SmartBar.Helpers.Functions.DecodeFrom64(System.String)">
+            <summary>
+            Desencriptar password
+            </summary>
+            <param name="encodedData"></param>
+            <returns>Password desencriptada</returns>
+        </member>
         <member name="T:SmartBar.Models.ColaboratorModel">
             <summary>
             Modelo do colaborador
@@ -30,7 +135,7 @@
         </member>
         <member name="P:SmartBar.Models.ColaboratorModel.Email">
             <summary>
-            Email de acesso bar
+            Email de acesso do bar
             </summary>
         </member>
         <member name="P:SmartBar.Models.ColaboratorModel.Password">
@@ -58,7 +163,7 @@
         </member>
         <member name="P:SmartBar.Models.LoginModel.UserType">
             <summary>
-            Tipo de utilizador (Cliente ou Staff)
+            Tipo de utilizador (Cliente ou Colaborador)
             </summary>
         </member>
         <member name="P:SmartBar.Models.LoginModel.Email">
@@ -70,6 +175,308 @@
             <summary>
             Password do utilizador
             </summary>
+        </member>
+        <member name="T:SmartBar.Models.ProductModel">
+            <summary>
+            Modelo de um produto
+            </summary>
+        </member>
+        <member name="M:SmartBar.Models.ProductModel.#ctor">
+            <summary>
+            Construtor vazio de um produto
+            </summary>
+        </member>
+        <member name="M:SmartBar.Models.ProductModel.#ctor(System.String,System.String,System.Decimal,System.Int32)">
+            <summary>
+            Construtor default de um produto
+            </summary>
+            <param name="Id"></param>
+            <param name="Name"></param>
+            <param name="Picture"></param>
+            <param name="Price"></param>
+            <param name="Stock"></param>
+        </member>
+        <member name="P:SmartBar.Models.ProductModel.Id">
+            <summary>
+            ID do produto
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.ProductModel.Name">
+            <summary>
+            Nome do produto
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.ProductModel.Price">
+            <summary>
+            Preço do produto
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.ProductModel.Stock">
+            <summary>
+            Stock do produto
+            </summary>
+        </member>
+        <member name="T:SmartBar.Models.ResponseModel">
+            <summary>
+            Modelo da resposta
+            </summary>
+        </member>
+        <member name="M:SmartBar.Models.ResponseModel.#ctor">
+            <summary>
+            Construtor vazio da resposta
+            </summary>
+        </member>
+        <member name="M:SmartBar.Models.ResponseModel.#ctor(System.Int32,System.String)">
+            <summary>
+            Construtor default da resposta
+            </summary>
+            <param name="StatusCode"></param>
+            <param name="Message"></param>
+        </member>
+        <member name="P:SmartBar.Models.ResponseModel.StatusCode">
+            <summary>
+            Status code da resposta
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.ResponseModel.Message">
+            <summary>
+            Mensagem da resposta
+            </summary>
+        </member>
+        <member name="T:SmartBar.Models.SmartBarDatabaseSettingsModel">
+            <summary>
+            Modelo de configurações da base de dados
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.SmartBarDatabaseSettingsModel.ConnectionString">
+            <summary>
+            String de conexeção
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.SmartBarDatabaseSettingsModel.DatabaseName">
+            <summary>
+            Nome da base de dados
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.SmartBarDatabaseSettingsModel.ColaboratorCollectionName">
+            <summary>
+            Coleção de colaboradores
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.SmartBarDatabaseSettingsModel.HistoricConllectionName">
+            <summary>
+            Coleção de histórico
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.SmartBarDatabaseSettingsModel.NotificationCollectionName">
+            <summary>
+            Coleção de notificações
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.SmartBarDatabaseSettingsModel.ProductCollectionName">
+            <summary>
+            Coleção de produtos
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.SmartBarDatabaseSettingsModel.RequestCollectionName">
+            <summary>
+            Coleção de pedidos
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.SmartBarDatabaseSettingsModel.UserCollectionName">
+            <summary>
+            Coleção de utilizadores
+            </summary>
+        </member>
+        <member name="T:SmartBar.Models.UserModel">
+            <summary>
+            Modelo do cliente
+            </summary>
+        </member>
+        <member name="M:SmartBar.Models.UserModel.#ctor">
+            <summary>
+            Construtor vazio do cliente
+            </summary>
+        </member>
+        <member name="M:SmartBar.Models.UserModel.#ctor(System.String,System.String,System.String,System.String,System.Decimal)">
+            <summary>
+            Construtor default do cliente
+            </summary>
+            <param name="Id"></param>
+            <param name="Email"></param>
+            <param name="Password"></param>
+            <param name="Name"></param>
+            <param name="Balance"></param>
+        </member>
+        <member name="P:SmartBar.Models.UserModel.Id">
+            <summary>
+            Id do cliente
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.UserModel.Email">
+            <summary>
+            Email do cliente
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.UserModel.Password">
+            <summary>
+            Password do cliente
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.UserModel.Name">
+            <summary>
+            Nome do cliente
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.UserModel.Balance">
+            <summary>
+            Saldo do cliente
+            </summary>
+        </member>
+        <member name="T:SmartBar.Services.ColaboratorService">
+            <summary>
+            Serviço de ligação à coleção dos bares
+            </summary>
+        </member>
+        <member name="M:SmartBar.Services.ColaboratorService.#ctor(Microsoft.Extensions.Options.IOptions{SmartBar.Models.SmartBarDatabaseSettingsModel})">
+            <summary>
+            Construtor default de ligação à coleção dos bares
+            </summary>
+            <param name="smartBarDatabaseSettingsModel"></param>
+        </member>
+        <member name="M:SmartBar.Services.ColaboratorService.GetAsync">
+            <summary>
+            Obter todos os bares
+            </summary>
+            <returns>Uma lista de bares</returns>
+        </member>
+        <member name="M:SmartBar.Services.ColaboratorService.GetAsync(System.String)">
+            <summary>
+            Obter determinado bar
+            </summary>
+            <param name="email"></param>
+            <returns>O bar, se existir</returns>
+        </member>
+        <member name="M:SmartBar.Services.ColaboratorService.CreateAsync(SmartBar.Models.ColaboratorModel)">
+            <summary>
+            Criar um novo bar
+            </summary>
+            <param name="newColaborator"></param>
+            <returns>O novo bar criado</returns>
+        </member>
+        <member name="M:SmartBar.Services.ColaboratorService.UpdateAsync(System.String,SmartBar.Models.ColaboratorModel)">
+            <summary>
+            Atualizar determinado bar
+            </summary>
+            <param name="id"></param>
+            <param name="updatedColaborator"></param>
+            <returns>O bar atualizado</returns>
+        </member>
+        <member name="M:SmartBar.Services.ColaboratorService.RemoveAsync(System.String)">
+            <summary>
+            Remover determinado bar
+            </summary>
+            <param name="id"></param>
+            <returns>True ou False</returns>
+        </member>
+        <member name="T:SmartBar.Services.ProductService">
+            <summary>
+            Serviço de ligação à coleção dos produtos
+            </summary>
+        </member>
+        <member name="M:SmartBar.Services.ProductService.#ctor(Microsoft.Extensions.Options.IOptions{SmartBar.Models.SmartBarDatabaseSettingsModel})">
+            <summary>
+            Construtor default de ligação à coleção dos produtos
+            </summary>
+            <param name="smartBarDatabaseSettingsModel"></param>
+        </member>
+        <member name="M:SmartBar.Services.ProductService.GetAsync">
+            <summary>
+            Obter todos os produtos
+            </summary>
+            <returns>A lista dos produtos</returns>
+        </member>
+        <member name="M:SmartBar.Services.ProductService.GetAsync(System.String)">
+            <summary>
+            Obter determinado produto através do id
+            </summary>
+            <param name="id"></param>
+            <returns>O produto, se existir</returns>
+        </member>
+        <member name="M:SmartBar.Services.ProductService.GetAsyncByName(System.String)">
+            <summary>
+            Obter determinado produto através do nome
+            </summary>
+            <param name="name"></param>
+            <returns>O produto se existir</returns>
+        </member>
+        <member name="M:SmartBar.Services.ProductService.CreateAsync(SmartBar.Models.ProductModel)">
+            <summary>
+            Criar um novo produto
+            </summary>
+            <param name="newProduct"></param>
+            <returns>O novo produto criado</returns>
+        </member>
+        <member name="M:SmartBar.Services.ProductService.UpdateAsync(System.String,SmartBar.Models.ProductModel)">
+            <summary>
+            Atualizar determinado produto
+            </summary>
+            <param name="id"></param>
+            <param name="updatedProduct"></param>
+            <returns>O produto atualizado</returns>
+        </member>
+        <member name="M:SmartBar.Services.ProductService.RemoveAsync(System.String)">
+            <summary>
+            Remover determinado produto
+            </summary>
+            <param name="id"></param>
+            <returns>True ou False</returns>
+        </member>
+        <member name="T:SmartBar.Services.UserService">
+            <summary>
+            Serviço de ligação à coleção dos clientes
+            </summary>
+        </member>
+        <member name="M:SmartBar.Services.UserService.#ctor(Microsoft.Extensions.Options.IOptions{SmartBar.Models.SmartBarDatabaseSettingsModel})">
+            <summary>
+            Construtor default de ligação à coleção dos clientes
+            </summary>
+            <param name="smartBarDatabaseSettingsModel"></param>
+        </member>
+        <member name="M:SmartBar.Services.UserService.GetAsync">
+            <summary>
+            Obter todos os clientes
+            </summary>
+            <returns>Uma lista de clientes</returns>
+        </member>
+        <member name="M:SmartBar.Services.UserService.GetAsync(System.String)">
+            <summary>
+            Obter determinado cliente
+            </summary>
+            <param name="email"></param>
+            <returns>O cliente, se existir</returns>
+        </member>
+        <member name="M:SmartBar.Services.UserService.CreateAsync(SmartBar.Models.UserModel)">
+            <summary>
+            Criar um novo cliente
+            </summary>
+            <param name="newColaborator"></param>
+            <returns>O novo cliente criado</returns>
+        </member>
+        <member name="M:SmartBar.Services.UserService.UpdateAsync(System.String,SmartBar.Models.UserModel)">
+            <summary>
+            Atualizar determinado cliente
+            </summary>
+            <param name="id"></param>
+            <param name="updatedColaborator"></param>
+            <returns>O cliente atualizado</returns>
+        </member>
+        <member name="M:SmartBar.Services.UserService.RemoveAsync(System.String)">
+            <summary>
+            Remover determinado cliente
+            </summary>
+            <param name="id"></param>
+            <returns>True ou False</returns>
         </member>
     </members>
 </doc>

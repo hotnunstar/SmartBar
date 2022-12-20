@@ -8,17 +8,9 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SmartBar
 build_property.RootNamespace = SmartBar
-<<<<<<< HEAD:Source/Backend/SmartBar/SmartBar/obj/Debug/net6.0/SmartBar.GeneratedMSBuildEditorConfig.editorconfig
-build_property.ProjectDir = C:\ProjetoAplicado\SmartBar\Source\Backend\SmartBar\SmartBar\
+build_property.ProjectDir = E:\escola\projeto_pa\SmartBar\Source\Backend\SmartBar\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\ProjetoAplicado\SmartBar\Source\Backend\SmartBar\SmartBar
-=======
-build_property.ProjectDir = D:\Pessoal\Projects\ProjetoAplicado\SmartBar\Source\Backend\SmartBar\
-build_property.RazorLangVersion = 6.0
-build_property.SupportLocalizedComponentNames = 
-build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\Pessoal\Projects\ProjetoAplicado\SmartBar\Source\Backend\SmartBar
->>>>>>> 2f8f0d5fac64192ddbda38f3e428b4db1dcd43e1:Source/Backend/SmartBar/obj/Debug/net6.0/SmartBar.GeneratedMSBuildEditorConfig.editorconfig
+build_property.MSBuildProjectDirectory = E:\escola\projeto_pa\SmartBar\Source\Backend\SmartBar
 build_property._RazorSourceGeneratorDebug = 

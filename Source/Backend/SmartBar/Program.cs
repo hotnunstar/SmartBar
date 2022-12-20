@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<SmartBarDatabaseSettingsModel>(builder.Configuration.GetSection("SmartBarDatabase"));
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<ColaboratorService>();
+builder.Services.AddSingleton<ProductService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

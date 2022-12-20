@@ -38,6 +38,14 @@ namespace SmartBar.Services
         await _productCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
         /// <summary>
+        /// Obter determinado produto através do nome
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>O produto se existir</returns>
+        public async Task<ProductModel?> GetAsyncByName(string name) =>
+        await _productCollection.Find(x => x.Name == name).FirstOrDefaultAsync();
+
+        /// <summary>
         /// Criar um novo produto
         /// </summary>
         /// <param name="newProduct"></param>
