@@ -35,10 +35,10 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
+    implementation 'com.google.guava:guava:27.0.1-android'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation('androidx.lifecycle:lifecycle-runtime-ktx:2.5.1')
     testImplementation 'junit:junit:4.13.2'
@@ -56,4 +56,11 @@ dependencies {
 
     // Gson (To convert raw JSON to pretty JSON)
     implementation 'com.google.code.gson:gson:2.8.9'
+
+    // Convert JSON to DataClass
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.1'
+
+    // JWT Decoder
+    implementation "com.auth0:jwks-rsa:0.3.0"
+    implementation "com.auth0:java-jwt:3.3.0"
 }
