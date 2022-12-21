@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.ipca.smartbar.R
+import com.ipca.smartbar.client.ClientProductsActivity
 
 
 class LoadPageActivity : AppCompatActivity() {

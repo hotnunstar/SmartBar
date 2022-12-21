@@ -41,7 +41,7 @@ namespace SmartBar.Models
         public string Id { get { return id; } set { id = value; } }
 
         /// <summary>
-        /// Email de acesso bar
+        /// Email de acesso do bar
         /// </summary>
         public string Email { get { return email; } set { email = value; } }
 

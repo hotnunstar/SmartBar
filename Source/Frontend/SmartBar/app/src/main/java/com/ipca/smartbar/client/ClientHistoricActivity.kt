@@ -50,8 +50,10 @@ class ClientHistoricActivity : AppCompatActivity() {
                 true
             }
             R.id.action_products_client -> {
-
+                val intent = Intent(this@ClientHistoricActivity, ClientProductsActivity::class.java)
+                startActivity(intent)
                 true
+
             }
             R.id.action_cart_client -> {
                 val intent = Intent(this@ClientHistoricActivity, ClientCartActivity::class.java)

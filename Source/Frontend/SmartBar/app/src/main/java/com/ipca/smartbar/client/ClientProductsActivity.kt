@@ -39,7 +39,8 @@ class ClientProductsActivity : AppCompatActivity() {
                 true
             }
             R.id.action_products_client -> {
-                TODO("CRIAR FRAGMENTS PARA OS DIFERENTES TIPOS DE PRODUTOS")
+                val intent = Intent(this@ClientProductsActivity, ClientProductsActivity::class.java)
+                startActivity(intent)
                 true
             }
             R.id.action_cart_client -> {
