@@ -1,7 +1,7 @@
 package com.ipca.smartbar.client
 
-import java.time.Instant
 import java.time.LocalDateTime
+import java.util.*
 
 class Historic {
     //var idClient: String? = null
@@ -10,7 +10,7 @@ class Historic {
     var valor: Double? = null
     var Estado: Int? = null
 
-    constructor(idPedido: String?, data: LocalDateTime?, valor: Double?, Estado: Int?) {
+    constructor(idPedido: String?, data: LocalDateTime, valor: Double?, Estado: Int?) {
         this.idPedido = idPedido
         this.data = data
         this.valor = valor

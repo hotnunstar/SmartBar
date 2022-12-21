@@ -2,7 +2,6 @@ package com.ipca.smartbar.client
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,8 +11,10 @@ import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.ipca.smartbar.R
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ClientHistoricActivity : AppCompatActivity() {
 
@@ -26,7 +27,10 @@ class ClientHistoricActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_client_historic)
 
-        historic.add(Historic("100", LocalDateTime.now(), 10.0,1))
+        val stringDate = "18-07-2019 16:20"
+        val dateTime = LocalDateTime.parse(stringDate, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+
+        historic.add(Historic("100", dateTime, 10.00,1))
 
         val listViewHistoric = findViewById<ListView>(R.id.listViewHistoric)
         listViewHistoric.adapter = adapter
@@ -98,3 +102,4 @@ class ClientHistoricActivity : AppCompatActivity() {
         }
     }
 }
+
