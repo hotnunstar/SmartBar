@@ -48,17 +48,19 @@ class LoginActivity : AppCompatActivity() {
 
                 if (loginModel.email.isNotEmpty() && loginModel.password.isNotEmpty()) {
                     if (loginModel.userType == "CLIENTE") {
-                        val response = LoginRequests.loginRequest(LoginService::class.java)
+                        LoginRequests.postLogin(loginModel)
+                        /*val response = LoginRequests.buildService(LoginService::class.java)
                         response.postLogin(loginModel).enqueue(
                             object : Callback<LoginResponse> {
                                 override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>){
-                                    Toast.makeText(this@LoginActivity, response.message().toString(), Toast.LENGTH_LONG).show()
+                                    Log.d("RESPONSE", response.toString())
+                                    Toast.makeText(this@LoginActivity, response.toString(), Toast.LENGTH_LONG).show()
                                 }
                                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                                     Log.d("TESTE", t.toString())
                                     Toast.makeText(this@LoginActivity, t.toString(), Toast.LENGTH_LONG).show()
                                 }
-                            })
+                            })*/
                     }
                         // val intent = Intent(this@LoginActivity, ClientProductsActivity::class.java)
                         // startActivity(intent)
