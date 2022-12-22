@@ -1,7 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
     "C:\\ProjetoAplicado\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar.csproj": {}
   },
   "projects": {
@@ -13,29 +12,12 @@
         "projectPath": "C:\\ProjetoAplicado\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar.csproj",
         "packagesPath": "C:\\Users\\Watchmen\\.nuget\\packages\\",
         "outputPath": "C:\\ProjetoAplicado\\SmartBar\\Source\\Backend\\SmartBar\\obj\\",
-=======
-    "E:\\escola\\projeto_pa\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar.csproj": {}
-  },
-  "projects": {
-    "E:\\escola\\projeto_pa\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "E:\\escola\\projeto_pa\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar.csproj",
-        "projectName": "SmartBar",
-        "projectPath": "E:\\escola\\projeto_pa\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar.csproj",
-        "packagesPath": "C:\\Users\\joelf\\.nuget\\packages\\",
-        "outputPath": "E:\\escola\\projeto_pa\\SmartBar\\Source\\Backend\\SmartBar\\obj\\",
->>>>>>> 8028e1d3d1f53ac0be906c2a59809507833bc640
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-<<<<<<< HEAD
           "C:\\Users\\Watchmen\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
-          "C:\\Users\\joelf\\AppData\\Roaming\\NuGet\\NuGet.Config",
->>>>>>> 8028e1d3d1f53ac0be906c2a59809507833bc640
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -97,11 +79,7 @@
               "privateAssets": "all"
             }
           },
-<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
-=======
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
->>>>>>> 8028e1d3d1f53ac0be906c2a59809507833bc640
         }
       }
     }
