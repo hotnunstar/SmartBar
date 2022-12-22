@@ -1,7 +1,5 @@
 package com.ipca.smartbar.generic
 
-
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -10,12 +8,9 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.auth0.jwt.JWT
-import com.ipca.smartbar.R
+import com.ipca.smartbar.*
 import com.ipca.smartbar.client.products.ClientProductsActivity
 import com.ipca.smartbar.staff.StaffMainActivity
-import java.time.LocalDate
-import java.time.ZoneId
 import java.util.*
 
 
@@ -29,19 +24,15 @@ class LoginActivity : AppCompatActivity() {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_login)
 
-            val sharedPreference =  getSharedPreferences("TOKEN",Context.MODE_PRIVATE)
-            val editor = sharedPreference.edit()
-
-            val savedToken = sharedPreference.getString("TOKEN", null)
-            if(savedToken != null)
+            var token = getToken()
+            if(token != null)
             {
-                val jwt = JWT.decode(savedToken)
-                val tokenLocalDate: LocalDate = jwt.expiresAt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-                val currentDate = LocalDate.now()
-                if(tokenLocalDate > currentDate) {
+                if(checkTokenExpiration(token))
+                {
                     val intent = Intent(this@LoginActivity, ClientProductsActivity::class.java)
                     startActivity(intent)
                 }
+                else deleteToken()
             }
 
             val spinner = findViewById<Spinner>(R.id.spinnerChooseSide)
@@ -65,15 +56,12 @@ class LoginActivity : AppCompatActivity() {
                 loginModel.password = loginPassword
 
                 if (loginModel.email.isNotEmpty() && loginModel.password.isNotEmpty()) {
-                    var token: String
                     if (loginModel.userType == "CLIENTE") {
                         LoginRequests.postLogin(lifecycleScope, loginModel){
                             token = it
-                            if(token.isBlank()) { Toast.makeText(this,"Credênciais inválidas!", Toast.LENGTH_SHORT).show() }
-                            if(token.isNotEmpty() && token.isNotBlank()) {
-                                editor.putString("TOKEN", token)
-                                editor.apply()
-
+                            if(token!!.isBlank()) { Toast.makeText(this,"Credênciais inválidas!", Toast.LENGTH_SHORT).show() }
+                            if(token!!.isNotEmpty() && token!!.isNotBlank()) {
+                                postToken(token!!)
                                 val intent = Intent(this@LoginActivity, ClientProductsActivity::class.java)
                                 startActivity(intent)
                             }
@@ -82,11 +70,9 @@ class LoginActivity : AppCompatActivity() {
                     if (loginModel.userType == "COLABORADOR") {
                     LoginRequests.postLogin(lifecycleScope, loginModel){
                             token = it
-                            if(token.isBlank()) { Toast.makeText(this,"Credênciais inválidas!", Toast.LENGTH_SHORT).show() }
-                            if(token.isNotEmpty() && token.isNotBlank()) {
-                                editor.putString("TOKEN", token)
-                                editor.apply()
-
+                            if(token!!.isBlank()) { Toast.makeText(this,"Credênciais inválidas!", Toast.LENGTH_SHORT).show() }
+                            if(token!!.isNotEmpty() && token!!.isNotBlank()) {
+                                postToken(token!!)
                                 val intent = Intent(this@LoginActivity, StaffMainActivity::class.java)
                                 startActivity(intent)
                             }

@@ -1,11 +1,7 @@
-<<<<<<<< HEAD:Source/Frontend/SmartBar/app/src/main/java/com/ipca/smartbar/client/historic/Historic.kt
 package com.ipca.smartbar.client.historic
-========
-package com.ipca.smartbar.client.models
->>>>>>>> d5147a3ec1b0c1def51ff3793cc4974dda848258:Source/Frontend/SmartBar/app/src/main/java/com/ipca/smartbar/client/models/Historic.kt
 
 import java.time.LocalDateTime
-import java.util.*
+
 
 class Historic {
     //var idClient: String? = null

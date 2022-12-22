@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.ipca.smartbar.client.products.adapters.Adapter
 import com.ipca.smartbar.databinding.FragmentPackagedBinding
 
@@ -38,7 +39,7 @@ class PackagedFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        //viewModel.products.observe(viewLifecycleOwner, Observer(::bindValues))
+        viewModel.products.observe(viewLifecycleOwner, Observer(::bindValues))
     }
 
     private fun bindValues(pair: Pair<ArrayList<Product>,Boolean>) {
