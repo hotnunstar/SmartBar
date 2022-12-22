@@ -30,11 +30,8 @@ class LoadPageActivity : AppCompatActivity() {
             override fun onAnimationStart(p0: Animation?) {}
             override fun onAnimationRepeat(p0: Animation?) {}
             override fun onAnimationEnd(p0: Animation?) {
-<<<<<<< HEAD
-                val intent = Intent(this@LoadPageActivity, ClientCartActivity::class.java)
-=======
                 val intent = Intent(this@LoadPageActivity, ClientProductsActivity::class.java)
->>>>>>> 8028e1d3d1f53ac0be906c2a59809507833bc640
+
                 startActivity(intent)
             }
         })
