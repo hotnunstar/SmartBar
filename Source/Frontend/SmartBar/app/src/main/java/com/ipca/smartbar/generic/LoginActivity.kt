@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -13,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.auth0.jwt.JWT
 import com.ipca.smartbar.R
-import com.ipca.smartbar.client.ClientProductsActivity
+import com.ipca.smartbar.client.products.ClientProductsActivity
 import com.ipca.smartbar.staff.StaffMainActivity
 import java.time.LocalDate
 import java.time.ZoneId
@@ -88,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
                                 editor.putString("TOKEN", token)
                                 editor.apply()
 
-                                val intent = Intent(this@LoginActivity, ClientProductsActivity::class.java)
+                                val intent = Intent(this@LoginActivity, StaffMainActivity::class.java)
                                 startActivity(intent)
                             }
                         }
@@ -103,8 +102,4 @@ class LoginActivity : AppCompatActivity() {
             val buttonLogin = findViewById<Button>(R.id.buttonLogin)
             buttonLogin.setOnClickListener(onButtonLoginPressed)
         }
-
-        companion object {
-        const val TAG = "LoginActivity"
-    }
 }

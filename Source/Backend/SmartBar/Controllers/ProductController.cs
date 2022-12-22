@@ -24,6 +24,72 @@ namespace SmartBar.Controllers
             lista = await _productService.GetAsync();
             return lista;
         }
+ 
+        [HttpGet("hotfood")]
+        public async Task<List<ProductModel>> GetProductsHotFood()
+        {
+            List<ProductModel> lista;
+            List<ProductModel> aux = new List<ProductModel>();
+            lista = await _productService.GetAsync();
+            foreach (ProductModel product in lista)
+            {
+                if(product.Type ==1)
+                {
+                    aux.Add(product);
+                }
+            }
+            //Tipo de Produto -> hot food =1; Packaged = 2; hot drink =3; cold drink =4
+            return aux;
+        }
+        [HttpGet("packaged")]
+        public async Task<List<ProductModel>> GetProductsPackaged()
+        {
+            List<ProductModel> lista;
+            List<ProductModel> aux = new List<ProductModel>();
+            lista = await _productService.GetAsync();
+            foreach (ProductModel product in lista)
+            {
+                if (product.Type == 2)
+                {
+                    aux.Add(product);
+                }
+            }
+            //Tipo de Produto -> hot food =1; Packaged = 2; hot drink =3; cold drink =4
+            return aux;
+        }
+        [HttpGet("coldrink")]
+        public async Task<List<ProductModel>> GetProductsColdDrink()
+        {
+            List<ProductModel> lista;
+            List<ProductModel> aux = new List<ProductModel>();
+            lista = await _productService.GetAsync();
+            foreach (ProductModel product in lista)
+            {
+                if (product.Type == 4)
+                {
+                    aux.Add(product);
+                }
+            }
+            //Tipo de Produto -> hot food =1; Packaged = 2; hot drink =3; cold drink =4
+            return aux;
+        }
+
+        [HttpGet("hotdrink")]
+        public async Task<List<ProductModel>> GetProductsHotDrink()
+        {
+            List<ProductModel> lista;
+            List<ProductModel> aux = new List<ProductModel>();
+            lista = await _productService.GetAsync();
+            foreach (ProductModel product in lista)
+            {
+                if (product.Type == 3)
+                {
+                    aux.Add(product);
+                }
+            }
+            //Tipo de Produto -> hot food =1; Packaged = 2; hot drink =3; cold drink =4
+            return aux;
+        }
         [HttpPost]
         public async Task<IActionResult> PostProduct(ProductModel product)
         {
@@ -32,7 +98,7 @@ namespace SmartBar.Controllers
             ResponseModel badRequest = new()
             {
                 StatusCode = 400,
-                Message = "Parâmetros inválidos"
+                Message = "Invalid parameters"
 
             };
             ResponseModel response = new()
@@ -56,11 +122,11 @@ namespace SmartBar.Controllers
             aux = await _productService.GetAsyncByName(product.Name);
             if(aux!= null)
             {
-                badRequest.Message = "Já existe um produto igual";
+                badRequest.Message = "the product already exists";
                 return BadRequest(badRequest);
             }
             
-            //inserir
+            //insert
             await _productService.CreateAsync(product);
             return Ok(response);
 

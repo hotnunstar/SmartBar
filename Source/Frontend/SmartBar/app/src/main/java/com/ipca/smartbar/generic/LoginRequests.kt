@@ -8,6 +8,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Retrofit
 import com.fasterxml.jackson.module.kotlin.*
+import com.ipca.smartbar.Constants
+import com.ipca.smartbar.ApiServices
 import okhttp3.OkHttpClient
 
 object LoginRequests {
@@ -23,7 +25,7 @@ object LoginRequests {
                 .client(client)
                 .build()
 
-            val service = retrofit.create(LoginService::class.java)
+            val service = retrofit.create(ApiServices::class.java)
             val loginModelJson = loginModel.toJSON()
             val loginModelJsonString = loginModelJson.toString()
             val requestBody = loginModelJsonString.toRequestBody("application/json".toMediaTypeOrNull())

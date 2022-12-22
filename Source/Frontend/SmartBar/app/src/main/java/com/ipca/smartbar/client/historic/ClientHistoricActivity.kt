@@ -1,8 +1,7 @@
-package com.ipca.smartbar.client
+package com.ipca.smartbar.client.historic
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,8 +11,14 @@ import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.ipca.smartbar.R
+import com.ipca.smartbar.client.notifications.ClientNotificationsActivity
+import com.ipca.smartbar.client.products.ClientProductsActivity
+import com.ipca.smartbar.client.cart.ClientCartActivity
+import com.ipca.smartbar.client.profile.ClientProfileActivity
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ClientHistoricActivity : AppCompatActivity() {
 
@@ -26,7 +31,10 @@ class ClientHistoricActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_client_historic)
 
-        historic.add(Historic("100", LocalDateTime.now(), 10.0,1))
+        val stringDate = "18-07-2019 16:20"
+        val dateTime = LocalDateTime.parse(stringDate, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+
+        historic.add(Historic("100", dateTime, 10.00,1))
 
         val listViewHistoric = findViewById<ListView>(R.id.listViewHistoric)
         listViewHistoric.adapter = adapter
@@ -88,7 +96,7 @@ class ClientHistoricActivity : AppCompatActivity() {
 
         override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
             val rootView = layoutInflater.inflate(R.layout.row_historic, parent, false)
-            val textViewPedidoHist = rootView.findViewById<TextView>(R.id.textViewPedidoHist)
+            val textViewPedidoHist = rootView.findViewById<TextView>(R.id.textViewPedido)
             val textViewData = rootView.findViewById<TextView>(R.id.textViewData)
             val textViewTotalPrice = rootView.findViewById<TextView>(R.id.textViewTotalPrice)
 
@@ -96,7 +104,10 @@ class ClientHistoricActivity : AppCompatActivity() {
             textViewData.text = historic[position].data.toString()
             textViewTotalPrice.text = historic[position].valor.toString()
 
+            textViewData.text = (textViewData.text as String).replace('T', ' ')
+
             return rootView
         }
     }
 }
+

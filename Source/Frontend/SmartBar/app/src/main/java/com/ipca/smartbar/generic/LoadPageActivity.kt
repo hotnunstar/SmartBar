@@ -7,7 +7,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.ipca.smartbar.R
-import com.ipca.smartbar.client.ClientProductsActivity
+import com.ipca.smartbar.client.products.ClientProductsActivity
 
 
 class LoadPageActivity : AppCompatActivity() {
@@ -25,7 +25,7 @@ class LoadPageActivity : AppCompatActivity() {
             override fun onAnimationStart(p0: Animation?) {}
             override fun onAnimationRepeat(p0: Animation?) {}
             override fun onAnimationEnd(p0: Animation?) {
-                val intent = Intent(this@LoadPageActivity, LoginActivity::class.java)
+                val intent = Intent(this@LoadPageActivity, ClientProductsActivity::class.java)
                 startActivity(intent)
             }
         })
