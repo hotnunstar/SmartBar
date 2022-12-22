@@ -1,4 +1,4 @@
-package com.ipca.smartbar.client
+package com.ipca.smartbar.client.models
 
 import java.time.LocalDateTime
 import java.util.*

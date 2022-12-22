@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.ipca.smartbar.R
+import com.ipca.smartbar.client.models.Historic
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -92,13 +93,15 @@ class ClientHistoricActivity : AppCompatActivity() {
 
         override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
             val rootView = layoutInflater.inflate(R.layout.row_historic, parent, false)
-            val textViewPedidoHist = rootView.findViewById<TextView>(R.id.textViewPedidoHist)
+            val textViewPedidoHist = rootView.findViewById<TextView>(R.id.textViewPedido)
             val textViewData = rootView.findViewById<TextView>(R.id.textViewData)
             val textViewTotalPrice = rootView.findViewById<TextView>(R.id.textViewTotalPrice)
 
             textViewPedidoHist.text = historic[position].idPedido
             textViewData.text = historic[position].data.toString()
             textViewTotalPrice.text = historic[position].valor.toString()
+
+            textViewData.text = (textViewData.text as String).replace('T', ' ')
 
             return rootView
         }
