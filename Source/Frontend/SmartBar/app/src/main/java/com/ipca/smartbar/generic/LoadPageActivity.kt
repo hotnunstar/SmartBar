@@ -7,8 +7,12 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.ipca.smartbar.R
+<<<<<<< HEAD
 import com.ipca.smartbar.client.ClientCartActivity
 import com.ipca.smartbar.client.ClientProductsActivity
+=======
+import com.ipca.smartbar.client.products.ClientProductsActivity
+>>>>>>> 8028e1d3d1f53ac0be906c2a59809507833bc640
 
 
 class LoadPageActivity : AppCompatActivity() {
@@ -26,7 +30,11 @@ class LoadPageActivity : AppCompatActivity() {
             override fun onAnimationStart(p0: Animation?) {}
             override fun onAnimationRepeat(p0: Animation?) {}
             override fun onAnimationEnd(p0: Animation?) {
+<<<<<<< HEAD
                 val intent = Intent(this@LoadPageActivity, ClientCartActivity::class.java)
+=======
+                val intent = Intent(this@LoadPageActivity, ClientProductsActivity::class.java)
+>>>>>>> 8028e1d3d1f53ac0be906c2a59809507833bc640
                 startActivity(intent)
             }
         })

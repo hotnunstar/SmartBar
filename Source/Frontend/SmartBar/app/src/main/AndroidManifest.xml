@@ -16,35 +16,35 @@
         android:theme="@style/Theme.SmartBar"
         tools:targetApi="31">
         <activity
-            android:name=".client.ClientNotificationsActivity"
+            android:name=".client.notifications.ClientNotificationsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".client.ClientHistoricActivity"
+            android:name=".client.historic.ClientHistoricActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".client.ClientCartActivity"
+            android:name=".client.cart.ClientCartActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".client.ClientProfileActivity"
+            android:name=".client.profile.ClientProfileActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".client.ClientProductsActivity"
+            android:name=".client.products.ClientProductsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

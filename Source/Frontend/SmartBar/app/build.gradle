@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id("kotlin-kapt")
 }
 
 android {
@@ -41,21 +43,32 @@ dependencies {
     implementation 'com.google.guava:guava:27.0.1-android'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation('androidx.lifecycle:lifecycle-runtime-ktx:2.5.1')
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    implementation "androidx.fragment:fragment-ktx:1.5.5"
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
+    // Fetch Data
+    implementation("com.squareup.moshi:moshi:1.13.0")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+
     // Coroutines to make the HTTP requests asynchronous(In the background thread)
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
 
     // Retrofit (Requests)
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 
     // Okhttp3 for the POST requests
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
 
     // Gson (To convert raw JSON to pretty JSON)
-    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.google.code.gson:gson:2.9.1'
 
     // Convert JSON to DataClass
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.1'

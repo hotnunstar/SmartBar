@@ -1,11 +1,11 @@
-package com.ipca.smartbar.client.adapters
+package com.ipca.smartbar.client.products.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import com.ipca.smartbar.client.models.Product
+import com.ipca.smartbar.client.products.Product
 import com.ipca.smartbar.databinding.RowProductsBinding
 
 class Adapter(val context: Context, val products: ArrayList<Product>) : BaseAdapter() {

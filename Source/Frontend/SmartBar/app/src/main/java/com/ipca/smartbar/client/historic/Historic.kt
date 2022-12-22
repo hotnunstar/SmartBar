@@ -1,7 +1,9 @@
-package com.ipca.smartbar.client.models
+package com.ipca.smartbar.client.historic
+
+
 
 import java.time.LocalDateTime
-import java.util.*
+
 
 class Historic {
     //var idClient: String? = null

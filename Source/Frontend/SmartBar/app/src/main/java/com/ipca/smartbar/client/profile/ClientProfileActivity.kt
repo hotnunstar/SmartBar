@@ -1,16 +1,29 @@
-package com.ipca.smartbar.client
+package com.ipca.smartbar.client.profile
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import com.ipca.smartbar.R
+import com.ipca.smartbar.client.cart.ClientCartActivity
+import com.ipca.smartbar.client.historic.ClientHistoricActivity
+import com.ipca.smartbar.client.notifications.ClientNotificationsActivity
+import com.ipca.smartbar.client.products.ClientProductsActivity
+import com.ipca.smartbar.generic.LoginActivity
 
-class ClientMainActivity : AppCompatActivity() {
+class ClientProfileActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_client_main)
+        setContentView(R.layout.activity_client_profile)
+
+        val buttonTS = findViewById(R.id.buttonTerminarSessao) as Button
+        buttonTS.setOnClickListener {
+            val intent = Intent(this@ClientProfileActivity, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -22,27 +35,27 @@ class ClientMainActivity : AppCompatActivity() {
         super.onOptionsItemSelected(item)
         return when(item.itemId) {
             R.id.action_profile_client -> {
-                val intent = Intent(this@ClientMainActivity, ClientProfileActivity::class.java)
+                val intent = Intent(this@ClientProfileActivity, ClientProfileActivity::class.java)
                 startActivity(intent)
                 true
             }
             R.id.action_products_client -> {
-                val intent = Intent(this@ClientMainActivity, ClientProductsActivity::class.java)
+                val intent = Intent(this@ClientProfileActivity, ClientProductsActivity::class.java)
                 startActivity(intent)
                 true
             }
             R.id.action_cart_client -> {
-                val intent = Intent(this@ClientMainActivity, ClientCartActivity::class.java)
+                val intent = Intent(this@ClientProfileActivity, ClientCartActivity::class.java)
                 startActivity(intent)
                 true
             }
             R.id.action_historic_client -> {
-                val intent = Intent(this@ClientMainActivity, ClientHistoricActivity::class.java)
+                val intent = Intent(this@ClientProfileActivity, ClientHistoricActivity::class.java)
                 startActivity(intent)
                 true
             }
             R.id.action_notifications_client -> {
-                val intent = Intent(this@ClientMainActivity, ClientNotificationsActivity::class.java)
+                val intent = Intent(this@ClientProfileActivity, ClientNotificationsActivity::class.java)
                 startActivity(intent)
                 true
             }
@@ -52,5 +65,5 @@ class ClientMainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-}
 
+}

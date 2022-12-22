@@ -4,22 +4,22 @@
 
     <item
         android:id="@+id/action_product_hot_food"
-        android:icon="@drawable/ic_baseline_person_24"
+        android:icon="@drawable/hot_food"
         android:title="Hot food"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_products_packaged"
-        android:icon="@drawable/ic_baseline_restaurant_24"
+        android:icon="@drawable/_26338"
         android:title="Packaged"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_products_cold_drink"
-        android:icon="@drawable/ic_baseline_shopping_cart_24"
+        android:icon="@drawable/cold_drink"
         android:title="cold_drink"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_products_hot_drink"
-        android:icon="@drawable/ic_baseline_access_time_24"
+        android:icon="@drawable/hot_drink"
         android:title="Hot drink"
         app:showAsAction="always" />
 

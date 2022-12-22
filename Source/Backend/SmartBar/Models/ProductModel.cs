@@ -24,6 +24,7 @@ namespace SmartBar.Models
        // byte[] picture;
         decimal price;
         int stock;
+        int type;
 
         /// <summary>
         /// Construtor vazio de um produto
@@ -38,15 +39,16 @@ namespace SmartBar.Models
         /// <param name="Picture"></param>
         /// <param name="Price"></param>
         /// <param name="Stock"></param>
-        public ProductModel(string Id, string Name, /*byte[] Picture*/ decimal Price, int Stock)
+        public ProductModel(string Id, string Name, /*byte[] Picture*/ decimal Price, int Stock, int type)
         {
             id = Id;
             name = Name;
             //picture = Picture;
             price = Price;
             stock = Stock;
+            this.type = type;
         }
-        
+
 
         /// <summary>
         /// ID do produto
@@ -72,5 +74,10 @@ namespace SmartBar.Models
         /// Stock do produto
         /// </summary>
         public int Stock { get { return stock; } set { stock = value; } }
+
+        /// <summary>
+        /// Tipo de Produto -> hot food =1; Packaged = 2; hot drink =3; cold drink =4
+        /// </summary>
+        public int Type { get { return type; } set { type = value; } }
     }
 }

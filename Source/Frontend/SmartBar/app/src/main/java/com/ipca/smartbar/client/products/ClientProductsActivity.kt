@@ -1,4 +1,4 @@
-package com.ipca.smartbar.client
+package com.ipca.smartbar.client.products
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.ipca.smartbar.R
+import com.ipca.smartbar.client.historic.ClientHistoricActivity
+import com.ipca.smartbar.client.notifications.ClientNotificationsActivity
+import com.ipca.smartbar.client.profile.ClientProfileActivity
 import com.ipca.smartbar.databinding.ActivityClientMainBinding
 
 class ClientProductsActivity : AppCompatActivity() {

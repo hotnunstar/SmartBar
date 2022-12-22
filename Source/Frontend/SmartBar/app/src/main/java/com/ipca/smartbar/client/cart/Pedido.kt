@@ -1,4 +1,4 @@
-package com.ipca.smartbar.client.models
+package com.ipca.smartbar.client.cart
 
 import java.time.LocalDateTime
 

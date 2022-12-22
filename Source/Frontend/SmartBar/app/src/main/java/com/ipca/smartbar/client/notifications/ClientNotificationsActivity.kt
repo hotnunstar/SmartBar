@@ -1,4 +1,4 @@
-package com.ipca.smartbar.client
+package com.ipca.smartbar.client.notifications
 
 import android.content.Intent
 import android.os.Build
@@ -13,9 +13,11 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.ipca.smartbar.R
-import com.ipca.smartbar.client.models.Notification
+import com.ipca.smartbar.client.products.ClientProductsActivity
+import com.ipca.smartbar.client.cart.ClientCartActivity
+import com.ipca.smartbar.client.historic.ClientHistoricActivity
+import com.ipca.smartbar.client.profile.ClientProfileActivity
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class ClientNotificationsActivity : AppCompatActivity() {
 
