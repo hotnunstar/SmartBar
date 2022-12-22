@@ -1,5 +1,6 @@
 package com.ipca.smartbar.client.cart
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,7 @@ class ClientCartActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private val pedido = Pedido("10", "10", LocalDateTime.now(), 10.00, "")
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_client_cart)
