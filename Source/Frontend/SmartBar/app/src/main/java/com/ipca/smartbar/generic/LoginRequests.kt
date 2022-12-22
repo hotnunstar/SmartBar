@@ -1,42 +1,47 @@
 package com.ipca.smartbar.generic
 
-import android.util.Log
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.fasterxml.jackson.module.kotlin.*
+import okhttp3.OkHttpClient
 
 object LoginRequests {
-    private val client = OkHttpClient.Builder().build()
-    private const val baseurl = "https://192.168.1.74:7097"
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(baseurl)
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(client)
-        .build()
+    private val client = OkHttpClient()
 
-    fun<T> loginRequest(service: Class<T>): T{
-        return retrofit.create(service)
-    }
+    fun postLogin(scope: CoroutineScope,
+                  loginModel: LoginModel,
+                  callback: (String)->Unit) {
+        scope.launch (Dispatchers.IO) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(Constants.baseurl)
+                .client(client)
+                .build()
 
-    /*fun loginRequest(loginModel: LoginModel) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val data = loginModel.toJSON()
-            val call = getRetrofit().create(LoginService::class.java).postLogin(loginModel)
-            Log.d("CALL", call.toString())
-            //val token = call.body()
+            val service = retrofit.create(LoginService::class.java)
+            val loginModelJson = loginModel.toJSON()
+            val loginModelJsonString = loginModelJson.toString()
+            val requestBody = loginModelJsonString.toRequestBody("application/json".toMediaTypeOrNull())
+            val response = service.postLogin(requestBody)
 
-            //Log.d("TOKEN", token.toString())
+            scope.launch (Dispatchers.Main){
+                if (response.isSuccessful) {
+                    val jsonString = response.body()?.string()
+                    val mapper = jacksonObjectMapper()
+
+                    if (jsonString != null) {
+                        val responseObject = mapper.readValue<LoginResponse>(jsonString)
+                        if (responseObject.token.isNotEmpty()) { callback(responseObject.token) }
+                        else callback("")
+                    }
+                }
+                else callback("")
+            }
         }
     }
-
-    private fun getRetrofit():Retrofit{
-        return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://localhost:7097")
-            .build()
-    }*/
 }

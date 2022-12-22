@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Bson.IO;
+using Newtonsoft.Json.Linq;
 using SmartBar.Models;
 using SmartBar.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json.Nodes;
 
 namespace SmartBar.Controllers
 {
@@ -40,10 +43,11 @@ namespace SmartBar.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel login)
         {
-            ResponseModel response = new()
+            TokenResponseModel response = new()
             {
                 StatusCode = 401,
-                Message = "Credênciais inválidas!"
+                Message = "Credênciais inválidas!",
+                Token = ""
             };
 
             if(login.Email != string.Empty && login.Password != string.Empty && login.UserType != string.Empty)
@@ -54,8 +58,11 @@ namespace SmartBar.Controllers
                     var userData = await userController.GetUser(login.Email, login.Password);
                     if (userData != null)
                     {
-                        string jwtToken = GenerateToken(userData.Id);
-                        return Ok(jwtToken);
+                        response.Token = GenerateToken(userData.Id, "CLIENTE");
+                        response.StatusCode = 200;
+                        response.Message = "Token gerado com sucesso";
+
+                        return Ok(response);
                     }
                     else return NotFound(response);
                 }
@@ -65,8 +72,10 @@ namespace SmartBar.Controllers
                     var userData = await colaboratorController.GetColaborator(login.Email, login.Password);
                     if (userData != null)
                     {
-                        string jwtToken = GenerateToken(userData.Id);
-                        return Ok(jwtToken);
+                        response.Token = GenerateToken(userData.Id, "COLABORADOR");
+                        response.StatusCode = 200;
+                        response.Message = "Token gerado com sucesso";
+                        return Ok(response);
                     }
                     else return NotFound(response);
                 }
@@ -75,9 +84,9 @@ namespace SmartBar.Controllers
             return NotFound(response);
         }
 
-        private string GenerateToken(string id)
+        private string GenerateToken(string id, string userType)
         {
-            var claims = new[] { new Claim("Id", id) };
+            var claims = new[] { new Claim("id", id), new Claim("userType", userType) };
             var issuer = _config["Jwt:Issuer"];
             var audience = _config["Jwt:Audience"];
             var expiry = DateTime.Now.AddMonths(3); // Atribui uma validade de 3 meses ao token

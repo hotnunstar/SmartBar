@@ -186,7 +186,7 @@
             Construtor vazio de um produto
             </summary>
         </member>
-        <member name="M:SmartBar.Models.ProductModel.#ctor(System.String,System.String,System.Decimal,System.Int32,System.Int32)">
+        <member name="M:SmartBar.Models.ProductModel.#ctor(System.String,System.String,System.Decimal,System.Int32)">
             <summary>
             Construtor default de um produto
             </summary>
@@ -214,11 +214,6 @@
         <member name="P:SmartBar.Models.ProductModel.Stock">
             <summary>
             Stock do produto
-            </summary>
-        </member>
-        <member name="P:SmartBar.Models.ProductModel.Type">
-            <summary>
-            Tipo de Produto -> hot food =1; Packaged = 2; hot drink =3; cold drink =4
             </summary>
         </member>
         <member name="T:SmartBar.Models.ResponseModel">
@@ -291,6 +286,38 @@
         <member name="P:SmartBar.Models.SmartBarDatabaseSettingsModel.UserCollectionName">
             <summary>
             Coleção de utilizadores
+            </summary>
+        </member>
+        <member name="T:SmartBar.Models.TokenResponseModel">
+            <summary>
+            Modelo para resposta de um token de autenticação
+            </summary>
+        </member>
+        <member name="M:SmartBar.Models.TokenResponseModel.#ctor">
+            <summary>
+            Construtor vazio da resposta
+            </summary>
+        </member>
+        <member name="M:SmartBar.Models.TokenResponseModel.#ctor(System.Int32,System.String,System.String)">
+            <summary>
+            Construtor default da resposta
+            </summary>
+            <param name="StatusCode"></param>
+            <param name="Message"></param>
+        </member>
+        <member name="P:SmartBar.Models.TokenResponseModel.StatusCode">
+            <summary>
+            Status code da resposta
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.TokenResponseModel.Message">
+            <summary>
+            Mensagem da resposta
+            </summary>
+        </member>
+        <member name="P:SmartBar.Models.TokenResponseModel.Token">
+            <summary>
+            Token de autenticação
             </summary>
         </member>
         <member name="T:SmartBar.Models.UserModel">
