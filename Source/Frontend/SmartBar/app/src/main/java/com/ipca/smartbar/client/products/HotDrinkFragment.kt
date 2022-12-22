@@ -15,7 +15,7 @@ import com.ipca.smartbar.databinding.FragmentHotDrinkBinding
 class HotDrinkFragment : Fragment() {
     private lateinit var binding : FragmentHotDrinkBinding
     private lateinit var adapter: Adapter
-    private val viewModel : ViewModelHotDrink by viewModels()
+    private val viewModel : ViewModelProducts by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +33,7 @@ class HotDrinkFragment : Fragment() {
         products.add(Product("lanche","image",12.0))
         products.add(Product("lanche","image",12.0))*/
 
-        viewModel.getProducts()
+        viewModel.getProductsHotDrink()
         setupObservers()
 
 

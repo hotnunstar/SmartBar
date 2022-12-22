@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.ipca.smartbar.client.products.Product
+import com.ipca.smartbar.client.products.ViewModelProducts
 import com.ipca.smartbar.databinding.RowProductsBinding
 
 class Adapter(val context: Context, val products: ArrayList<Product>) : BaseAdapter() {
 
 private lateinit var binding: RowProductsBinding
+private val viewModel = ViewModelProducts()
     override fun getCount(): Int {
         return products.size
     }
@@ -27,6 +29,9 @@ private lateinit var binding: RowProductsBinding
         binding = RowProductsBinding.inflate(LayoutInflater.from(context),p2,false)
         binding.tvNomeProduct.text = products[p0].nome.toString()
         binding.tvPreco.text = products[p0].preco.toString()
+        binding.btAddProduct.setOnClickListener(){
+            viewModel.addProductInList(products[p0])
+        }
         return binding.root
     }
 }

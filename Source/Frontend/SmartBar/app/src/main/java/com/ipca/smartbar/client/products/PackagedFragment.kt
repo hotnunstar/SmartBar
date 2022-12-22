@@ -14,7 +14,7 @@ import com.ipca.smartbar.databinding.FragmentPackagedBinding
 class PackagedFragment : Fragment() {
     private lateinit var binding: FragmentPackagedBinding
     private lateinit var adapter: Adapter
-    private val viewModel: ViewModelPackaged by viewModels()
+    private val viewModel: ViewModelProducts by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +27,7 @@ class PackagedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getProducts()
+        viewModel.getProductsPackaged()
         setupObservers()
     }
 

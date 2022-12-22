@@ -6,13 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.ipca.smartbar.client.products.adapters.Adapter
 import com.ipca.smartbar.databinding.FragmentHotFoodBinding
 
 class HotFoodFragment : Fragment() {
     private lateinit var binding : FragmentHotFoodBinding
-    private val viewModel = ViewModelHotFood()
+    private val viewModel : ViewModelProducts by viewModels()
     private lateinit var adapter: Adapter
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,7 +26,7 @@ class HotFoodFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getProducts()
+        viewModel.getProductsHotFood()
         SetupObserver()
     }
     private fun loadList(products: ArrayList<Product>) {

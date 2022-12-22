@@ -21,7 +21,6 @@ interface ApiServices {
 
     @GET("/api/Product/hotfood")
     suspend fun getProductsHotFood(): Response<List<Product>>
-
     @Headers("Content-Type: application/json")
     @POST("/api/Auth")
     suspend fun postLogin(@Body requestBody: RequestBody): Response<ResponseBody>

@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.ipca.smartbar.client.products.adapters.Adapter
 import com.ipca.smartbar.databinding.FragmentColdDrinkBinding
 
 class ColdDrinkFragment : Fragment() {
     private lateinit var binding : FragmentColdDrinkBinding
-    private val viewModel = ViewModelColdDrink()
+    private val viewModel : ViewModelProducts by viewModels()
     private lateinit var adapter : Adapter
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +27,7 @@ class ColdDrinkFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getProducts()
+        viewModel.getProductsColdDrink()
         SetupObserver()
 
     }
