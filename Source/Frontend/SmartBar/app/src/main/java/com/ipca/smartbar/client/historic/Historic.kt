@@ -1,7 +1,5 @@
 package com.ipca.smartbar.client.historic
 
-
-
 import java.time.LocalDateTime
 
 
