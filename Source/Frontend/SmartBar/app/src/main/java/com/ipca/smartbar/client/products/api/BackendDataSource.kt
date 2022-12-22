@@ -17,4 +17,12 @@ class BackendDataSource {
     {
         return apiServices.getProductsPackaged()
     }
+    suspend fun getProductsHotDrink() : Response<List<Product>>
+    {
+        return apiServices.getProductsHotDrink()
+    }
+    suspend fun getProductsColdDrink() : Response<List<Product>>
+    {
+        return apiServices.getProductsColdDrink()
+    }
 }

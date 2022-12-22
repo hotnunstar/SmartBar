@@ -35,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
             val savedToken = sharedPreference.getString("TOKEN", null)
             if(savedToken != null)
             {
+                editor.clear()
                 val jwt = JWT.decode(savedToken)
                 val tokenLocalDate: LocalDate = jwt.expiresAt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
                 val currentDate = LocalDate.now()

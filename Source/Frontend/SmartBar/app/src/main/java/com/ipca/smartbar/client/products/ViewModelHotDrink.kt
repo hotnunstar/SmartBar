@@ -14,7 +14,7 @@ class ViewModelHotDrink : ViewModel() {
     {
         viewModelScope.launch(Dispatchers.IO)
         {
-            products.postValue(Repository.getProductsHotFood())
+            products.postValue(Repository.getProductsHotDrink())
         }
     }
 
