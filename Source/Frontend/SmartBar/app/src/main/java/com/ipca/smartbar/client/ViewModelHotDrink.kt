@@ -3,8 +3,8 @@ package com.ipca.smartbar.client
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ipca.smartbar.client.api.Repository
-import com.ipca.smartbar.client.models.Product
+import com.ipca.smartbar.client.products.api.Repository
+import com.ipca.smartbar.client.products.Product
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
