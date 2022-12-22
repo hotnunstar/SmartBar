@@ -25,7 +25,7 @@ class LoadPageActivity : AppCompatActivity() {
             override fun onAnimationStart(p0: Animation?) {}
             override fun onAnimationRepeat(p0: Animation?) {}
             override fun onAnimationEnd(p0: Animation?) {
-                val intent = Intent(this@LoadPageActivity, LoginActivity::class.java)
+                val intent = Intent(this@LoadPageActivity, ClientProductsActivity::class.java)
                 startActivity(intent)
             }
         })
