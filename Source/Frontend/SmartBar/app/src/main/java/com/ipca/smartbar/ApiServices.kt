@@ -10,11 +10,17 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface ApiServices {
-    @GET("/api/Product/hotfood")
-    suspend fun getProductsHotFood(): Response<List<Product>>
+    @GET("/api/Product/hotdrink")
+    suspend fun getProductsHotDrink(): Response<List<Product>>
 
     @GET("/api/Product/packaged")
     suspend fun getProductsPackaged(): Response<List<Product>>
+
+    @GET("/api/Product/coldrink")
+    suspend fun getProductsColdDrink(): Response<List<Product>>
+
+    @GET("/api/Product/hotfood")
+    suspend fun getProductsHotFood(): Response<List<Product>>
 
     @Headers("Content-Type: application/json")
     @POST("/api/Auth")

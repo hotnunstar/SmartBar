@@ -12,6 +12,7 @@ builder.Services.Configure<SmartBarDatabaseSettingsModel>(builder.Configuration.
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<ColaboratorService>();
 builder.Services.AddSingleton<ProductService>();
+builder.Services.AddSingleton<RequestService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
