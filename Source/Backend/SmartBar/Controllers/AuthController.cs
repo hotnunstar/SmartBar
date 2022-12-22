@@ -58,7 +58,7 @@ namespace SmartBar.Controllers
                     var userData = await userController.GetUser(login.Email, login.Password);
                     if (userData != null)
                     {
-                        response.Token = GenerateToken(userData.Id);
+                        response.Token = GenerateToken(userData.Id, "CLIENTE");
                         response.StatusCode = 200;
                         response.Message = "Token gerado com sucesso";
 
@@ -72,7 +72,7 @@ namespace SmartBar.Controllers
                     var userData = await colaboratorController.GetColaborator(login.Email, login.Password);
                     if (userData != null)
                     {
-                        response.Token = GenerateToken(userData.Id);
+                        response.Token = GenerateToken(userData.Id, "COLABORADOR");
                         response.StatusCode = 200;
                         response.Message = "Token gerado com sucesso";
                         return Ok(response);
@@ -84,9 +84,9 @@ namespace SmartBar.Controllers
             return NotFound(response);
         }
 
-        private string GenerateToken(string id)
+        private string GenerateToken(string id, string userType)
         {
-            var claims = new[] { new Claim("Id", id) };
+            var claims = new[] { new Claim("id", id), new Claim("userType", userType) };
             var issuer = _config["Jwt:Issuer"];
             var audience = _config["Jwt:Audience"];
             var expiry = DateTime.Now.AddMonths(3); // Atribui uma validade de 3 meses ao token
