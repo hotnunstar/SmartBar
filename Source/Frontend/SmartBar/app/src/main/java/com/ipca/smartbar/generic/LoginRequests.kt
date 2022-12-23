@@ -1,5 +1,6 @@
 package com.ipca.smartbar.generic
 
+import android.util.Log
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,11 +35,9 @@ object LoginRequests {
             scope.launch (Dispatchers.Main){
                 if (response.isSuccessful) {
                     val jsonString = response.body()?.string()
-                    val mapper = jacksonObjectMapper()
 
                     if (jsonString != null) {
-                        val responseObject = mapper.readValue<LoginResponse>(jsonString)
-                        if (responseObject.token.isNotEmpty()) { callback(responseObject.token) }
+                        if (jsonString.isNotEmpty()) { callback(jsonString) }
                         else callback("")
                     }
                 }

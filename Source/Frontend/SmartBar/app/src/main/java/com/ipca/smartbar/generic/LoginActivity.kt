@@ -13,7 +13,6 @@ import com.ipca.smartbar.client.products.ClientProductsActivity
 import com.ipca.smartbar.staff.StaffMainActivity
 import java.util.*
 
-
 class LoginActivity : AppCompatActivity() {
 
     private val spinnerOptions = arrayOf("CLIENTE", "COLABORADOR")

@@ -31,12 +31,20 @@ namespace SmartBar.Services
             await _userCollection.Find(_ => true).ToListAsync();
 
         /// <summary>
-        /// Obter determinado cliente
+        /// Obter determinado cliente através do email
         /// </summary>
         /// <param name="email"></param>
         /// <returns>O cliente, se existir</returns>
-        public async Task<UserModel?> GetAsync(string email) =>
+        public async Task<UserModel?> GetAsyncByEmail(string email) =>
         await _userCollection.Find(x => x.Email == email).FirstOrDefaultAsync();
+
+        /// <summary>
+        /// Obter determinado cliente através do id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<UserModel?> GetAsyncById(string id) =>
+        await _userCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
         /// <summary>
         /// Criar um novo cliente
