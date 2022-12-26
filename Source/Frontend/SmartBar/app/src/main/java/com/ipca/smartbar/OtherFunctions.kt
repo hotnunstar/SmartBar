@@ -10,7 +10,7 @@ import java.time.ZoneId
 fun Context.postToken(token: String){
     val sharedPreference =  getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
     val editor = sharedPreference.edit()
-    editor.putString("TOKEN", token)
+    editor.putString("TOKEN", "Bearer $token")
     editor.apply()
 }
 
@@ -20,7 +20,8 @@ fun Context.getToken(): String? {
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun checkTokenExpiration(token: String): Boolean{
+fun checkTokenExpiration(auth: String): Boolean{
+    val token: String = auth.substringAfterLast(" ")
     val jwt = JWT.decode(token)
     val tokenLocalDate: LocalDate = jwt.expiresAt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
     val currentDate = LocalDate.now()

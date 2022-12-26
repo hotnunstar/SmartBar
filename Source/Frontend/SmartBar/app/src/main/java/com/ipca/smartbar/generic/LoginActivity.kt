@@ -34,6 +34,8 @@ class LoginActivity : AppCompatActivity() {
                 else deleteToken()
             }
 
+            val viewProgressBarLogin = findViewById<View>(R.id.viewProgressBarLogin)
+            val progressBarLogin = findViewById<ProgressBar>(R.id.progressBarLogin)
             val spinner = findViewById<Spinner>(R.id.spinnerChooseSide)
             val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, spinnerOptions)
             spinner.adapter = arrayAdapter
@@ -49,6 +51,8 @@ class LoginActivity : AppCompatActivity() {
             }
 
             val onButtonLoginPressed: ((View)->Unit)= {
+                viewProgressBarLogin.visibility = View.VISIBLE
+                progressBarLogin.visibility = View.VISIBLE
                 val loginPassword = findViewById<EditText>(R.id.editTextLoginPassword).text.toString()
                 val loginEmail = findViewById<EditText>(R.id.editTextLoginEmail).text.toString()
                 loginModel.email = loginEmail
@@ -58,7 +62,11 @@ class LoginActivity : AppCompatActivity() {
                     if (loginModel.userType == "CLIENTE") {
                         LoginRequests.postLogin(lifecycleScope, loginModel){
                             token = it
-                            if(token!!.isBlank()) { Toast.makeText(this,"Credênciais inválidas!", Toast.LENGTH_SHORT).show() }
+                            if(token!!.isBlank()) {
+                                viewProgressBarLogin.visibility = View.GONE
+                                progressBarLogin.visibility = View.GONE
+                                Toast.makeText(this,"Credênciais inválidas!", Toast.LENGTH_SHORT).show()
+                            }
                             if(token!!.isNotEmpty() && token!!.isNotBlank()) {
                                 postToken(token!!)
                                 val intent = Intent(this@LoginActivity, ClientProductsActivity::class.java)
@@ -69,7 +77,11 @@ class LoginActivity : AppCompatActivity() {
                     if (loginModel.userType == "COLABORADOR") {
                     LoginRequests.postLogin(lifecycleScope, loginModel){
                             token = it
-                            if(token!!.isBlank()) { Toast.makeText(this,"Credênciais inválidas!", Toast.LENGTH_SHORT).show() }
+                            if(token!!.isBlank()) {
+                                viewProgressBarLogin.visibility = View.GONE
+                                progressBarLogin.visibility = View.GONE
+                                Toast.makeText(this,"Credênciais inválidas!", Toast.LENGTH_SHORT).show()
+                            }
                             if(token!!.isNotEmpty() && token!!.isNotBlank()) {
                                 postToken(token!!)
                                 val intent = Intent(this@LoginActivity, StaffMainActivity::class.java)
@@ -81,6 +93,8 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
                 else {
+                    viewProgressBarLogin.visibility = View.GONE
+                    progressBarLogin.visibility = View.GONE
                     Toast.makeText(this, "Deve inserir email e password!", Toast.LENGTH_LONG).show()
                 }
             }

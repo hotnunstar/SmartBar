@@ -6,6 +6,7 @@ import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -25,4 +26,7 @@ interface ApiServices {
     @Headers("Content-Type: application/json")
     @POST("/api/Auth")
     suspend fun postLogin(@Body requestBody: RequestBody): Response<ResponseBody>
+
+    @GET("/api/User/GetUserById")
+    suspend fun getProfile(@Header("Authorization") token: String?): Response<ResponseBody>
 }
