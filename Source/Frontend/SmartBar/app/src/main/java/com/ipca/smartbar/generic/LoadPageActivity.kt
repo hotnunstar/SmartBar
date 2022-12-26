@@ -16,7 +16,6 @@ class LoadPageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_load_page)
 
-
         val logoIPCA = findViewById<ImageView>(R.id.imageViewLogoIPCA)
         val animScaleIn = AnimationUtils.loadAnimation(this, R.anim.scale_in)
         logoIPCA.startAnimation(animScaleIn)

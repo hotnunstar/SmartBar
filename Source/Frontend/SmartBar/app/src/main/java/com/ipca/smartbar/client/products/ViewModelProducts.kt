@@ -47,9 +47,6 @@ class ViewModelProducts : ViewModel(){
         val intent = Intent()
         bundle.putSerializable(EXTRA_PRODUCT,product)
         intent.putExtras(bundle)
-
-
-
     }
     companion object{
        const val EXTRA_PRODUCT = "extra_product"
