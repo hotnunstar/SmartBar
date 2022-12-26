@@ -4,35 +4,35 @@ using MongoDB.Bson;
 namespace SmartBar.Models
 {
     /// <summary>
-    /// Modelo do colaborador
+    /// Modelo do bar
     /// </summary>
-    public class ColaboratorModel
+    public class BarModel
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         string id;
         string email;
         string password;
-        string name;
+        string description;
 
         /// <summary>
-        /// Construtor do colaborador vazio
+        /// Construtor do bar vazio
         /// </summary>
-        public ColaboratorModel() { }
+        public BarModel() { }
 
         /// <summary>
-        /// Construtor do colaborador default
+        /// Construtor do bar default
         /// </summary>
         /// <param name="Id"></param>
         /// <param name="Email"></param>
         /// <param name="Password"></param>
-        /// <param name="Name"></param>
-        public ColaboratorModel(string Id, string Email, string Password, string Name)
+        /// <param name="Description"></param>
+        public BarModel(string Id, string Email, string Password, string Description)
         {
             this.id = Id;
             this.email = Email;
             this.password = Password;
-            this.name = Name;
+            this.description = Description;
         }
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace SmartBar.Models
         public string Password { get { return password; } set { password = value; } }
 
         /// <summary>
-        /// Nome de apresentação do bar
+        /// Descrição do bar
         /// </summary>
-        public string Name { get { return name; } set { name = value; } }
+        public string Description { get { return description; } set { description = value; } }
     }
 }

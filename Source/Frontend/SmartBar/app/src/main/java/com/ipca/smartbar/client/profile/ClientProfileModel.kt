@@ -2,7 +2,7 @@ package com.ipca.smartbar.client.profile
 
 import org.json.JSONObject
 
-class ProfileModel {
+class ClientProfileModel {
 
     var balance : Double = 0.0
     var name    : String = ""
@@ -14,22 +14,21 @@ class ProfileModel {
         this.email = email
     }
 
-
     fun toJSON() : JSONObject {
         val jsonObject = JSONObject()
-        jsonObject.put("balance", balance )
-        jsonObject.put("name"   , name    )
-        jsonObject.put("email"  , email   )
+        jsonObject.put("balance", balance)
+        jsonObject.put("name"   , name   )
+        jsonObject.put("email"  , email  )
         return jsonObject
     }
 
     companion object
     {
-        fun fromJSON(jsonObject: JSONObject) : ProfileModel {
-            return ProfileModel(
-                jsonObject.getDouble("balance" ),
-                jsonObject.getString("name"    ),
-                jsonObject.getString("email"   )
+        fun fromJSON(jsonObject: JSONObject) : ClientProfileModel {
+            return ClientProfileModel(
+                jsonObject.getDouble("balance"),
+                jsonObject.getString("name"   ),
+                jsonObject.getString("email"  )
             )
         }
     }

@@ -20,19 +20,19 @@ namespace SmartBar.Controllers
     {
         private readonly IConfiguration _config;
         private readonly UserService _userService;
-        private readonly ColaboratorService _colaboratorService;
+        private readonly BarService _barService;
 
         /// <summary>
         /// Contrutor do controlador de autenticação
         /// </summary>
         /// <param name="config"></param>
         /// <param name="userService"></param>
-        /// <param name="colaboratorService"></param>
-        public AuthController(IConfiguration config, UserService userService, ColaboratorService colaboratorService)
+        /// <param name="barService"></param>
+        public AuthController(IConfiguration config, UserService userService, BarService barService)
         {
             _config = config;
             _userService = userService;
-            _colaboratorService = colaboratorService;
+            _barService = barService;
         }
 
         /// <summary>
@@ -59,8 +59,8 @@ namespace SmartBar.Controllers
                 }
                 else if (login.UserType == "COLABORADOR")
                 {
-                    ColaboratorController colaboratorController = new(_colaboratorService);
-                    var userData = await colaboratorController.GetColaborator(login.Email, login.Password);
+                    BarController barController = new(_barService);
+                    var userData = await barController.GetBarByEmail(login.Email, login.Password);
                     if (userData != null)
                     {
                         token = GenerateToken(userData.Id, "COLABORADOR");

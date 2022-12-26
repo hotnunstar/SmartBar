@@ -42,7 +42,7 @@ namespace SmartBar.Services
         /// Obter determinado cliente através do id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>O cliente, se existir</returns>
         public async Task<UserModel?> GetAsyncById(string id) =>
         await _userCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 

@@ -3,6 +3,7 @@ package com.ipca.smartbar.generic
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -10,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.*
 import com.ipca.smartbar.client.products.ClientProductsActivity
-import com.ipca.smartbar.staff.StaffMainActivity
+import com.ipca.smartbar.bar.StaffMainActivity
 import java.util.*
 
 class LoginActivity : AppCompatActivity() {
@@ -28,8 +29,14 @@ class LoginActivity : AppCompatActivity() {
             {
                 if(checkTokenExpiration(token))
                 {
-                    val intent = Intent(this@LoginActivity, ClientProductsActivity::class.java)
-                    startActivity(intent)
+                    if(checkUserType(token) == "CLIENTE"){
+                        val intent = Intent(this@LoginActivity, ClientProductsActivity::class.java)
+                        startActivity(intent)
+                    }
+                    if(checkUserType(token) == "COLABORADOR"){
+                        val intent = Intent(this@LoginActivity, StaffMainActivity::class.java)
+                        startActivity(intent)
+                    }
                 }
                 else deleteToken()
             }
@@ -59,43 +66,31 @@ class LoginActivity : AppCompatActivity() {
                 loginModel.password = loginPassword
 
                 if (loginModel.email.isNotEmpty() && loginModel.password.isNotEmpty()) {
-                    if (loginModel.userType == "CLIENTE") {
-                        LoginRequests.postLogin(lifecycleScope, loginModel){
-                            token = it
-                            if(token!!.isBlank()) {
-                                viewProgressBarLogin.visibility = View.GONE
-                                progressBarLogin.visibility = View.GONE
-                                Toast.makeText(this,"Credênciais inválidas!", Toast.LENGTH_SHORT).show()
-                            }
-                            if(token!!.isNotEmpty() && token!!.isNotBlank()) {
-                                postToken(token!!)
+                    LoginRequests.postLogin(lifecycleScope, loginModel){
+                        token = it
+                        if(token!!.isBlank()) {
+                            viewProgressBarLogin.visibility = View.GONE
+                            progressBarLogin.visibility = View.GONE
+                            Toast.makeText(this,"Credênciais inválidas!", Toast.LENGTH_SHORT).show()
+                        }
+                        if(token!!.isNotEmpty() && token!!.isNotBlank()) {
+                            postToken(token!!)
+                            if (loginModel.userType == "CLIENTE") {
                                 val intent = Intent(this@LoginActivity, ClientProductsActivity::class.java)
                                 startActivity(intent)
                             }
-                        }
-                    }
-                    if (loginModel.userType == "COLABORADOR") {
-                    LoginRequests.postLogin(lifecycleScope, loginModel){
-                            token = it
-                            if(token!!.isBlank()) {
-                                viewProgressBarLogin.visibility = View.GONE
-                                progressBarLogin.visibility = View.GONE
-                                Toast.makeText(this,"Credênciais inválidas!", Toast.LENGTH_SHORT).show()
-                            }
-                            if(token!!.isNotEmpty() && token!!.isNotBlank()) {
-                                postToken(token!!)
+                            if (loginModel.userType == "COLABORADOR") {
                                 val intent = Intent(this@LoginActivity, StaffMainActivity::class.java)
                                 startActivity(intent)
                             }
+
                         }
-                        val intent = Intent(this@LoginActivity, StaffMainActivity::class.java)
-                        startActivity(intent)
                     }
                 }
                 else {
                     viewProgressBarLogin.visibility = View.GONE
                     progressBarLogin.visibility = View.GONE
-                    Toast.makeText(this, "Deve inserir email e password!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Deve inserir email e password!", Toast.LENGTH_SHORT).show()
                 }
             }
             val buttonLogin = findViewById<Button>(R.id.buttonLogin)

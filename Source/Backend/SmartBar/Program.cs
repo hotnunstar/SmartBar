@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.Configure<SmartBarDatabaseSettingsModel>(builder.Configuration.GetSection("SmartBarDatabase"));
 builder.Services.AddSingleton<UserService>();
-builder.Services.AddSingleton<ColaboratorService>();
+builder.Services.AddSingleton<BarService>();
 builder.Services.AddSingleton<ProductService>();
 builder.Services.AddSingleton<RequestService>();
 builder.Services.AddControllers();

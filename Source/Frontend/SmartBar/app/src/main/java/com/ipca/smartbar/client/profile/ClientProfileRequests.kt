@@ -9,12 +9,12 @@ import okhttp3.OkHttpClient
 import org.json.JSONObject
 import retrofit2.Retrofit
 
-object ProfileRequests {
+object ClientProfileRequests {
     private val client = OkHttpClient()
 
-    fun getProfile(scope: CoroutineScope,
-                   token: String?,
-                   callback: (ProfileModel)->Unit){
+    fun getUserProfile(scope: CoroutineScope,
+                       token: String?,
+                       callback: (ClientProfileModel)->Unit){
         scope.launch(Dispatchers.IO){
             val retrofit = Retrofit.Builder()
                 .baseUrl(Constants.baseurl)
@@ -22,20 +22,20 @@ object ProfileRequests {
                 .build()
 
             val service = retrofit.create(ApiServices::class.java)
-            val response = service.getProfile(token)
+            val response = service.getUserProfile(token)
 
             if(response.isSuccessful)
             {
                 val result = response.body()!!.string()
                 val jsonObject = JSONObject(result)
-                val user = ProfileModel.fromJSON(jsonObject)
+                val user = ClientProfileModel.fromJSON(jsonObject)
 
                 scope.launch(Dispatchers.Main) {
                     callback(user)
                 }
             }
             else{
-                val user = ProfileModel(0.0,"", "")
+                val user = ClientProfileModel(0.0,"", "")
                 scope.launch(Dispatchers.Main) {
                     callback(user)
                 }

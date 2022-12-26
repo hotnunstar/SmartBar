@@ -11,7 +11,6 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.R
 import com.ipca.smartbar.client.cart.ClientCartActivity
@@ -38,7 +37,7 @@ class ClientProfileActivity : AppCompatActivity() {
         viewProgressBarClientProfile.visibility = View.VISIBLE
         progressBarClientProfile.visibility = View.VISIBLE
 
-        ProfileRequests.getProfile(lifecycleScope, token){
+        ClientProfileRequests.getUserProfile(lifecycleScope, token){
             if(it.email.isNotEmpty())
             {
                 val balance = it.balance.toString()+"€"
@@ -71,7 +70,7 @@ class ClientProfileActivity : AppCompatActivity() {
             val intent = Intent(this@ClientProfileActivity, LoginActivity::class.java)
             startActivity(intent)
         }
-        val buttonLogout = findViewById<Button>(R.id.buttonTerminarSessao)
+        val buttonLogout = findViewById<Button>(R.id.buttonClientLogout)
         buttonLogout.setOnClickListener(onButtonLogoutPressed)
     }
 

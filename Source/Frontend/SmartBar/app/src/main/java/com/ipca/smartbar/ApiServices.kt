@@ -28,5 +28,8 @@ interface ApiServices {
     suspend fun postLogin(@Body requestBody: RequestBody): Response<ResponseBody>
 
     @GET("/api/User/GetUserById")
-    suspend fun getProfile(@Header("Authorization") token: String?): Response<ResponseBody>
+    suspend fun getUserProfile(@Header("Authorization") token: String?): Response<ResponseBody>
+
+    @GET("/api/Bar/GetBarById")
+    suspend fun getBarProfile(@Header("Authorization") token: String?): Response<ResponseBody>
 }

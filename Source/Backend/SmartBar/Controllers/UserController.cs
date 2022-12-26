@@ -28,7 +28,7 @@ namespace SmartBar.Controllers
         /// </summary>
         /// <param name="email"></param>
         /// <param name="password"></param>
-        /// <returns>Null ou Utilizador</returns>
+        /// <returns>Null ou Cliente</returns>
         [Route("GetUserByEmail")]
         [HttpGet]
         public async Task<UserModel> GetUserByEmail(string? email, string? password)
@@ -47,8 +47,10 @@ namespace SmartBar.Controllers
             return null;
         }
 
-
-        [Authorize]
+        /// <summary>
+        /// Obter determinado cliente através do ID
+        /// </summary>
+        /// <returns>NotFound ou Cliente</returns>
         [Route("GetUserById")]
         [HttpGet, Authorize]
         public async Task<IActionResult> GetUserById()
@@ -67,7 +69,6 @@ namespace SmartBar.Controllers
             }
             return NotFound();
         }
-
 
         /// <summary>
         /// Inserir um cliente
