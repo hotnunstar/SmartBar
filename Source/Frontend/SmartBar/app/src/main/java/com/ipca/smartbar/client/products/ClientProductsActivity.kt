@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.ipca.smartbar.R
+import com.ipca.smartbar.client.cart.ClientCartActivity
 import com.ipca.smartbar.client.historic.ClientHistoricActivity
 import com.ipca.smartbar.client.notifications.ClientNotificationsActivity
 import com.ipca.smartbar.client.profile.ClientProfileActivity
@@ -47,7 +48,7 @@ class ClientProductsActivity : AppCompatActivity() {
                 true
             }
             R.id.action_cart_client -> {
-                val intent = Intent(this@ClientProductsActivity, ClientProfileActivity::class.java)
+                val intent = Intent(this@ClientProductsActivity, ClientCartActivity::class.java)
                 startActivity(intent)
                 true
             }
