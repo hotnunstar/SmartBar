@@ -16,7 +16,10 @@ import com.ipca.smartbar.R
 import com.ipca.smartbar.client.historic.ClientHistoricActivity
 import com.ipca.smartbar.client.notifications.ClientNotificationsActivity
 import com.ipca.smartbar.client.products.ClientProductsActivity
+import com.ipca.smartbar.client.products.HotFoodFragment
 import com.ipca.smartbar.client.profile.ClientProfileActivity
+import com.ipca.smartbar.databinding.ActivityClientCartBinding
+import com.ipca.smartbar.databinding.ActivityClientMainBinding
 import java.time.LocalDateTime
 
 class ClientCartActivity : AppCompatActivity() {
@@ -25,11 +28,12 @@ class ClientCartActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private val pedido = Pedido("10", "10", LocalDateTime.now(), 10.00, "")
-
+    private lateinit var binding: ActivityClientCartBinding
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_client_cart)
+        binding = ActivityClientCartBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         var spinnerBar = findViewById<Spinner>(R.id.spinnerChooseBar)
         val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, spinnerOptionBar)
@@ -47,6 +51,12 @@ class ClientCartActivity : AppCompatActivity() {
                 pedido.bar = spinnerOptionBar[0]
             }
         }
+        val fragment = ProductsCardFragment()
+        supportFragmentManager.beginTransaction().
+        replace(R.id.content_frame_layout,fragment).
+        addToBackStack(null).
+        commitAllowingStateLoss()
+        true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

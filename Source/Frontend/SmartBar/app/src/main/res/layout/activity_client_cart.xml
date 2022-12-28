@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".client.cart.ClientCartActivity">
 
+    <FrameLayout
+        android:id="@+id/content_frame_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="310dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <Spinner
         android:id="@+id/spinnerChooseBar"
         android:layout_width="wrap_content"
@@ -20,19 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView9" />
 
-    <ListView
-        android:id="@+id/listViewHistoric"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="350dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/textViewTotalPrice"
@@ -51,7 +52,7 @@
         android:text="€"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listViewHistoric" />
+        app:layout_constraintTop_toBottomOf="@+id/content_frame_layout" />
 
     <TextView
         android:id="@+id/textView9"
@@ -61,7 +62,7 @@
         android:text="Valor Total:"
         android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/textViewTotalPrice"
-        app:layout_constraintTop_toBottomOf="@+id/listViewHistoric" />
+        app:layout_constraintTop_toBottomOf="@+id/content_frame_layout" />
 
     <Spinner
         android:id="@+id/spinnerHorario"
