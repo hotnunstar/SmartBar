@@ -6,6 +6,7 @@ import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -21,7 +22,14 @@ interface ApiServices {
 
     @GET("/api/Product/hotfood")
     suspend fun getProductsHotFood(): Response<List<Product>>
+
     @Headers("Content-Type: application/json")
     @POST("/api/Auth")
     suspend fun postLogin(@Body requestBody: RequestBody): Response<ResponseBody>
+
+    @GET("/api/User/GetUserById")
+    suspend fun getUserProfile(@Header("Authorization") token: String?): Response<ResponseBody>
+
+    @GET("/api/Bar/GetBarById")
+    suspend fun getBarProfile(@Header("Authorization") token: String?): Response<ResponseBody>
 }

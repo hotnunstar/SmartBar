@@ -16,6 +16,13 @@
         android:theme="@style/Theme.SmartBar"
         tools:targetApi="31">
         <activity
+            android:name=".bar.profile.BarProfileActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".client.notifications.ClientNotificationsActivity"
             android:exported="false">
             <meta-data
@@ -51,7 +58,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".staff.StaffMainActivity"
+            android:name=".bar.StaffMainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -20,19 +20,19 @@ namespace SmartBar.Controllers
     {
         private readonly IConfiguration _config;
         private readonly UserService _userService;
-        private readonly ColaboratorService _colaboratorService;
+        private readonly BarService _barService;
 
         /// <summary>
         /// Contrutor do controlador de autenticação
         /// </summary>
         /// <param name="config"></param>
         /// <param name="userService"></param>
-        /// <param name="colaboratorService"></param>
-        public AuthController(IConfiguration config, UserService userService, ColaboratorService colaboratorService)
+        /// <param name="barService"></param>
+        public AuthController(IConfiguration config, UserService userService, BarService barService)
         {
             _config = config;
             _userService = userService;
-            _colaboratorService = colaboratorService;
+            _barService = barService;
         }
 
         /// <summary>
@@ -43,45 +43,34 @@ namespace SmartBar.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel login)
         {
-            TokenResponseModel response = new()
+            if (login.Email != string.Empty && login.Password != string.Empty && login.UserType != string.Empty)
             {
-                StatusCode = 401,
-                Message = "Credênciais inválidas!",
-                Token = ""
-            };
-
-            if(login.Email != string.Empty && login.Password != string.Empty && login.UserType != string.Empty)
-            {
-                if(login.UserType == "CLIENTE")
+                string token;
+                if (login.UserType == "CLIENTE")
                 {
                     UserController userController = new(_userService);
-                    var userData = await userController.GetUser(login.Email, login.Password);
+                    var userData = await userController.GetUserByEmail(login.Email, login.Password);
                     if (userData != null)
                     {
-                        response.Token = GenerateToken(userData.Id, "CLIENTE");
-                        response.StatusCode = 200;
-                        response.Message = "Token gerado com sucesso";
-
-                        return Ok(response);
+                        token = GenerateToken(userData.Id, "CLIENTE");
+                        return Ok(token);
                     }
-                    else return NotFound(response);
+                    else return NotFound();
                 }
-                else if(login.UserType == "COLABORADOR")
+                else if (login.UserType == "COLABORADOR")
                 {
-                    ColaboratorController colaboratorController = new(_colaboratorService);
-                    var userData = await colaboratorController.GetColaborator(login.Email, login.Password);
+                    BarController barController = new(_barService);
+                    var userData = await barController.GetBarByEmail(login.Email, login.Password);
                     if (userData != null)
                     {
-                        response.Token = GenerateToken(userData.Id, "COLABORADOR");
-                        response.StatusCode = 200;
-                        response.Message = "Token gerado com sucesso";
-                        return Ok(response);
+                        token = GenerateToken(userData.Id, "COLABORADOR");
+                        return Ok(token);
                     }
-                    else return NotFound(response);
+                    else return NotFound();
                 }
-                else return NotFound(response);
+                else return NotFound();
             }
-            return NotFound(response);
+            return NotFound();
         }
 
         private string GenerateToken(string id, string userType)

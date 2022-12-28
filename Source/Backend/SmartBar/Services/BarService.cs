@@ -7,52 +7,60 @@ namespace SmartBar.Services
     /// <summary>
     /// Serviço de ligação à coleção dos bares
     /// </summary>
-    public class ColaboratorService
+    public class BarService
     {
-        private readonly IMongoCollection<ColaboratorModel> _colaboratorCollection;
+        private readonly IMongoCollection<BarModel> _barCollection;
 
         /// <summary>
         /// Construtor default de ligação à coleção dos bares
         /// </summary>
         /// <param name="smartBarDatabaseSettingsModel"></param>
-        public ColaboratorService(IOptions<SmartBarDatabaseSettingsModel> smartBarDatabaseSettingsModel)
+        public BarService(IOptions<SmartBarDatabaseSettingsModel> smartBarDatabaseSettingsModel)
         {
             var mongoClient = new MongoClient(smartBarDatabaseSettingsModel.Value.ConnectionString);
             var mongoDatabase = mongoClient.GetDatabase(smartBarDatabaseSettingsModel.Value.DatabaseName);
-            _colaboratorCollection = mongoDatabase.GetCollection<ColaboratorModel>(smartBarDatabaseSettingsModel.Value.ColaboratorCollectionName);
+            _barCollection = mongoDatabase.GetCollection<BarModel>(smartBarDatabaseSettingsModel.Value.ColaboratorCollectionName);
         }
 
         /// <summary>
         /// Obter todos os bares
         /// </summary>
         /// <returns>Uma lista de bares</returns>
-        public async Task<List<ColaboratorModel>> GetAsync() =>
-            await _colaboratorCollection.Find(_ => true).ToListAsync();
+        public async Task<List<BarModel>> GetAsync() =>
+            await _barCollection.Find(_ => true).ToListAsync();
 
         /// <summary>
         /// Obter determinado bar
         /// </summary>
         /// <param name="email"></param>
         /// <returns>O bar, se existir</returns>
-        public async Task<ColaboratorModel?> GetAsync(string email) =>
-        await _colaboratorCollection.Find(x => x.Email == email).FirstOrDefaultAsync();
+        public async Task<BarModel?> GetAsyncByEmail(string email) =>
+        await _barCollection.Find(x => x.Email == email).FirstOrDefaultAsync();
+
+        /// <summary>
+        /// Obter determinado bar através do id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>O bar, se existir</returns>
+        public async Task<BarModel?> GetAsyncById(string id) =>
+        await _barCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
         /// <summary>
         /// Criar um novo bar
         /// </summary>
-        /// <param name="newColaborator"></param>
+        /// <param name="newBar"></param>
         /// <returns>O novo bar criado</returns>
-        public async Task CreateAsync(ColaboratorModel newColaborator) =>
-            await _colaboratorCollection.InsertOneAsync(newColaborator);
+        public async Task CreateAsync(BarModel newBar) =>
+            await _barCollection.InsertOneAsync(newBar);
 
         /// <summary>
         /// Atualizar determinado bar
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="updatedColaborator"></param>
+        /// <param name="updatedBar"></param>
         /// <returns>O bar atualizado</returns>
-        public async Task UpdateAsync(string id, ColaboratorModel updatedColaborator) =>
-            await _colaboratorCollection.ReplaceOneAsync(x => x.Id == id, updatedColaborator);
+        public async Task UpdateAsync(string id, BarModel updatedBar) =>
+            await _barCollection.ReplaceOneAsync(x => x.Id == id, updatedBar);
 
         /// <summary>
         /// Remover determinado bar
@@ -60,6 +68,6 @@ namespace SmartBar.Services
         /// <param name="id"></param>
         /// <returns>True ou False</returns>
         public async Task RemoveAsync(string id) =>
-            await _colaboratorCollection.DeleteOneAsync(x => x.Id == id);
+            await _barCollection.DeleteOneAsync(x => x.Id == id);
     }
 }

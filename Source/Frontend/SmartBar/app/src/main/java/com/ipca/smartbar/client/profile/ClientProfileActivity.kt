@@ -1,17 +1,25 @@
 package com.ipca.smartbar.client.profile
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.R
 import com.ipca.smartbar.client.cart.ClientCartActivity
 import com.ipca.smartbar.client.historic.ClientHistoricActivity
 import com.ipca.smartbar.client.notifications.ClientNotificationsActivity
 import com.ipca.smartbar.client.products.ClientProductsActivity
+import com.ipca.smartbar.deleteToken
 import com.ipca.smartbar.generic.LoginActivity
+import com.ipca.smartbar.getToken
 
 class ClientProfileActivity : AppCompatActivity() {
 
@@ -19,11 +27,51 @@ class ClientProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_client_profile)
 
-        val buttonTS = findViewById(R.id.buttonTerminarSessao) as Button
-        buttonTS.setOnClickListener {
+        val token = getToken()
+
+        val textViewClientBalance = findViewById<TextView>(R.id.textViewClientBalance)
+        val textViewClientEmail = findViewById<TextView>(R.id.textViewClientEmail)
+        val textViewClientName = findViewById<TextView>(R.id.textViewClientName)
+        val progressBarClientProfile = findViewById<ProgressBar>(R.id.progressBarClientProfile)
+        val viewProgressBarClientProfile = findViewById<View>(R.id.viewProgressBarClientProfile)
+        viewProgressBarClientProfile.visibility = View.VISIBLE
+        progressBarClientProfile.visibility = View.VISIBLE
+
+        ClientProfileRequests.getUserProfile(lifecycleScope, token){
+            if(it.email.isNotEmpty())
+            {
+                val balance = it.balance.toString()+"€"
+                textViewClientBalance.text = balance
+                textViewClientName.text = it.name
+                textViewClientEmail.text = it.email
+                viewProgressBarClientProfile.visibility = View.GONE
+                progressBarClientProfile.visibility = View.GONE
+            }
+            else
+            {
+                viewProgressBarClientProfile.visibility = View.GONE
+                progressBarClientProfile.visibility = View.GONE
+                Toast.makeText(this, "Erro de conexão", Toast.LENGTH_LONG).show()
+                deleteToken()
+                val intent = Intent(this@ClientProfileActivity, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+        val onChangePasswordPressed: ((View)->Unit) = {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://portal.ipca.pt/Intranet/ResetPassword/ResetUserPassword"))
+            startActivity(intent)
+        }
+        val textViewChangePassword = findViewById<TextView>(R.id.textViewChangePassword)
+        textViewChangePassword.setOnClickListener(onChangePasswordPressed)
+
+        val onButtonLogoutPressed: ((View) -> Unit) = {
+            deleteToken()
             val intent = Intent(this@ClientProfileActivity, LoginActivity::class.java)
             startActivity(intent)
         }
+        val buttonLogout = findViewById<Button>(R.id.buttonClientLogout)
+        buttonLogout.setOnClickListener(onButtonLogoutPressed)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -65,5 +113,4 @@ class ClientProfileActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
 }

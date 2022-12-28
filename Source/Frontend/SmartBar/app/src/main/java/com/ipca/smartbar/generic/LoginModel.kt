@@ -1,18 +1,8 @@
 package com.ipca.smartbar.generic
 
-import android.provider.ContactsContract.CommonDataKinds.Email
 import org.json.JSONObject
 
-class LoginModel {
-    var userType : String
-    var email: String
-    var password: String
-
-    constructor(userType: String, email: String, password: String) {
-        this.userType = userType
-        this.email = email
-        this.password = password
-    }
+class LoginModel(var userType: String, var email: String, var password: String) {
 
     fun toJSON() : JSONObject {
         val jsonObject = JSONObject()
