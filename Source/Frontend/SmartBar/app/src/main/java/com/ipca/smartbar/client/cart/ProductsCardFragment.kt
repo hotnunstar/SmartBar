@@ -5,12 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.client.cart.adapter.Adapter
 import com.ipca.smartbar.client.products.Product
 import com.ipca.smartbar.client.products.dataBase.AppDatabase
 import com.ipca.smartbar.databinding.FragmentProductsCardBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class ProductsCardFragment : Fragment(){
@@ -18,7 +22,8 @@ class ProductsCardFragment : Fragment(){
     private lateinit var binding: FragmentProductsCardBinding
     private lateinit var adapter: Adapter
     var products = ArrayList<Product>()
-    //val listener = create(Listener::class.java)
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,13 +48,8 @@ class ProductsCardFragment : Fragment(){
     private fun loadList(product: ArrayList<Product>) {
         val list = binding.lvProducts
         val context: Context = this.context as Context
-        adapter = Adapter(context, product)
+        adapter = Adapter(context, product,this)
         list.adapter = adapter
-        /*adapter.clickListener = { product ->
-             product.quantity?.plus(1)
-
-
-        }*/
 
     }
 
@@ -59,6 +59,12 @@ class ProductsCardFragment : Fragment(){
         adapter.notifyDataSetChanged()
 
     }
+     fun deleteProduct(product:Product)
+    {
+        lifecycleScope.launch(Dispatchers.IO)
+        {
+            AppDatabase.getDatabase(requireContext())?.productDao()?.delete(product)
+        }
 
-
+    }
 }

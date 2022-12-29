@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.Toast
+import com.ipca.smartbar.client.cart.ProductsCardFragment
 import com.ipca.smartbar.client.products.Product
 import com.ipca.smartbar.databinding.RowCartBinding
 
 
-class Adapter(val context: Context, val products: ArrayList<Product>) : BaseAdapter() {
+class Adapter(val context: Context, val products: ArrayList<Product>,val listener: ProductsCardFragment) : BaseAdapter() {
     private lateinit var binding: RowCartBinding
     override fun getCount(): Int {
         return products.size
@@ -29,11 +29,22 @@ class Adapter(val context: Context, val products: ArrayList<Product>) : BaseAdap
         binding.textViewProductName.text=products[p0].nome
         binding.textViewQuantidade.text = products[p0].quantity.toString()
         binding.buttonAcrescentar.setOnClickListener {
-            binding.textViewQuantidade.text = 20.toString()
-
+            products[p0].quantity +=1
+            notifyDataSetChanged()
         }
         binding.buttonRetirar.setOnClickListener {
+            if(products[p0].quantity ==1)
+            products[p0].quantity =1
+            else
+            {
+                products[p0].quantity -=1
+                notifyDataSetChanged()
+            }
 
+        }
+        binding.imageButtonDelete.setOnClickListener {
+            listener.deleteProduct(products[p0])
+            notifyDataSetChanged()
         }
         return binding.root
     }

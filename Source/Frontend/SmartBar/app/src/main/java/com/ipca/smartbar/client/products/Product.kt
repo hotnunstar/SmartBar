@@ -21,7 +21,7 @@ data class Product (
     @Json(name = "stock")
     var stock:Int?=0,
     @Json(name = "quantity")
-    var quantity:Int?=1
+    var quantity:Int=1
 ) : Serializable
 
 
