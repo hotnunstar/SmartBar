@@ -5,7 +5,9 @@ import com.ipca.smartbar.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import retrofit2.Retrofit
 
@@ -148,51 +150,45 @@ object BarProductsRequests {
         }
     }
 
-    fun postMenus(scope: CoroutineScope,
+    fun postProduct(scope: CoroutineScope,
                   token: String?,
-                  callback: (BarProductsModel)->Unit){
+                  barProductsModel: BarProductsModel,
+                  callback: (String)->Unit){
+        scope.launch(Dispatchers.IO) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(Constants.baseurl)
+                .client(client)
+                .build()
 
-    }
+            val service = retrofit.create(ApiServices::class.java)
+            val barProductModelJson = barProductsModel.toJSON()
+            val barProductModelJsonString = barProductModelJson.toString()
+            val requestBody = barProductModelJsonString.toRequestBody("application/json".toMediaTypeOrNull())
+            val response = service.postProductBar(token, requestBody)
 
-    fun postSnacks(scope: CoroutineScope,
-                   token: String?,
-                   callback: (BarProductsModel)->Unit){
+            if(response.isSuccessful) scope.launch(Dispatchers.Main) { callback("OK") }
+            else scope.launch(Dispatchers.Main) { callback("NotOK") }
+            }
+        }
 
-    }
-
-    fun postHotDrinks(scope: CoroutineScope,
-                      token: String?,
-                      callback: (BarProductsModel)->Unit){
-
-    }
-
-    fun postColdDrinks(scope: CoroutineScope,
-                       token: String?,
-                       callback: (BarProductsModel)->Unit){
-
-    }
-
-    fun putMenus(scope: CoroutineScope,
+    fun putProduct(scope: CoroutineScope,
                  token: String?,
-                 callback: (BarProductsModel)->Unit){
+                 barProductsModel: BarProductsModel,
+                 callback: (String)->Unit){
+        scope.launch(Dispatchers.IO) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(Constants.baseurl)
+                .client(client)
+                .build()
 
-    }
+            val service = retrofit.create(ApiServices::class.java)
+            val barProductModelJson = barProductsModel.toJSON()
+            val barProductModelJsonString = barProductModelJson.toString()
+            val requestBody = barProductModelJsonString.toRequestBody("application/json".toMediaTypeOrNull())
+            val response = service.putProductBar(token, requestBody)
 
-    fun putSnacks(scope: CoroutineScope,
-                  token: String?,
-                  callback: (BarProductsModel)->Unit){
-
-    }
-
-    fun putHotDrinks(scope: CoroutineScope,
-                     token: String?,
-                     callback: (BarProductsModel)->Unit){
-
-    }
-
-    fun putColdDrinks(scope: CoroutineScope,
-                      token: String?,
-                      callback: (BarProductsModel)->Unit){
-
+            if(response.isSuccessful) scope.launch(Dispatchers.Main) { callback("OK") }
+            else scope.launch(Dispatchers.Main) { callback("NotOK") }
+        }
     }
 }

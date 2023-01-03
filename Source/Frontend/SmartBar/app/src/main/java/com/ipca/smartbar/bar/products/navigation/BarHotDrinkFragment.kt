@@ -15,12 +15,11 @@ import com.ipca.smartbar.bar.products.BarProductsModel
 import com.ipca.smartbar.bar.products.BarProductsRequests
 import com.ipca.smartbar.databinding.FragmentBarProductsBinding
 
-class BarHotDrinkFragment(token: String?) : Fragment() {
+class BarHotDrinkFragment(private val token: String?) : Fragment() {
     private var _binding: FragmentBarProductsBinding? = null
     private val binding get() = _binding!!
     private val adapter = ProductsAdapter()
     private var products = ArrayList<BarProductsModel>()
-    private val token = token
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,15 +75,17 @@ class BarHotDrinkFragment(token: String?) : Fragment() {
             val rowView = layoutInflater.inflate(R.layout.row_products_bar, parent, false)
             val textViewProductName = rowView.findViewById<TextView>(R.id.textViewProductName)
             val textViewProductPrice = rowView.findViewById<TextView>(R.id.textViewProductPrice)
+            val textViewProductStock = rowView.findViewById<TextView>(R.id.textViewProductStock)
             val imageButtonEditProduct = rowView.findViewById<ImageButton>(R.id.imageButtonEditProduct)
 
             val product = products[position]
             val price = product.price.toString()+"€"
             textViewProductName.text = product.name
             textViewProductPrice.text = price
+            textViewProductStock.text = product.stock.toString()
 
             imageButtonEditProduct.setOnClickListener(){
-                val fragment = EditProductFragment()
+                val fragment = EditProductFragment(product, token)
                 val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerViewBarProducts, fragment)
                 transaction.commit()

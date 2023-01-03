@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartBar.Models;
 using SmartBar.Services;
+using System.Data;
 
 namespace SmartBar.Controllers
 {
@@ -97,46 +98,60 @@ namespace SmartBar.Controllers
             return aux;
         }
 
+        /// <summary>
+        /// Adicionar um produto
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns>Action Result</returns>
         [HttpPost, Authorize]
         public async Task<IActionResult> PostProduct(ProductModel product)
         {
-            ProductModel aux = new();
-            product.Id = "";
-            ResponseModel badRequest = new()
+            if(GetUserType() == "CLIENTE") return Unauthorized();
+            if(GetUserType() == "COLABORADOR")
             {
-                StatusCode = 400,
-                Message = "Invalid parameters"
+                if(product.Name == string.Empty || product.Name == null) return BadRequest();
 
-            };
-            ResponseModel response = new()
-            {
-                StatusCode = 200,
-                Message = "Product inserted successfully"
-            };
-            // confirm all product attributes
-            if(product.Name == "")
-            {
-                badRequest.Message = "please fill in the name";
-                return BadRequest(badRequest);
+                var productName = product.Name.ToLower();
+                if(await _productService.GetAsyncByName(productName) == null)
+                {
+                    try
+                    {
+                        product.Id = "";
+                        await _productService.CreateAsync(product);
+                        return Ok();
+                    }
+                    catch { return BadRequest(); }
+                }  
+                else return BadRequest();
             }
-           
-            if(product.Price<=0)
-            {
-                badRequest.Message = "please fill in the correct price";
-                return BadRequest(badRequest);
-            }
-            //check if there are equals products
-            aux = await _productService.GetAsyncByName(product.Name);
-            if(aux!= null)
-            {
-                badRequest.Message = "the product already exists";
-                return BadRequest(badRequest);
-            }
-            
-            //insert
-            await _productService.CreateAsync(product);
-            return Ok(response);
-
+            else return NotFound();
         }
+
+        /// <summary>
+        /// Alterar um produto
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns>Action Result </returns>
+        [HttpPut, Authorize]
+        public async Task<IActionResult> PutProduct(ProductModel product)
+        {
+            if (GetUserType() == "CLIENTE") return Unauthorized();
+            if (GetUserType() == "COLABORADOR")
+            {
+                if (product.Name == string.Empty || product.Name == null) return BadRequest();
+                if (await _productService.GetAsync(product.Id) == null) return BadRequest();
+                else
+                {
+                    try
+                    {
+                        await _productService.UpdateAsync(product.Id, product);
+                        return Ok();
+                    }
+                    catch { return BadRequest(); }
+                }
+            }
+            else return NotFound();
+        }
+        private string GetUserType() { return this.User.Claims.First(i => i.Type == "userType").Value; }
     }
 }

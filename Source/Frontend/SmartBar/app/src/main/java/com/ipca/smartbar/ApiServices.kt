@@ -10,6 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface ApiServices {
     @GET("/api/Product/hotdrink")
@@ -38,14 +39,13 @@ interface ApiServices {
 
     @GET("/api/Bar/GetBarById")
     suspend fun getBarProfile(@Header("Authorization") token: String?): Response<ResponseBody>
-
     //endregion
 
     //region Products Bar
     @GET("/api/Product/hotfood")
     suspend fun getMenus(@Header("Authorization") token: String?): Response<ResponseBody>
 
-    @GET("/api/Product/packagedfood")
+    @GET("/api/Product/packaged")
     suspend fun getSnacks(@Header("Authorization") token: String?): Response<ResponseBody>
 
     @GET("/api/Product/coldrink")
@@ -53,6 +53,13 @@ interface ApiServices {
 
     @GET("/api/Product/hotdrink")
     suspend fun getHotDrinks(@Header("Authorization") token: String?): Response<ResponseBody>
-    //endregion
 
+    @Headers("Content-Type: application/json")
+    @POST("/api/Product")
+    suspend fun postProductBar(@Header("Authorization") token: String?, @Body requestBody: RequestBody): Response<ResponseBody>
+
+    @Headers("Content-Type: application/json")
+    @PUT("/api/Product")
+    suspend fun putProductBar(@Header("Authorization") token: String?, @Body requestBody: RequestBody): Response<ResponseBody>
+    //endregion
 }

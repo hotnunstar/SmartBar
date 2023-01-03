@@ -26,7 +26,7 @@ class BarProductsModel {
         this.type = type
     }
 
-    fun toJson() : JSONObject{
+    fun toJSON() : JSONObject{
         val jsonObject = JSONObject()
         jsonObject.put("id"     , id     )
         jsonObject.put("name"   , name   )
