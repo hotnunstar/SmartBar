@@ -84,7 +84,6 @@ class ClientProductsActivity : AppCompatActivity() {
                     true
 
                 }
-
                 R.id.action_products_packaged ->{
                     val fragment = PackagedFragment()
                     supportFragmentManager.beginTransaction().
@@ -93,8 +92,6 @@ class ClientProductsActivity : AppCompatActivity() {
                     commitAllowingStateLoss()
                     true
                 }
-
-
                 R.id.action_products_hot_drink -> {
                     val fragment = HotDrinkFragment()
                     supportFragmentManager.beginTransaction()
@@ -110,8 +107,6 @@ class ClientProductsActivity : AppCompatActivity() {
                     commitAllowingStateLoss()
                     true
                 }
-
-
                 else -> true
             }
         }

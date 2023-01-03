@@ -3,7 +3,6 @@ package com.ipca.smartbar.generic
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -11,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.*
 import com.ipca.smartbar.client.products.ClientProductsActivity
-import com.ipca.smartbar.bar.StaffMainActivity
+import com.ipca.smartbar.bar.profile.BarProfileActivity
 import java.util.*
 
 class LoginActivity : AppCompatActivity() {
@@ -34,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                     if(checkUserType(token) == "COLABORADOR"){
-                        val intent = Intent(this@LoginActivity, StaffMainActivity::class.java)
+                        val intent = Intent(this@LoginActivity, BarProfileActivity::class.java)
                         startActivity(intent)
                     }
                 }
@@ -80,10 +79,9 @@ class LoginActivity : AppCompatActivity() {
                                 startActivity(intent)
                             }
                             if (loginModel.userType == "COLABORADOR") {
-                                val intent = Intent(this@LoginActivity, StaffMainActivity::class.java)
+                                val intent = Intent(this@LoginActivity, BarProfileActivity::class.java)
                                 startActivity(intent)
                             }
-
                         }
                     }
                 }

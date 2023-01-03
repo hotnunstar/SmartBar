@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartBar.Models;
 using SmartBar.Services;
@@ -17,7 +18,7 @@ namespace SmartBar.Controllers
         public ProductController(ProductService productService) => _productService = productService;
 
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public async Task<List<ProductModel>> GetProducts()
         {
             List<ProductModel> lista;
@@ -25,7 +26,8 @@ namespace SmartBar.Controllers
             return lista;
         }
  
-        [HttpGet("hotfood")]
+        [Route("hotfood")]
+        [HttpGet, Authorize]
         public async Task<List<ProductModel>> GetProductsHotFood()
         {
             List<ProductModel> lista;
@@ -36,12 +38,14 @@ namespace SmartBar.Controllers
                 if(product.Type ==1)
                 {
                     aux.Add(product);
-                }
+                }  
             }
             //Tipo de Produto -> hot food =1; Packaged = 2; hot drink =3; cold drink =4
             return aux;
         }
-        [HttpGet("packaged")]
+
+        [Route("packaged")]
+        [HttpGet, Authorize]
         public async Task<List<ProductModel>> GetProductsPackaged()
         {
             List<ProductModel> lista;
@@ -57,7 +61,8 @@ namespace SmartBar.Controllers
             //Tipo de Produto -> hot food =1; Packaged = 2; hot drink =3; cold drink =4
             return aux;
         }
-        [HttpGet("coldrink")]
+        [Route("coldrink")]
+        [HttpGet, Authorize]
         public async Task<List<ProductModel>> GetProductsColdDrink()
         {
             List<ProductModel> lista;
@@ -74,7 +79,8 @@ namespace SmartBar.Controllers
             return aux;
         }
 
-        [HttpGet("hotdrink")]
+        [Route("hotdrink")]
+        [HttpGet, Authorize]
         public async Task<List<ProductModel>> GetProductsHotDrink()
         {
             List<ProductModel> lista;
@@ -90,10 +96,11 @@ namespace SmartBar.Controllers
             //Tipo de Produto -> hot food =1; Packaged = 2; hot drink =3; cold drink =4
             return aux;
         }
-        [HttpPost]
+
+        [HttpPost, Authorize]
         public async Task<IActionResult> PostProduct(ProductModel product)
         {
-            ProductModel aux = new ProductModel();
+            ProductModel aux = new();
             product.Id = "";
             ResponseModel badRequest = new()
             {
