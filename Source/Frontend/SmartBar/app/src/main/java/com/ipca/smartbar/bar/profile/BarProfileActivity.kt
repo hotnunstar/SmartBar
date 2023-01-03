@@ -12,12 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.R
-import com.ipca.smartbar.bar.StaffMainActivity
-import com.ipca.smartbar.client.cart.ClientCartActivity
-import com.ipca.smartbar.client.historic.ClientHistoricActivity
-import com.ipca.smartbar.client.notifications.ClientNotificationsActivity
-import com.ipca.smartbar.client.products.ClientProductsActivity
-import com.ipca.smartbar.client.profile.ClientProfileActivity
+import com.ipca.smartbar.bar.products.BarProductsActivity
 import com.ipca.smartbar.deleteToken
 import com.ipca.smartbar.generic.LoginActivity
 import com.ipca.smartbar.getToken
@@ -72,22 +67,22 @@ class BarProfileActivity : AppCompatActivity() {
             super.onOptionsItemSelected(item)
             return when (item.itemId) {
                 R.id.action_profile_staff -> {
-                    val intent = Intent(this@BarProfileActivity, StaffMainActivity::class.java)
+                    val intent = Intent(this@BarProfileActivity, BarProfileActivity::class.java)
                     startActivity(intent)
                     true
                 }
                 R.id.action_product_settings_staff -> {
-                    val intent = Intent(this@BarProfileActivity, StaffMainActivity::class.java)
+                    val intent = Intent(this@BarProfileActivity, BarProductsActivity::class.java)
                     startActivity(intent)
                     true
                 }
                 R.id.action_requests_staff -> {
-                    val intent = Intent(this@BarProfileActivity, StaffMainActivity::class.java)
+                    val intent = Intent(this@BarProfileActivity, BarProfileActivity::class.java)
                     startActivity(intent)
                     true
                 }
                 R.id.action_historic_staff -> {
-                    val intent = Intent(this@BarProfileActivity, StaffMainActivity::class.java)
+                    val intent = Intent(this@BarProfileActivity, BarProfileActivity::class.java)
                     startActivity(intent)
                     true
                 }

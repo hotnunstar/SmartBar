@@ -25,6 +25,11 @@ interface ApiServices {
     suspend fun getProductsHotFood(): Response<List<Product>>
 
     @Headers("Content-Type: application/json")
+    @POST("/api/pedido")
+    suspend fun postPedido(@Body pedido:Pedido): Response<ResponseBody>
+
+    //region Login
+    @Headers("Content-Type: application/json")
     @POST("/api/Auth")
     suspend fun postLogin(@Body requestBody: RequestBody): Response<ResponseBody>
 
@@ -34,8 +39,20 @@ interface ApiServices {
     @GET("/api/Bar/GetBarById")
     suspend fun getBarProfile(@Header("Authorization") token: String?): Response<ResponseBody>
 
+    //endregion
 
-    @Headers("Content-Type: application/json")
-    @POST("/api/pedido")
-    suspend fun postPedido(@Body pedido:Pedido): Response<ResponseBody>
+    //region Products Bar
+    @GET("/api/Product/hotfood")
+    suspend fun getMenus(@Header("Authorization") token: String?): Response<ResponseBody>
+
+    @GET("/api/Product/packagedfood")
+    suspend fun getSnacks(@Header("Authorization") token: String?): Response<ResponseBody>
+
+    @GET("/api/Product/coldrink")
+    suspend fun getColdDrinks(@Header("Authorization") token: String?): Response<ResponseBody>
+
+    @GET("/api/Product/hotdrink")
+    suspend fun getHotDrinks(@Header("Authorization") token: String?): Response<ResponseBody>
+    //endregion
+
 }

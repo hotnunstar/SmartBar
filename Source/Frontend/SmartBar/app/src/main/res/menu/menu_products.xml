@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigationMenus"
+        android:icon="@drawable/menu"
+        android:title="Menus"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/navigationSnacks"
+        android:icon="@drawable/snack"
+        android:title="Snacks"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/navigationColdDrinks"
+        android:icon="@drawable/colddrink"
+        android:title="Cold Drinks"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/navigationHotDrinks"
+        android:icon="@drawable/hotdrink"
+        android:title="Hot Drinks"
+        app:showAsAction="always"/>
+</menu>

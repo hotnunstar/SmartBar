@@ -3,9 +3,9 @@ package com.ipca.smartbar.bar.profile
 import org.json.JSONObject
 
 class BarProfileModel {
-    var id          : String = ""
-    var description : String = ""
-    var email       : String = ""
+    var id         : String = ""
+    var description: String = ""
+    var email      : String = ""
 
     constructor(id: String, description: String, email: String) {
         this.id = id

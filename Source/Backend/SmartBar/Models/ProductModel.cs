@@ -39,14 +39,15 @@ namespace SmartBar.Models
         /// <param name="Picture"></param>
         /// <param name="Price"></param>
         /// <param name="Stock"></param>
-        public ProductModel(string Id, string Name, /*byte[] Picture*/ decimal Price, int Stock, int type)
+        /// <param name="Type"></param>
+        public ProductModel(string Id, string Name, /*byte[] Picture*/ decimal Price, int Stock, int Type)
         {
             id = Id;
             name = Name;
             //picture = Picture;
             price = Price;
             stock = Stock;
-            this.type = type;
+            this.type = Type;
         }
 
 
