@@ -1,19 +1,18 @@
 package com.ipca.smartbar.client.cart
 
-import java.time.LocalDateTime
+import androidx.room.PrimaryKey
+import com.ipca.smartbar.client.products.Product
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-class Pedido {
-    var idProduto: String? = null
-    var idPedido: String? = null
-    var data: LocalDateTime? = null
-    var valor: Double? = null
-    var bar: String? = null
-
-    constructor(idProduto: String, idPedido: String?, data: LocalDateTime?, valor: Double?, bar: String?) {
-        this.idProduto = idProduto
-        this.idPedido = idPedido
-        this.data = data
-        this.valor = valor
-        this.bar = bar
-    }
-}
+@JsonClass(generateAdapter = true)
+data class Pedido(
+    @Json(name = "id")
+    var id: String?=null,
+    @Json(name = "listProducts")
+    var listProducts: ArrayList<Product>?,
+    @Json(name = "preco")
+    var preco: Double=0.0,
+    @Json(name = "bar")
+    var bar:String
+)

@@ -16,11 +16,11 @@ class ViewModelProducts() : ViewModel(){
     val products = MutableLiveData<Pair<ArrayList<Product>,Boolean>>()
 
 
-    fun getProductsColdDrink()
+    fun getProductsColdDrink(token:String?)
     {
         viewModelScope.launch(Dispatchers.IO)
         {
-            products.postValue(Repository.getProductsColdDrink())
+            products.postValue(Repository.getProductsColdDrink(token))
         }
     }
     fun getProductsPackaged()

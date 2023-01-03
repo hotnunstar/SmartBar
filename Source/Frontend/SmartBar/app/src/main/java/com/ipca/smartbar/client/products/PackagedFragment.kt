@@ -15,7 +15,7 @@ import com.ipca.smartbar.databinding.FragmentPackagedBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class PackagedFragment : Fragment() {
+class PackagedFragment(private val token:String?) : Fragment() {
     private lateinit var binding: FragmentPackagedBinding
     private lateinit var adapter: Adapter
     private val viewModel: ViewModelProducts by viewModels()

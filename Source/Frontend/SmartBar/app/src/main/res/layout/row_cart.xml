@@ -13,7 +13,7 @@
         android:layout_marginTop="1dp"
         android:text="Nome do Produto"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonAcrescentar"
+        app:layout_constraintEnd_toStartOf="@+id/buttonRetirar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,11 +23,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Quantidade"
-        app:layout_constraintEnd_toStartOf="@+id/buttonRetirar"
-        app:layout_constraintTop_toTopOf="@+id/buttonRetirar" />
+        app:layout_constraintEnd_toStartOf="@+id/buttonAcrescentar"
+        app:layout_constraintTop_toTopOf="@+id/buttonAcrescentar" />
 
     <Button
-        android:id="@+id/buttonRetirar"
+        android:id="@+id/buttonAcrescentar"
         android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
@@ -37,12 +37,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonAcrescentar"
+        android:id="@+id/buttonRetirar"
         android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:text="m+"
         app:layout_constraintEnd_toStartOf="@+id/textViewQuantidade"
-        app:layout_constraintTop_toTopOf="@+id/buttonRetirar" />
+        app:layout_constraintTop_toTopOf="@+id/buttonAcrescentar" />
 
     <ImageButton
         android:id="@+id/imageButtonDelete"

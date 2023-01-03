@@ -1,7 +1,9 @@
 package com.ipca.smartbar.client.products.api
 
 import com.ipca.smartbar.ApiServices
+import com.ipca.smartbar.client.cart.Pedido
 import com.ipca.smartbar.client.products.Product
+import okhttp3.ResponseBody
 import retrofit2.Response
 
 class BackendDataSource {
@@ -21,8 +23,12 @@ class BackendDataSource {
     {
         return apiServices.getProductsHotDrink()
     }
-    suspend fun getProductsColdDrink() : Response<List<Product>>
+    suspend fun getProductsColdDrink(token:String?) : Response<List<Product>>
     {
-        return apiServices.getProductsColdDrink()
+        return apiServices.getProductsColdDrink(token)
+    }
+    suspend fun postPedido(pedido:Pedido): Response<ResponseBody>
+    {
+        return apiServices.postPedido(pedido)
     }
 }

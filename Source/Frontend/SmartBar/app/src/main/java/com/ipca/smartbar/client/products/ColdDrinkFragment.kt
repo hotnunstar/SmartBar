@@ -18,7 +18,7 @@ import com.ipca.smartbar.databinding.RowProductsBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ColdDrinkFragment : Fragment() {
+class ColdDrinkFragment(private val token:String?) : Fragment() {
     private lateinit var binding : FragmentColdDrinkBinding
     private val viewModel : ViewModelProducts by viewModels()
 
@@ -34,8 +34,7 @@ class ColdDrinkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.getProductsColdDrink()
+        viewModel.getProductsColdDrink(token)
         SetupObserver()
 
 

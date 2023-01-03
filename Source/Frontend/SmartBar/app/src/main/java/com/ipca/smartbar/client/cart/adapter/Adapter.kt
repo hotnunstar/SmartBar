@@ -26,10 +26,13 @@ class Adapter(val context: Context, val products: ArrayList<Product>,val listene
 
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
         binding = RowCartBinding.inflate(LayoutInflater.from(context),p2,false)
+        var preco = 0.0
         binding.textViewProductName.text=products[p0].nome
+        binding.textViewPrecoProduto.text = products[p0].preco.toString()
         binding.textViewQuantidade.text = products[p0].quantity.toString()
         binding.buttonAcrescentar.setOnClickListener {
             products[p0].quantity +=1
+            listener.apdateProduct(products[p0],products)
             notifyDataSetChanged()
         }
         binding.buttonRetirar.setOnClickListener {
@@ -38,6 +41,7 @@ class Adapter(val context: Context, val products: ArrayList<Product>,val listene
             else
             {
                 products[p0].quantity -=1
+                listener.valorTotal(products)
                 notifyDataSetChanged()
             }
 

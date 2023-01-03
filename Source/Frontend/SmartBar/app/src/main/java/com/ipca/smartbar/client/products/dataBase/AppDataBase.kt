@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.ipca.smartbar.client.products.Product
 
 
-    @Database(entities = [Product::class], version = 1)
+    @Database(entities = [Product::class], version = 2)
     abstract class AppDatabase : RoomDatabase() {
         abstract fun productDao(): ProductDAO
 

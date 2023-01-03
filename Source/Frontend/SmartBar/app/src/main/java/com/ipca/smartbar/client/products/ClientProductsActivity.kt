@@ -11,6 +11,7 @@ import com.ipca.smartbar.client.historic.ClientHistoricActivity
 import com.ipca.smartbar.client.notifications.ClientNotificationsActivity
 import com.ipca.smartbar.client.profile.ClientProfileActivity
 import com.ipca.smartbar.databinding.ActivityClientMainBinding
+import com.ipca.smartbar.getToken
 
 class ClientProductsActivity : AppCompatActivity() {
     private lateinit var binding : ActivityClientMainBinding
@@ -86,7 +87,7 @@ class ClientProductsActivity : AppCompatActivity() {
                 }
 
                 R.id.action_products_packaged ->{
-                    val fragment = PackagedFragment()
+                    val fragment = PackagedFragment(getToken())
                     supportFragmentManager.beginTransaction().
                     replace(R.id.content_frame,fragment).
                     addToBackStack(null).
@@ -103,7 +104,7 @@ class ClientProductsActivity : AppCompatActivity() {
                     true
                 }
                 R.id.action_products_cold_drink ->{
-                    val fragment = ColdDrinkFragment()
+                    val fragment = ColdDrinkFragment(getToken())
                     supportFragmentManager.beginTransaction().
                     replace(R.id.content_frame,fragment).
                     addToBackStack(null).
