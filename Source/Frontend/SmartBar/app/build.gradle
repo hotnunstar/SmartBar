@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
     id("kotlin-kapt")
 }
 
@@ -79,7 +80,7 @@ dependencies {
     implementation "com.auth0:jwks-rsa:0.3.0"
     implementation "com.auth0:java-jwt:3.3.0"
 
-    //Room
+    // Room
     implementation("androidx.room:room-runtime:2.4.3")
     annotationProcessor("androidx.room:room-compiler:2.4.3")
     kapt("androidx.room:room-compiler:2.4.3")

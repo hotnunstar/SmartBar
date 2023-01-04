@@ -8,7 +8,7 @@ namespace SmartBar.Controllers
 {
 
     /// <summary>
-    /// Controlador de clientes
+    /// Controlador de utilizadores
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -17,7 +17,7 @@ namespace SmartBar.Controllers
         private readonly UserService _userService;
 
         /// <summary>
-        /// Construtor do controlador de clientes
+        /// Construtor do controlador de utilizadores
         /// </summary>
         /// <param name="userService"></param>
         public UserController(UserService userService) => _userService = userService;

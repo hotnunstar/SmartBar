@@ -1,26 +1,28 @@
 package com.ipca.smartbar.bar.products
 
+import android.graphics.Bitmap
+import androidx.core.graphics.createBitmap
 import org.json.JSONObject
 
 class BarProductsModel {
-    var id     : String? = null
-    var name   : String? = null
-    //var picture: ByteArray = "asd"
-    var price  : Double? = 0.0
-    var stock  : Int? = null
-    var type   : Int? = null
+    var id     : String = ""
+    var name   : String = ""
+    var picture: String = ""
+    var price  : Double = 0.0
+    var stock  : Int = 0
+    var type   : Int = 0
 
     constructor(
         id: String,
         name: String,
-        //picture: ByteArray,
+        picture: String,
         price: Double,
         stock: Int,
         type: Int
     ) {
         this.id = id
         this.name = name
-        //this.picture = picture
+        this.picture = picture
         this.price = price
         this.stock = stock
         this.type = type
@@ -30,7 +32,7 @@ class BarProductsModel {
         val jsonObject = JSONObject()
         jsonObject.put("id"     , id     )
         jsonObject.put("name"   , name   )
-        //jsonObject.put("picture", picture)
+        jsonObject.put("picture", picture)
         jsonObject.put("price"  , price  )
         jsonObject.put("stock"  , stock  )
         jsonObject.put("type"   , type   )
@@ -42,7 +44,7 @@ class BarProductsModel {
             return BarProductsModel(
                 jsonObject.getString("id"),
                 jsonObject.getString("name"),
-                //jsonObject.get("picture") as ByteArray,
+                jsonObject.getString("picture"),
                 jsonObject.getDouble("price"),
                 jsonObject.getInt("stock"),
                 jsonObject.getInt("type")

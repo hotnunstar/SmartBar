@@ -2,7 +2,6 @@ package com.ipca.smartbar
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import com.auth0.jwt.JWT
 import java.time.LocalDate
@@ -33,6 +32,12 @@ fun checkUserType(auth: String): String {
     val token: String = auth.substringAfterLast(" ")
     val jwt = JWT.decode(token)
     return jwt.getClaim("userType").asString()
+}
+
+fun checkUserId(auth: String): String {
+    val token: String = auth.substringAfterLast(" ")
+    val jwt = JWT.decode(token)
+    return jwt.getClaim("id").asString()
 }
 
 fun Context.deleteToken() {

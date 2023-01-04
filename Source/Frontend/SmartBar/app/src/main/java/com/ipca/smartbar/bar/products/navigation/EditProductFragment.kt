@@ -1,17 +1,21 @@
 package com.ipca.smartbar.bar.products.navigation
 
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.R
 import com.ipca.smartbar.bar.products.BarProductsModel
 import com.ipca.smartbar.bar.products.BarProductsRequests
 import com.ipca.smartbar.databinding.FragmentEditProductBinding
+import java.util.*
 
 class EditProductFragment(
     private val product: BarProductsModel,
@@ -29,6 +33,7 @@ class EditProductFragment(
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val editTextProductName = binding.editTextEditProductName
@@ -37,6 +42,11 @@ class EditProductFragment(
         val checkBoxStock = binding.checkBoxEditProductStock
         val buttonEditProduct = binding.buttonConfirmProductEdit
         val buttonCancel = binding.buttonCancelProductEdit
+        val imageViewProduct = binding.imageViewEditProduct
+
+        val pictureByteArray = Base64.getDecoder().decode(product.picture)
+        val bitmap = BitmapFactory.decodeByteArray(pictureByteArray, 0, pictureByteArray.size)
+        imageViewProduct.setImageBitmap(bitmap)
 
         editTextProductName.setTextKeepState(product.name)
         editTextProductPrice.setTextKeepState(product.price.toString())
@@ -108,9 +118,9 @@ class EditProductFragment(
     private fun changeTitle()
     {
         val title = binding.textViewTitleEditProduct
-        if(product.type == 1)title.text = "EDITAR MENU"
-        if(product.type == 2)title.text = "EDITAR SNACK"
-        if(product.type == 3)title.text = "EDITAR BEBIDA QUENTE"
-        if(product.type == 4)title.text = "EDITAR BEBIDA FRIA"
+        if(product.type == 1) title.text = "EDITAR MENU"
+        if(product.type == 2) title.text = "EDITAR SNACK"
+        if(product.type == 3) title.text = "EDITAR BEBIDA QUENTE"
+        if(product.type == 4) title.text = "EDITAR BEBIDA FRIA"
     }
 }
