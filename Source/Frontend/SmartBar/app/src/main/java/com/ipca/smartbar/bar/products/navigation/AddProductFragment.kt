@@ -91,12 +91,13 @@ class AddProductFragment(
     private fun postProduct(product: BarProductsModel){
         BarProductsRequests.postProduct(lifecycleScope, token, product){
             val result = it
-            if (result == "OK"){
-                Toast.makeText(activity,"PRODUTO INSERIDO!", Toast.LENGTH_SHORT).show()
-                goToFragment()
-            }
-            else{
-                Toast.makeText(activity, "ERRO NA INSERÇÃO DO PRODUTO", Toast.LENGTH_SHORT).show()
+            when (result){
+                "OK" -> {
+                    Toast.makeText(activity,"PRODUTO INSERIDO!", Toast.LENGTH_SHORT).show()
+                    goToFragment()
+                }
+                "REPEATED" -> Toast.makeText(activity, "NOME DO PRODUTO REPETIDO", Toast.LENGTH_SHORT).show()
+                else -> Toast.makeText(activity, "ERRO NA INSERÇÃO DO PRODUTO", Toast.LENGTH_SHORT).show()
             }
         }
     }

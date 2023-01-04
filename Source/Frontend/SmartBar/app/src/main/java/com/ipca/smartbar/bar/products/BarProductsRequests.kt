@@ -1,5 +1,6 @@
 package com.ipca.smartbar.bar.products
 
+import android.util.Log
 import com.ipca.smartbar.ApiServices
 import com.ipca.smartbar.Constants
 import kotlinx.coroutines.CoroutineScope
@@ -167,9 +168,12 @@ object BarProductsRequests {
             val response = service.postProductBar(token, requestBody)
 
             if(response.isSuccessful) scope.launch(Dispatchers.Main) { callback("OK") }
-            else scope.launch(Dispatchers.Main) { callback("NotOK") }
+            else {
+                if(response.errorBody()!!.string() == "NOME REPETIDO") scope.launch(Dispatchers.Main) { callback("REPEATED") }
+                else scope.launch(Dispatchers.Main) { callback("NotOK") }
             }
         }
+    }
 
     fun putProduct(scope: CoroutineScope,
                  token: String?,

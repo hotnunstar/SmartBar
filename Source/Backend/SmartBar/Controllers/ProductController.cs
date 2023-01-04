@@ -89,7 +89,7 @@ namespace SmartBar.Controllers
             {
                 foreach (var product in originalList)
                 {
-                    if (product.Type == 2) filtredList.Add(product);
+                    if (product.Type == 3) filtredList.Add(product);
                 }
                 if (filtredList.Count > 0) return Ok(filtredList);
                 else return NotFound();
@@ -111,7 +111,7 @@ namespace SmartBar.Controllers
             {
                 foreach (var product in originalList)
                 {
-                    if (product.Type == 2) filtredList.Add(product);
+                    if (product.Type == 4) filtredList.Add(product);
                 }
                 if (filtredList.Count > 0) return Ok(filtredList);
                 else return NotFound();
@@ -127,7 +127,7 @@ namespace SmartBar.Controllers
         [HttpPost, Authorize]
         public async Task<IActionResult> PostProduct(ProductModel product)
         {
-            if (GetUserType() == "CLIENTE") return Unauthorized();
+            if(GetUserType() == "CLIENTE") return Unauthorized();
             if(GetUserType() == "COLABORADOR")
             {
                 if(product.Name == string.Empty || product.Name == null) return BadRequest();
@@ -143,7 +143,7 @@ namespace SmartBar.Controllers
                     }
                     catch { return BadRequest(); }
                 }  
-                else return BadRequest();
+                else return BadRequest("NOME REPETIDO");
             }
             else return NotFound();
         }
