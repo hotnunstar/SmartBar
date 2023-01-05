@@ -22,20 +22,30 @@ import com.ipca.smartbar.client.cart.adapter.Adapter
 import com.ipca.smartbar.client.products.Product
 import com.ipca.smartbar.client.products.api.Repository
 import com.ipca.smartbar.client.products.dataBase.AppDatabase
+import com.ipca.smartbar.client.profile.ClientProfileActivity
 import com.ipca.smartbar.databinding.FragmentProductsCardBinding
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 
-class ProductsCardFragment : Fragment(){
+class ProductsCardFragment(private val token:String?) : Fragment(){
     private val spinnerOptionBar = arrayOf("Bar 1", "Bar 2")
     private lateinit var binding: FragmentProductsCardBinding
     private lateinit var adapter: Adapter
     var products = ArrayList<Product>()
     var preco=0.0
     var bar : String=""
-
-
+    var horario : String=""
+    @RequiresApi(Build.VERSION_CODES.O)
+    var localDateHour = LocalDateTime.now().hour
+    @RequiresApi(Build.VERSION_CODES.O)
+    var localDateMinute = LocalDateTime.now().minute
+    @RequiresApi(Build.VERSION_CODES.O)
+    private val spinnerOptionHorario = arrayListOf("${localDateHour} : ${localDateMinute}")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,14 +58,24 @@ class ProductsCardFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        spinner()
+        spinnerBar()
+        spinnerHoraPedido()
         retornaProdutosDb()
         binding.buttonConfirmarPedido.setOnClickListener {
 
-            var pedido = Pedido(listProducts = products, preco = preco, bar = bar)
+
+            val listaFinal = CriaPair()
+            var pedido = Pedido(listProducts = listaFinal, preco = preco, bar = bar)
+            if(listaFinal.size==0)
+            {
+                Toast.makeText(context, "Escolher produtos para efetuar a compra", Toast.LENGTH_SHORT).show()
+            }
+            var result:Pair<String,Boolean>
             lifecycleScope.launch(Dispatchers.IO)
             {
-                val result = Repository.confirmarPedido(pedido)
+
+                  result = Repository.confirmarPedido(pedido,token)
+                    //controlaResult(result)
             }
 
         }
@@ -92,11 +112,11 @@ class ProductsCardFragment : Fragment(){
         }
 
     }
-    fun spinner()
+    fun spinnerBar()
     {
         val context = context as Context
         var spinnerBar = binding.spinnerChooseBar
-        val arrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, spinnerOptionBar)
+        val arrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, spinnerOptionHorario)
         spinnerBar.adapter = arrayAdapter
 
         spinnerBar.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -112,6 +132,26 @@ class ProductsCardFragment : Fragment(){
             }
         }
     }
+    fun spinnerHoraPedido()
+    {
+        val context = context as Context
+        var spinnerHorario = binding.spinnerHorario
+        val arrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, spinnerOptionBar)
+        spinnerHorario.adapter = arrayAdapter
+
+        spinnerHorario.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                horario = spinnerOptionHorario[position]
+            }
+
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                horario = spinnerOptionHorario[0]
+            }
+        }
+    }
     fun valorTotal(product: ArrayList<Product>)
     {
         var aux =0.0
@@ -123,14 +163,38 @@ class ProductsCardFragment : Fragment(){
         preco=aux
         binding.textViewTotalPrice.text = aux.toString()
     }
-fun apdateProduct(product:Product, products2: ArrayList<Product>){
+    fun apdateProduct(product:Product, products2: ArrayList<Product>){
     lifecycleScope.launch(Dispatchers.IO)
     {
         AppDatabase.getDatabase(requireContext())?.productDao()?.insertAll(product)
         products = products2
     }
+}
+
+    fun CriaPair(): List<ProductPedido>
+    {
+        val listPair = ArrayList<ProductPedido>()
+
+        for(item in products)
+        {
+
+            listPair.add(ProductPedido(item.id,item.quantity))
+        }
+        return listPair
+    }
+    fun controlaResult(item: Pair<String, Boolean>)
+    {
+        if(item.second==false)
+        {
+            Toast.makeText(context, "correu mal!", Toast.LENGTH_SHORT).show()
+
+        }
+    }
+
+
 
 
 }
 
-}
+
+

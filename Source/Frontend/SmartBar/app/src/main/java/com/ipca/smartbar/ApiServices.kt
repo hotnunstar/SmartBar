@@ -25,8 +25,8 @@ interface ApiServices {
     suspend fun getProductsHotFood(): Response<List<Product>>
 
     @Headers("Content-Type: application/json")
-    @POST("/api/pedido")
-    suspend fun postPedido(@Body pedido:Pedido): Response<ResponseBody>
+    @POST("/api/Request")
+    suspend fun postPedido(@Body pedido:Pedido,@Header("Authorization") token: String?): Response<ResponseBody>
 
     //region Login
     @Headers("Content-Type: application/json")

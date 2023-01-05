@@ -49,9 +49,9 @@ object Repository {
             Pair(ArrayList(),false)
         }
     }
-    suspend fun confirmarPedido(pedido: Pedido): Pair<String,Boolean>
+    suspend fun confirmarPedido(pedido: Pedido,token:String?): Pair<String,Boolean>
     {
-        val response = backendDataSource.postPedido(pedido)
+        val response = backendDataSource.postPedido(pedido,token)
         if(response.isSuccessful)
         {
             return Pair(response.message(),true)

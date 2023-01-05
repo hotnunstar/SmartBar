@@ -20,6 +20,7 @@ import com.ipca.smartbar.client.products.HotFoodFragment
 import com.ipca.smartbar.client.profile.ClientProfileActivity
 import com.ipca.smartbar.databinding.ActivityClientCartBinding
 import com.ipca.smartbar.databinding.ActivityClientMainBinding
+import com.ipca.smartbar.getToken
 import java.time.LocalDateTime
 
 class ClientCartActivity : AppCompatActivity() {
@@ -29,27 +30,13 @@ class ClientCartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityClientCartBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val fragment = ProductsCardFragment()
+        val fragment = ProductsCardFragment(getToken())
         supportFragmentManager.beginTransaction().
         replace(R.id.content_frame_layout,fragment).
         addToBackStack(null).
         commitAllowingStateLoss()
         true
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
