@@ -13,6 +13,7 @@ builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<BarService>();
 builder.Services.AddSingleton<ProductService>();
 builder.Services.AddSingleton<RequestService>();
+builder.Services.AddSingleton<HistoricService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

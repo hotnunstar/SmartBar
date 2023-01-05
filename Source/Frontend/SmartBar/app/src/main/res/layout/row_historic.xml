@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewData"
+        android:id="@+id/tvDateRequestHist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -26,14 +26,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
-        android:id="@+id/textViewTotalPrice"
+        android:id="@+id/tvTotalPriceHist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:text="Preço"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/textViewPedido"
-        app:layout_constraintTop_toTopOf="@+id/textViewPedido" />
+        app:layout_constraintStart_toEndOf="@+id/tvRequestHist"
+        app:layout_constraintTop_toTopOf="@+id/tvRequestHist" />
 
     <TextView
         android:id="@+id/textView7"
@@ -41,11 +41,11 @@
         android:layout_height="wrap_content"
         android:text="€"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/textViewTotalPrice"
-        app:layout_constraintTop_toTopOf="@+id/textViewTotalPrice" />
+        app:layout_constraintStart_toEndOf="@+id/tvTotalPriceHist"
+        app:layout_constraintTop_toTopOf="@+id/tvTotalPriceHist" />
 
     <TextView
-        android:id="@+id/textViewPedido"
+        android:id="@+id/tvRequestHist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="NºP"

@@ -29,6 +29,11 @@ interface ApiServices {
     @POST("/api/pedido")
     suspend fun postPedido(@Body pedido:Pedido): Response<ResponseBody>
 
+    //region Historic Client
+    @GET("/api/Historic/GetHistoricByClient")
+    suspend fun getCHByClientID(@Header("Authorization") token: String?): Response<ResponseBody>
+    //endregion
+
     //region Login
     @Headers("Content-Type: application/json")
     @POST("/api/Auth")

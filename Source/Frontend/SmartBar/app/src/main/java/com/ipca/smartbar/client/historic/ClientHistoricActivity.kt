@@ -8,37 +8,72 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.ListView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.R
 import com.ipca.smartbar.client.notifications.ClientNotificationsActivity
 import com.ipca.smartbar.client.products.ClientProductsActivity
 import com.ipca.smartbar.client.cart.ClientCartActivity
 import com.ipca.smartbar.client.profile.ClientProfileActivity
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import com.ipca.smartbar.databinding.ActivityClientHistoricBinding
+import com.ipca.smartbar.getToken
+
 
 class ClientHistoricActivity : AppCompatActivity() {
 
-    val historic = arrayListOf<Historic>()
+    private lateinit var binding: ActivityClientHistoricBinding
 
-    val adapter = HistoricAdapter()
+    val adapter = CHAdapter()
+    var historic = arrayListOf<ClientHistoricModel>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_client_historic)
 
-        val stringDate = "18-07-2019 16:20"
-        val dateTime = LocalDateTime.parse(stringDate, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+        binding = ActivityClientHistoricBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        historic.add(Historic("100", dateTime, 10.00,1))
+        val token = getToken()
 
-        val listViewHistoric = findViewById<ListView>(R.id.listViewHistoric)
-        listViewHistoric.adapter = adapter
+        CHBackendRequests.getHistoric(lifecycleScope, token){
+            historic = it
+            adapter.notifyDataSetChanged()
+        }
+        binding.listViewClientHistoric.adapter = adapter
     }
+
+    inner class CHAdapter : BaseAdapter() {
+        override fun getCount(): Int {
+            return historic.size
+        }
+
+        override fun getItem(position: Int): Any {
+            return historic[position]
+        }
+
+        override fun getItemId(position: Int): Long {
+            return 0L
+        }
+
+        override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
+            val rowView = layoutInflater.inflate(R.layout.row_historic, parent, false)
+            val tvRequestHist = rowView.findViewById<TextView>(R.id.tvRequestHist)
+            val tvTotalPriceHist = rowView.findViewById<TextView>(R.id.tvTotalPriceHist)
+            val tvDateRequestHist = rowView.findViewById<TextView>(R.id.tvDateRequestHist)
+
+            val hist = historic[position]
+            tvRequestHist.text = hist.idRequest
+            tvTotalPriceHist.text = hist.totalPrice.toString()
+            tvDateRequestHist.text = hist.dateRequest
+
+            tvDateRequestHist.text = (tvDateRequestHist.text as String).replace("T", " ")
+
+            return rowView
+        }
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_client, menu)
@@ -81,33 +116,5 @@ class ClientHistoricActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    inner class HistoricAdapter : BaseAdapter() {
-        override fun getCount(): Int {
-            return historic.size
-        }
-
-        override fun getItem(position: Int): Any {
-            return historic[position]
-        }
-
-        override fun getItemId(position: Int): Long {
-            return 0L
-        }
-
-        override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
-            val rootView = layoutInflater.inflate(R.layout.row_historic, parent, false)
-            val textViewPedidoHist = rootView.findViewById<TextView>(R.id.textViewPedido)
-            val textViewData = rootView.findViewById<TextView>(R.id.textViewData)
-            val textViewTotalPrice = rootView.findViewById<TextView>(R.id.textViewTotalPrice)
-
-            textViewPedidoHist.text = historic[position].idPedido
-            textViewData.text = historic[position].data.toString()
-            textViewTotalPrice.text = historic[position].valor.toString()
-
-            textViewData.text = (textViewData.text as String).replace('T', ' ')
-
-            return rootView
-        }
-    }
 }
 

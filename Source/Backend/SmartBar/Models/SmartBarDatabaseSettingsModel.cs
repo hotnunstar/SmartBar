@@ -23,7 +23,7 @@
         /// <summary>
         /// Coleção de histórico
         /// </summary>
-        public string HistoricConllectionName { get; set; } = null!;
+        public string HistoricCollectionName { get; set; } = null!;
 
         /// <summary>
         /// Coleção de notificações
