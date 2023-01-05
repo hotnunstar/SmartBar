@@ -1,15 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
-/*
+using System.Drawing;
 
-
-=============================================================
-            FALTA TRABALHAR A IMAGEM
-============================================================
-
-
-
-*/
 namespace SmartBar.Models
 {
     /// <summary>
@@ -21,7 +13,7 @@ namespace SmartBar.Models
         [BsonRepresentation(BsonType.ObjectId)]
         string id;
         string name;
-       // byte[] picture;
+        string picture;
         decimal price;
         int stock;
         int type;
@@ -40,11 +32,11 @@ namespace SmartBar.Models
         /// <param name="Price"></param>
         /// <param name="Stock"></param>
         /// <param name="Type"></param>
-        public ProductModel(string Id, string Name, /*byte[] Picture*/ decimal Price, int Stock, int Type)
+        public ProductModel(string Id, string Name, string Picture, decimal Price, int Stock, int Type)
         {
             id = Id;
             name = Name;
-            //picture = Picture;
+            picture = Picture;
             price = Price;
             stock = Stock;
             this.type = Type;
@@ -64,7 +56,7 @@ namespace SmartBar.Models
         /// <summary>
         /// Imagem do produto
         /// </summary>
-        //public byte[] Picture { get { return picture; } set { picture = value; } }
+        public string Picture { get { return picture; } set { picture = value; } }
 
         /// <summary>
         /// Preço do produto

@@ -10,23 +10,32 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface ApiServices {
-    @GET("/api/Product/hotdrink")
-    suspend fun getProductsHotDrink(): Response<List<Product>>
 
-    @GET("/api/Product/packaged")
-    suspend fun getProductsPackaged(): Response<List<Product>>
-
-    @GET("/api/Product/coldrink")
-    suspend fun getProductsColdDrink(@Header("Authorization") token: String?): Response<List<Product>>
-
-    @GET("/api/Product/hotfood")
+    //region Products Client
+    @GET("/api/Product/Menus")
     suspend fun getProductsHotFood(): Response<List<Product>>
 
+    @GET("/api/Product/Snacks")
+    suspend fun getProductsPackaged(): Response<List<Product>>
+
+    @GET("/api/Product/HotDrink")
+    suspend fun getProductsHotDrink(): Response<List<Product>>
+
+    @GET("/api/Product/ColDrink")
+    suspend fun getProductsColdDrink(@Header("Authorization") token: String?): Response<List<Product>>
+    //endregion
+
+    //region Requests
     @Headers("Content-Type: application/json")
+
     @POST("/api/Request")
     suspend fun postPedido(@Body pedido:Pedido,@Header("Authorization") token: String?): Response<ResponseBody>
+
+    //endregion
+
 
     //region Login
     @Headers("Content-Type: application/json")
@@ -38,21 +47,27 @@ interface ApiServices {
 
     @GET("/api/Bar/GetBarById")
     suspend fun getBarProfile(@Header("Authorization") token: String?): Response<ResponseBody>
-
     //endregion
 
     //region Products Bar
-    @GET("/api/Product/hotfood")
+    @GET("/api/Product/Menus")
     suspend fun getMenus(@Header("Authorization") token: String?): Response<ResponseBody>
 
-    @GET("/api/Product/packagedfood")
+    @GET("/api/Product/Snacks")
     suspend fun getSnacks(@Header("Authorization") token: String?): Response<ResponseBody>
 
-    @GET("/api/Product/coldrink")
+    @GET("/api/Product/HotDrink")
+    suspend fun getHotDrinks(@Header("Authorization") token: String?): Response<ResponseBody>
+
+    @GET("/api/Product/ColdDrink")
     suspend fun getColdDrinks(@Header("Authorization") token: String?): Response<ResponseBody>
 
-    @GET("/api/Product/hotdrink")
-    suspend fun getHotDrinks(@Header("Authorization") token: String?): Response<ResponseBody>
-    //endregion
+    @Headers("Content-Type: application/json")
+    @POST("/api/Product")
+    suspend fun postProductBar(@Header("Authorization") token: String?, @Body requestBody: RequestBody): Response<ResponseBody>
 
+    @Headers("Content-Type: application/json")
+    @PUT("/api/Product")
+    suspend fun putProductBar(@Header("Authorization") token: String?, @Body requestBody: RequestBody): Response<ResponseBody>
+    //endregion
 }

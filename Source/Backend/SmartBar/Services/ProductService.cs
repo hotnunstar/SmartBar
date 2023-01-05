@@ -43,7 +43,7 @@ namespace SmartBar.Services
         /// <param name="name"></param>
         /// <returns>O produto se existir</returns>
         public async Task<ProductModel?> GetAsyncByName(string name) =>
-        await _productCollection.Find(x => x.Name == name).FirstOrDefaultAsync();
+        await _productCollection.Find(x => x.Name.ToLower() == name).FirstOrDefaultAsync();
 
         /// <summary>
         /// Criar um novo produto

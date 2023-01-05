@@ -3,9 +3,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartBar.Models;
 using SmartBar.Services;
+using System.Data;
 
 namespace SmartBar.Controllers
 {
+    /// <summary>
+    /// Controlador de produtos
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
@@ -17,126 +21,159 @@ namespace SmartBar.Controllers
         /// <param name="productService"></param>
         public ProductController(ProductService productService) => _productService = productService;
 
-
+        /// <summary>
+        /// Obter a lista de todos os produtos existentes
+        /// </summary>
+        /// <returns>Ok(List) ou NotFound()</returns>
         [HttpGet, Authorize]
-        public async Task<List<ProductModel>> GetProducts()
+        public async Task<IActionResult> GetProducts()
         {
-            List<ProductModel> lista;
-            lista = await _productService.GetAsync();
-            return lista;
+            List<ProductModel> productsList = await _productService.GetAsync();
+            if (productsList.Count > 0)return Ok(productsList);
+            else return NotFound();
         }
  
-        [Route("hotfood")]
+        /// <summary>
+        /// Obter a lista de menus (tipo 1)
+        /// </summary>
+        /// <returns>Ok(List) ou NotFound()</returns>
+        [Route("Menus")]
         [HttpGet, Authorize]
-        public async Task<List<ProductModel>> GetProductsHotFood()
+        public async Task<IActionResult> GetProductsHotFood()
         {
-            List<ProductModel> lista;
-            List<ProductModel> aux = new List<ProductModel>();
-            lista = await _productService.GetAsync();
-            foreach (ProductModel product in lista)
-            {
-                if(product.Type ==1)
-                {
-                    aux.Add(product);
-                }  
+            List<ProductModel> filtredList = new();
+            List<ProductModel>  originalList = await _productService.GetAsync();
+            if(originalList.Count > 0) {
+                foreach(var product in originalList) {
+                    if(product.Type == 1) filtredList.Add(product);
+                }
+                if (filtredList.Count > 0) return Ok(filtredList);
+                else return NotFound();
             }
-            //Tipo de Produto -> hot food =1; Packaged = 2; hot drink =3; cold drink =4
-            return aux;
+            else return NotFound();
         }
 
-        [Route("packaged")]
+        /// <summary>
+        /// Obter a lista de snacks (tipo 2)
+        /// </summary>
+        /// <returns>Ok(List) ou NotFound()</returns>
+        [Route("Snacks")]
         [HttpGet, Authorize]
-        public async Task<List<ProductModel>> GetProductsPackaged()
+        public async Task<IActionResult> GetProductsPackaged()
         {
-            List<ProductModel> lista;
-            List<ProductModel> aux = new List<ProductModel>();
-            lista = await _productService.GetAsync();
-            foreach (ProductModel product in lista)
+            List<ProductModel> filtredList = new();
+            List<ProductModel> originalList = await _productService.GetAsync();
+            if (originalList.Count > 0)
             {
-                if (product.Type == 2)
+                foreach (var product in originalList)
                 {
-                    aux.Add(product);
+                    if (product.Type == 2) filtredList.Add(product);
                 }
+                if (filtredList.Count > 0) return Ok(filtredList);
+                else return NotFound();
             }
-            //Tipo de Produto -> hot food =1; Packaged = 2; hot drink =3; cold drink =4
-            return aux;
-        }
-        [Route("coldrink")]
-        [HttpGet, Authorize]
-        public async Task<List<ProductModel>> GetProductsColdDrink()
-        {
-            List<ProductModel> lista;
-            List<ProductModel> aux = new List<ProductModel>();
-            lista = await _productService.GetAsync();
-            foreach (ProductModel product in lista)
-            {
-                if (product.Type == 4)
-                {
-                    aux.Add(product);
-                }
-            }
-            //Tipo de Produto -> hot food =1; Packaged = 2; hot drink =3; cold drink =4
-            return aux;
+            else return NotFound();
         }
 
-        [Route("hotdrink")]
+        /// <summary>
+        /// Obter a lista de bebidas quentes (tipo 3)
+        /// </summary>
+        /// <returns>Ok(List) ou NotFound()</returns>
+        [Route("HotDrink")]
         [HttpGet, Authorize]
-        public async Task<List<ProductModel>> GetProductsHotDrink()
+        public async Task<IActionResult> GetProductsHotDrink()
         {
-            List<ProductModel> lista;
-            List<ProductModel> aux = new List<ProductModel>();
-            lista = await _productService.GetAsync();
-            foreach (ProductModel product in lista)
+            List<ProductModel> filtredList = new();
+            List<ProductModel> originalList = await _productService.GetAsync();
+            if (originalList.Count > 0)
             {
-                if (product.Type == 3)
+                foreach (var product in originalList)
                 {
-                    aux.Add(product);
+                    if (product.Type == 3) filtredList.Add(product);
                 }
+                if (filtredList.Count > 0) return Ok(filtredList);
+                else return NotFound();
             }
-            //Tipo de Produto -> hot food =1; Packaged = 2; hot drink =3; cold drink =4
-            return aux;
+            else return NotFound();
         }
 
+        /// <summary>
+        /// Obter a lista de bebidas frias (tipo 4)
+        /// </summary>
+        /// <returns>Ok(List) ou NotFound()</returns>
+        [Route("ColdDrink")]
+        [HttpGet, Authorize]
+        public async Task<IActionResult> GetProductsColdDrink()
+        {
+            List<ProductModel> filtredList = new();
+            List<ProductModel> originalList = await _productService.GetAsync();
+            if (originalList.Count > 0)
+            {
+                foreach (var product in originalList)
+                {
+                    if (product.Type == 4) filtredList.Add(product);
+                }
+                if (filtredList.Count > 0) return Ok(filtredList);
+                else return NotFound();
+            }
+            else return NotFound();
+        }
+
+        /// <summary>
+        /// Adicionar um produto
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns>Ok(), BadRequest() ou NotFound()</returns>
         [HttpPost, Authorize]
         public async Task<IActionResult> PostProduct(ProductModel product)
         {
-            ProductModel aux = new();
-            product.Id = "";
-            ResponseModel badRequest = new()
+            if(GetUserType() == "CLIENTE") return Unauthorized();
+            if(GetUserType() == "COLABORADOR")
             {
-                StatusCode = 400,
-                Message = "Invalid parameters"
+                if(product.Name == string.Empty || product.Name == null) return BadRequest();
 
-            };
-            ResponseModel response = new()
-            {
-                StatusCode = 200,
-                Message = "Product inserted successfully"
-            };
-            // confirm all product attributes
-            if(product.Name == "")
-            {
-                badRequest.Message = "please fill in the name";
-                return BadRequest(badRequest);
+                var productName = product.Name.ToLower();
+                if(await _productService.GetAsyncByName(productName) == null)
+                {
+                    try
+                    {
+                        product.Id = "";
+                        await _productService.CreateAsync(product);
+                        return Ok();
+                    }
+                    catch { return BadRequest(); }
+                }  
+                else return BadRequest("NOME REPETIDO");
             }
-           
-            if(product.Price<=0)
-            {
-                badRequest.Message = "please fill in the correct price";
-                return BadRequest(badRequest);
-            }
-            //check if there are equals products
-            aux = await _productService.GetAsyncByName(product.Name);
-            if(aux!= null)
-            {
-                badRequest.Message = "the product already exists";
-                return BadRequest(badRequest);
-            }
-            
-            //insert
-            await _productService.CreateAsync(product);
-            return Ok(response);
-
+            else return NotFound();
         }
+
+        /// <summary>
+        /// Alterar um produto
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns>Ok(), BadRequest() ou NotFound()</returns>
+        [HttpPut, Authorize]
+        public async Task<IActionResult> PutProduct(ProductModel product)
+        {
+            if (GetUserType() == "CLIENTE") return Unauthorized();
+            if (GetUserType() == "COLABORADOR")
+            {
+                if (product.Name == string.Empty || product.Name == null) return BadRequest();
+                if (await _productService.GetAsync(product.Id) == null) return BadRequest();
+                else
+                {
+                    try
+                    {
+                        await _productService.UpdateAsync(product.Id, product);
+                        return Ok();
+                    }
+                    catch { return BadRequest(); }
+                }
+            }
+            else return NotFound();
+        }
+
+        private string GetUserType() { return this.User.Claims.First(i => i.Type == "userType").Value; }
     }
 }
