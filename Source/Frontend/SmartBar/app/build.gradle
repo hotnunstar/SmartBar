@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id("kotlin-kapt")
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -84,4 +85,8 @@ dependencies {
     implementation("androidx.room:room-runtime:2.4.3")
     annotationProcessor("androidx.room:room-compiler:2.4.3")
     kapt("androidx.room:room-compiler:2.4.3")
+
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }
