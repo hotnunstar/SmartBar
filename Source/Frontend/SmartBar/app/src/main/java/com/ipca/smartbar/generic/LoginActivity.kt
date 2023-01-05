@@ -1,12 +1,15 @@
 package com.ipca.smartbar.generic
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.PermissionChecker
 import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.*
 import com.ipca.smartbar.client.products.ClientProductsActivity

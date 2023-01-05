@@ -1,24 +1,26 @@
 package com.ipca.smartbar.bar.products.navigation
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.FragmentManager
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.R
-import com.ipca.smartbar.bar.products.BarProductsActivity
 import com.ipca.smartbar.bar.products.BarProductsModel
 import com.ipca.smartbar.bar.products.BarProductsRequests
 import com.ipca.smartbar.databinding.FragmentBarProductsBinding
-import com.ipca.smartbar.getToken
+import java.util.*
+
 
 class BarMenuFragment(private val token: String?) : Fragment() {
 
@@ -77,11 +79,13 @@ class BarMenuFragment(private val token: String?) : Fragment() {
             return 0L
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val rowView = layoutInflater.inflate(R.layout.row_products_bar, parent, false)
             val textViewProductName = rowView.findViewById<TextView>(R.id.textViewProductName)
             val textViewProductPrice = rowView.findViewById<TextView>(R.id.textViewProductPrice)
             val textViewProductStock = rowView.findViewById<TextView>(R.id.textViewProductStock)
+            val imageViewProduct = rowView.findViewById<ImageView>(R.id.imageViewProductBar)
             val imageButtonEditProduct = rowView.findViewById<ImageButton>(R.id.imageButtonEditProduct)
 
             val product = products[position]
@@ -89,8 +93,11 @@ class BarMenuFragment(private val token: String?) : Fragment() {
             textViewProductName.text = product.name
             textViewProductPrice.text = price
             textViewProductStock.text = product.stock.toString()
+            val pictureByteArray = Base64.getDecoder().decode(product.picture)
+            val bitmap = BitmapFactory.decodeByteArray(pictureByteArray, 0, pictureByteArray.size)
+            imageViewProduct.setImageBitmap(bitmap)
 
-            imageButtonEditProduct.setOnClickListener(){
+            imageButtonEditProduct.setOnClickListener{
                 val fragment = EditProductFragment(product, token)
                 val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerViewBarProducts, fragment)

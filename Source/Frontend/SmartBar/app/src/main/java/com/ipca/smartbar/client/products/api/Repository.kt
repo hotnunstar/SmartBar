@@ -42,16 +42,18 @@ object Repository {
     {
 
         val response = backendDataSource.getProductsColdDrink(token)
-        val result = response.body()
-        return if(response.isSuccessful && result != null) {
+        val result = response.body()?.string()
+        Log.e("", result!!)
+        return Pair(ArrayList(),false)
+        /*return if(response.isSuccessful && result != null) {
             Pair(ArrayList(result),true)
         } else {
             Pair(ArrayList(),false)
-        }
+        }*/
     }
-    suspend fun confirmarPedido(pedido: Pedido): Pair<String,Boolean>
+    suspend fun confirmarPedido(pedido: Pedido,token:String?): Pair<String,Boolean>
     {
-        val response = backendDataSource.postPedido(pedido)
+        val response = backendDataSource.postPedido(pedido,token)
         if(response.isSuccessful)
         {
             return Pair(response.message(),true)

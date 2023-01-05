@@ -23,12 +23,12 @@ class BackendDataSource {
     {
         return apiServices.getProductsHotDrink()
     }
-    suspend fun getProductsColdDrink(token:String?) : Response<List<Product>>
+    suspend fun getProductsColdDrink(token:String?) : Response<ResponseBody>
     {
-        return apiServices.getProductsColdDrink(token)
+        return apiServices.getColdDrinks(token)
     }
-    suspend fun postPedido(pedido:Pedido): Response<ResponseBody>
+    suspend fun postPedido(pedido:Pedido,token:String?): Response<ResponseBody>
     {
-        return apiServices.postPedido(pedido)
+        return apiServices.postPedido(pedido,token)
     }
 }

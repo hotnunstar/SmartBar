@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartBar.Models;
 using SmartBar.Services;
@@ -28,7 +29,8 @@ namespace SmartBar.Controllers
         {
             return await _resquestService.GetAsyncByClientAndState(idClient, state);
         }*/
-        [HttpPost]
+        [HttpPost,Authorize]
+        
         public async Task<IActionResult> PostRequest(RequestModel request)
         {
             request.IdRequest = ""; //Atribuir ID default
