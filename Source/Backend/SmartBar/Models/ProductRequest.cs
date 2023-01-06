@@ -10,7 +10,6 @@ namespace SmartBar.Models
         string idProduct;
         int quantity;
 
-
         /// <summary>
         /// Construtor dos produtos selecionados no pedido vazio
         /// </summary>
@@ -30,7 +29,6 @@ namespace SmartBar.Models
         /// <summary>
         /// Id do produto pertencente ao pedido
         /// </summary>
-
         public string IdProduct { get { return this.idProduct; } set { idProduct = value; } }
 
         /// <summary>

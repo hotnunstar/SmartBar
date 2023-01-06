@@ -6,6 +6,9 @@ using SmartBar.Services;
 
 namespace SmartBar.Controllers
 {
+    /// <summary>
+    /// Controlador de pedidos
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class RequestController : ControllerBase
@@ -30,20 +33,35 @@ namespace SmartBar.Controllers
             _historicService = historicService;
         }
 
-        [HttpGet]
+        /// <summary>
+        /// Obter todos os pedidos em aberto
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, Authorize]
         public async Task<List<RequestModel>> GetAll()
         {
             var list = await _resquestService.GetAsync();
             return list;
         }
 
+        /// <summary>
+        /// Inserção de um pedido
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost,Authorize]
         public async Task<IActionResult> PostRequest(RequestModel request)
         {
+            UserModel user = new();
             List<ProductModel> productsList = await _productService.GetAsync(); //lista de produtos
             List<ProductRequest> productRequest = new List<ProductRequest>(); 
-            productRequest = request.ProductAndQuantity; // lista de produtos ao pedido do cliente 
-            UserModel user = await _userService.GetAsyncById(request.IdCliente);
+            productRequest = request.ProductAndQuantity; // lista de produtos ao pedido do cliente
+                          
+            var getRequest = await _userService.GetAsyncById(request.IdCliente);
+
+            if(getRequest != null) user = getRequest;
+            else return BadRequest("Utilizador não encontrado");
+            
             double auxSaldo = 0;
             double auxSaldoInicial = user.Balance;
             int aux = 0;
@@ -102,17 +120,13 @@ namespace SmartBar.Controllers
                     if (request.State == 1)
                     {
                         request.State++;
+                        await _resquestService.UpdateAsync(idRequest, request);
                         // FALTA ENVIAR NOTIFICAÇÃO PARA O UTILIZADOR A CERCA DA ATUALIZAÇÃO DO PEDIDO
                         return Accepted();
                     }
                     if (request.State == 2)
                     {
                         request.State++;
-                        // FALTA ENVIAR NOTIFICAÇÃO PARA O UTILIZADOR A CERCA DA ATUALIZAÇÃO DO PEDIDO
-                        return Accepted();
-                    }
-                    if (request.State == 3)
-                    {
                         HistoricModel historic = new()
                         {
                             IdClient = request.IdCliente,
@@ -127,9 +141,10 @@ namespace SmartBar.Controllers
                         await _historicService.CreateAsync(historic);
                         await _resquestService.DeleteAsync(idRequest);
 
+                        // FALTA ENVIAR NOTIFICAÇÃO PARA O UTILIZADOR A CERCA DA ATUALIZAÇÃO DO PEDIDO
                         return Accepted();
                     }
-                    if (request.State > 3) { return BadRequest("Estado Impossível"); }
+                    if (request.State >= 3) { return BadRequest("Estado Impossível"); }
                 }
                 catch { return BadRequest("Erro na atualização do pedido"); }
             }

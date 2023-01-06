@@ -42,7 +42,6 @@ namespace SmartBar.Models
             this.type = Type;
         }
 
-
         /// <summary>
         /// ID do produto
         /// </summary>

@@ -44,6 +44,5 @@
         /// Coleção de utilizadores
         /// </summary>
         public string UserCollectionName { get; set; } = null!;
-        
     }
 }
