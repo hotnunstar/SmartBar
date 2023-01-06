@@ -80,14 +80,15 @@ namespace SmartBar.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPut, Authorize]
-        public async Task<ActionResult> PutRequest(RequestModel request)
+        public async Task<ActionResult> PutRequest(string idRequest)
         {
             HistoricModel historic = new();
+            RequestModel request = new();
 
             if (GetUserType() == "CLIENTE") return Unauthorized();
             if (GetUserType() == "COLABORADOR")
             {
-                if (await _resquestService.GetAsyncByRequestId(request.IdRequest) == null) return BadRequest("1");
+                if (await _resquestService.GetAsyncByRequestId(idRequest) == null) return BadRequest("1");
                 else
                 {
                     try
