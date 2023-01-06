@@ -5,32 +5,46 @@ using SmartBar.Services;
 
 namespace SmartBar.Controllers
 {
+    /// <summary>
+    /// Controller do histórico
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class HistoricController : ControllerBase
     {
         private readonly HistoricService _historicService;
-
+        /// <summary>
+        /// Construtor do controller do histórico
+        /// </summary>
+        /// <param name="historicService"></param>
         public HistoricController(HistoricService historicService) => _historicService = historicService;
 
-        [HttpGet]
-        public async Task<List<HistoricModel>> GetAll()
+        /// <summary>
+        /// Obter o Histórico Global
+        /// </summary>
+        /// <returns>O Histórico ou NotFound</returns>
+        [Route("GetHistoric")]
+        [HttpGet, Authorize]
+        public async Task<IActionResult> GetAll()
         {
-            List<HistoricModel> list;
-            list = await _historicService.GetAsync();
-            return list;
+            var historic = await _historicService.GetAsync();
+            if (historic.Count > 0)
+            {
+                return Ok(historic);
+            }
+            return BadRequest("Vazio"); 
         }
 
         /// <summary>
         /// Obter o Histórico de um determinado cliente
         /// </summary>
-        /// <returns></returns>
+        /// <returns>O Histórico do Cliente ou NotFound</returns>
         [Route("GetHistoricByClient")]
         [HttpGet, Authorize]
         public async Task<IActionResult> GetAllByClient()
         {
-            const int MAXLENGTH = 10;
-            string aux, aux2;
+            const int MAXLENGTH = 19;
+            string auxDateRequest, auxDateExpected;
             string idClient = GetUserID();
 
             if (idClient != null)
@@ -40,44 +54,59 @@ namespace SmartBar.Controllers
                 {
                     foreach (var item in historic)
                     {
-                        aux = item.DateRequest.ToString();
-                        if(aux.Length > MAXLENGTH)
+                        //Formatação para o kotlin aceitar as datas
+                        auxDateRequest = item.DateRequest.ToString();
+                        if(auxDateRequest.Length > MAXLENGTH)
                         {
-                            aux.Substring(0, MAXLENGTH);
+                            auxDateRequest.Substring(0, MAXLENGTH);
                         }
-                        item.DateRequest = Convert.ToDateTime(aux.Substring(0, MAXLENGTH));
-                        
+                        item.DateRequest = Convert.ToDateTime(auxDateRequest.Substring(0, MAXLENGTH));
 
-                        aux2 = item.DateExpected.ToString();
-                        if(aux2.Length > MAXLENGTH)
+
+                        auxDateExpected = item.DateExpected.ToString();
+                        if(auxDateExpected.Length > MAXLENGTH)
                         {
-                            aux2.Substring(0, MAXLENGTH);
+                            auxDateExpected.Substring(0, MAXLENGTH);
                         }
-                        item.DateExpected = Convert.ToDateTime(aux.Substring(0, MAXLENGTH));
+                        item.DateExpected = Convert.ToDateTime(auxDateExpected.Substring(0, MAXLENGTH));
                         
                     }
                     return Ok(historic);
                 }
             }
-            return NotFound("2");
+            return BadRequest("Vazio");
         }
 
-        [HttpPost]
+        /*[HttpPost, Authorize]
         public async Task<IActionResult> PostHistoric(HistoricModel historic)
         {
-            string aux;
-           
-            historic.IdRequest = ""; //Atribuir ID default
-            historic.State = 4; //Estado Final
-            historic.DateRequest = DateTime.Now;
-            historic.DateExpected = historic.DateRequest.AddHours(1);
-            historic.IdClient = "63a4ca2eae2ed6f20722a1b4";
-            historic.TotalPrice = 10.0;
-            historic.IdProduct.Add("1");
-            await _historicService.CreateAsync(historic);
-            return CreatedAtAction(nameof(GetAll), new { id = historic.IdRequest}, historic);
+            RequestModel request = new RequestModel();
+            if (await _requestService.GetAsyncByRequestId(request.IdRequest) == null)
+            {
+                return BadRequest("ID inexistente");
+            }
+            else
+            {
+                try
+                {
+                    historic.IdRequest = request.IdRequest;
+                    historic.IdClient = request.IdClient;
+                    historic.IdProduct = request.IdProduct;
+                    historic.DateExpected = request.DateExpected;
+                    historic.DateRequest = request.DateRequest;
+                    historic.TotalPrice = request.TotalPrice;
+                    historic.State = request.State;
 
-        }
+                    if (historic.State != 3) //Estado Concluído
+                    {
+                        return BadRequest("O Estado não é o Concluído");
+                    }
+                    await _historicService.CreateAsync(historic);
+                    return Ok();
+                }
+                catch { return BadRequest(); }
+            }
+        }*/
 
         private string GetUserID() { return this.User.Claims.First(i => i.Type == "id").Value; }
     }

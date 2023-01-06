@@ -9,7 +9,7 @@ namespace SmartBar.Models
         [BsonRepresentation(BsonType.ObjectId)]
         string idRequest;
         string idClient;
-        List<string> idProduct;
+        List<string> idProduct; //productRequest
         DateTime dateExpected;
         DateTime dateRequest;
         double totalPrice;
