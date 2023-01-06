@@ -31,12 +31,12 @@ namespace SmartBar.Models
         /// Id do produto pertencente ao pedido
         /// </summary>
 
-        public string IdProduct { get { return this.idProduct; } }
+        public string IdProduct { get { return this.idProduct; } set { idProduct = value; } }
 
         /// <summary>
         /// quantidade de produtos selecionados 
         /// </summary>
-        public int Quantity { get { return this.quantity; } }   
+        public int Quantity { get { return this.quantity; } set { quantity = value; } }   
 
     }
 }
