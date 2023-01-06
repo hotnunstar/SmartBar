@@ -14,7 +14,7 @@ namespace SmartBar.Services
         /// <summary>
         /// Construtor default de ligação à coleção do histórico
         /// </summary>
-        /// <param name="smartBarDataBaseSettingsModel"></param>
+        /// <param name="smartBarDatabaseSettingsModel"></param>
         public HistoricService(IOptions<SmartBarDatabaseSettingsModel> smartBarDatabaseSettingsModel)
         {
             var mongoClient = new MongoClient(smartBarDatabaseSettingsModel.Value.ConnectionString);

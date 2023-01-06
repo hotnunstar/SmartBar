@@ -9,7 +9,7 @@ namespace SmartBar.Models
         [BsonRepresentation(BsonType.ObjectId)]
         string idRequest;
         string idClient;
-        List<string> idProduct;
+        List<ProductRequest> productAndQuantity;
         DateTime dateExpected;
         DateTime dateRequest;
         double totalPrice;
@@ -25,16 +25,16 @@ namespace SmartBar.Models
         /// </summary>
         /// <param name="idRequest"></param>
         /// <param name="idClient"></param>
-        /// <param name="idProduct"></param>
+        /// <param name="productAndQuantity"></param>
         /// <param name="dateExpected"></param>
         /// <param name="dateRequest"></param>
         /// <param name="totalPrice"></param>
         /// <param name="state"></param>
-        public HistoricModel(string idRequest, string idClient, List<string> idProduct, DateTime dateExpected, DateTime dateRequest, double totalPrice, int state)
+        public HistoricModel(string idRequest, string idClient, List<ProductRequest> productAndQuantity, DateTime dateExpected, DateTime dateRequest, double totalPrice, int state)
         {
             this.idRequest = idRequest;
             this.idClient = idClient;
-            this.idProduct = idProduct;
+            this.productAndQuantity = productAndQuantity;
             this.dateExpected = dateExpected;
             this.dateRequest = dateRequest;
             this.totalPrice = totalPrice;
@@ -54,7 +54,7 @@ namespace SmartBar.Models
         /// <summary>
         /// Lista de ID´s de Produtos que o Pedido tem
         /// </summary>
-        public List<string> IdProduct { get { return idProduct; } set { idProduct = value; } }
+        public List<ProductRequest> ProductAndQuantity { get { return productAndQuantity; } set { productAndQuantity = value; } }
 
         /// <summary>
         /// Data de levantamento do Pedido
