@@ -166,7 +166,7 @@ namespace SmartBar.Controllers
                     try
                     {
                         await _productService.UpdateAsync(product.Id, product);
-                        return Ok();
+                        return Accepted();
                     }
                     catch { return BadRequest(); }
                 }

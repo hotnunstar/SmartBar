@@ -14,6 +14,7 @@ namespace SmartBar.Models
         DateTime dateRequest;
         double value;
         int state;
+        string firebaseToken;
 
         /// <summary>
         /// Construtor vazio de um Pedido
@@ -30,7 +31,8 @@ namespace SmartBar.Models
         /// <param name="DateRequest"></param>
         /// <param name="Value"></param>
         /// <param name="State"></param>
-        public RequestModel(string IdRequest, string IdCliente, List<string> IdProduct, DateTime DatePickUp, DateTime DateRequest, double Value, int State)
+        /// <param name="FirebaseToken"></param>
+        public RequestModel(string IdRequest, string IdCliente, List<string> IdProduct, DateTime DatePickUp, DateTime DateRequest, double Value, int State, string FirebaseToken)
         {
             idRequest = IdRequest;
             idCliente = IdCliente;
@@ -39,6 +41,7 @@ namespace SmartBar.Models
             dateRequest = DateRequest;
             value = Value;
             state = State;
+            firebaseToken = FirebaseToken;
         }
 
         /// <summary>
@@ -75,5 +78,10 @@ namespace SmartBar.Models
         /// Estado que o pedido se encontra
         /// </summary>
         public int State { get { return state; } set { state = value; } }
+
+        /// <summary>
+        /// Token da firebase (para push notification)
+        /// </summary>
+        public string FirebaseToken { get { return firebaseToken; } set { firebaseToken = value; } }
     }
 }

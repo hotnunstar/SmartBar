@@ -52,7 +52,7 @@ namespace SmartBar.Controllers
                     var userData = await userController.GetUserByEmail(login.Email, login.Password);
                     if (userData != null)
                     {
-                        token = GenerateToken(userData.Id, "CLIENTE");
+                        token = GenerateToken(userData.Id, "CLIENTE", login.FirebaseToken);
                         return Ok(token);
                     }
                     else return NotFound();
@@ -63,7 +63,7 @@ namespace SmartBar.Controllers
                     var userData = await barController.GetBarByEmail(login.Email, login.Password);
                     if (userData != null)
                     {
-                        token = GenerateToken(userData.Id, "COLABORADOR");
+                        token = GenerateToken(userData.Id, "COLABORADOR", login.FirebaseToken);
                         return Ok(token);
                     }
                     else return NotFound();
@@ -73,9 +73,9 @@ namespace SmartBar.Controllers
             return NotFound();
         }
 
-        private string GenerateToken(string id, string userType)
+        private string GenerateToken(string id, string userType, string firebaseToken)
         {
-            var claims = new[] { new Claim("id", id), new Claim("userType", userType) };
+            var claims = new[] { new Claim("id", id), new Claim("userType", userType), new Claim("firebaseToken", firebaseToken) };
             var issuer = _config["Jwt:Issuer"];
             var audience = _config["Jwt:Audience"];
             var expiry = DateTime.Now.AddMonths(3); // Atribui uma validade de 3 meses ao token
