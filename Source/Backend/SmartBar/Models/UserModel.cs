@@ -15,7 +15,7 @@ namespace SmartBar.Models
         string email;
         string password;
         string name;
-        decimal balance;
+        double balance;
 
         /// <summary>
         /// Construtor vazio do cliente
@@ -30,7 +30,7 @@ namespace SmartBar.Models
         /// <param name="Password"></param>
         /// <param name="Name"></param>
         /// <param name="Balance"></param>
-        public UserModel(string Id, string Email, string Password, string Name, decimal Balance)
+        public UserModel(string Id, string Email, string Password, string Name, double Balance)
         {
             this.id = Id;
             this.email = Email;
@@ -62,6 +62,6 @@ namespace SmartBar.Models
         /// <summary>
         /// Saldo do cliente
         /// </summary>
-        public decimal Balance { get { return balance; } set { balance = value; } }
+        public double Balance { get { return balance; } set { balance = value; } }
     }
 }
