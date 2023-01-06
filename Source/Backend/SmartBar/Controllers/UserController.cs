@@ -35,7 +35,7 @@ namespace SmartBar.Controllers
         {
             if(email != null && password != null)
             {
-                password = Functions.EncodePasswordToBase64(password);
+                password = Functions.EncodePassword(password);
                 var user = await _userService.GetAsyncByEmail(email);
                 if (user == null || user.Password != password) return null;
                 else
@@ -79,15 +79,21 @@ namespace SmartBar.Controllers
         public async Task<IActionResult> PostUser(UserModel user)
         {
             user.Id = ""; // Para atribuir ID default
-            user.Password = Functions.EncodePasswordToBase64(user.Password);
 
-            // FALTA FAZER VERIFICAÇÕES DOS DADOS DE ENTRADA
-            if(Functions.CheckEmail(user.Email))
+            var checkUser = await _userService.GetAsyncByEmail(user.Email);
+            if(checkUser == null) 
             {
-                await _userService.CreateAsync(user);
-                return CreatedAtAction(nameof(GetUserByEmail), new { id = user.Id }, user);
+                user.Password = Functions.EncodePassword(user.Password);
+
+                // FALTA FAZER VERIFICAÇÕES DOS DADOS DE ENTRADA
+                if (Functions.CheckEmail(user.Email))
+                {
+                    await _userService.CreateAsync(user);
+                    return CreatedAtAction(nameof(GetUserByEmail), new { id = user.Id }, user);
+                }
+                else return BadRequest("EMAIL EM FORMATO INCORRETO");
             }
-            return BadRequest();
+            else return BadRequest("EMAIL JÁ REGISTADO");
         }
 
         private string GetUtilizadorID() { return this.User.Claims.First(i => i.Type == "id").Value; }

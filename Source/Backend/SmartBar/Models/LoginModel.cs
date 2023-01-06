@@ -8,6 +8,7 @@
         string userType;
         string email;
         string password;
+        string firebaseToken;
 
         /// <summary>
         /// Construtor do Modelo do Login
@@ -15,11 +16,13 @@
         /// <param name="UserType"></param>
         /// <param name="Email"></param>
         /// <param name="Password"></param>
-        public LoginModel(string UserType, string Email, string Password)
+        /// /// <param name="FirebaseToken"></param>
+        public LoginModel(string UserType, string Email, string Password, string FirebaseToken)
         {
             userType = UserType;
             email = Email;
             password = Password;
+            firebaseToken = FirebaseToken;
         }
 
         /// <summary>
@@ -36,5 +39,10 @@
         /// Password do utilizador
         /// </summary>
         public string Password { get { return password; } set { password = value; } }
+
+        /// <summary>
+        /// Token do firebase (para push notification)
+        /// </summary>
+        public string FirebaseToken { get { return firebaseToken; } set { firebaseToken = value; } }
     }
 }
