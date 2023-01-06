@@ -9,7 +9,7 @@ namespace SmartBar.Models
         [BsonRepresentation(BsonType.ObjectId)]
         string idRequest;
         string idCliente;
-        List<string> idProduct;
+        List<ProductRequest> productAndQuantity;
         DateTime datePickUp;
         DateTime dateRequest;
         double value;
@@ -26,17 +26,17 @@ namespace SmartBar.Models
         /// </summary>
         /// <param name="IdRequest"></param>
         /// <param name="IdCliente"></param>
-        /// <param name="IdProduct"></param>
+        /// <param name="productAndQuantity"></param>
         /// <param name="DatePickUp"></param>
         /// <param name="DateRequest"></param>
         /// <param name="Value"></param>
         /// <param name="State"></param>
         /// <param name="FirebaseToken"></param>
-        public RequestModel(string IdRequest, string IdCliente, List<string> IdProduct, DateTime DatePickUp, DateTime DateRequest, double Value, int State, string FirebaseToken)
+        public RequestModel(string IdRequest, string IdCliente, List<ProductRequest> productAndQuantity, DateTime DatePickUp, DateTime DateRequest, double Value, int State, string FirebaseToken)
         {
             idRequest = IdRequest;
             idCliente = IdCliente;
-            idProduct = IdProduct;
+            this.productAndQuantity = productAndQuantity;
             datePickUp = DatePickUp;
             dateRequest = DateRequest;
             value = Value;
@@ -55,9 +55,9 @@ namespace SmartBar.Models
         public string IdCliente { get { return idCliente; } set { idCliente = value; } }
 
         /// <summary>
-        /// Lista de ID´s de Produtos que o Pedido tem
+        /// Lista de ID´s e quantidades de Produtos que o Pedido tem
         /// </summary>
-        public List<string> IdProduct { get { return idProduct; } set { idProduct = value; } }
+        public List<ProductRequest> ProductAndQuantity { get { return productAndQuantity; } set { productAndQuantity = value; } }
 
         /// <summary>
         /// Data de levantamento do Pedido
