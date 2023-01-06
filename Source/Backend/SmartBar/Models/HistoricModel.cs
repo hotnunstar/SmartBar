@@ -25,7 +25,7 @@ namespace SmartBar.Models
         /// </summary>
         /// <param name="idRequest"></param>
         /// <param name="idClient"></param>
-        /// <param name="idProduct"></param>
+        /// <param name="productAndQuantity"></param>
         /// <param name="dateExpected"></param>
         /// <param name="dateRequest"></param>
         /// <param name="totalPrice"></param>
@@ -54,7 +54,7 @@ namespace SmartBar.Models
         /// <summary>
         /// Lista de ID´s de Produtos que o Pedido tem
         /// </summary>
-        public List<ProductRequest> IdProduct { get { return productAndQuantity; } set { productAndQuantity = value; } }
+        public List<ProductRequest> ProductAndQuantity { get { return productAndQuantity; } set { productAndQuantity = value; } }
 
         /// <summary>
         /// Data de levantamento do Pedido

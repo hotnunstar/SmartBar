@@ -74,6 +74,11 @@ namespace SmartBar.Controllers
             return CreatedAtAction(nameof(GetAll), new { id = request.IdRequest }, request);
         }
 
+        /// <summary>
+        /// Encrementa o State do Pedido até o Concluído(3) e quando este chega a 3 é passado a Histórico
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPut, Authorize]
         public async Task<ActionResult> PutRequest(RequestModel request)
         {
@@ -82,17 +87,17 @@ namespace SmartBar.Controllers
             if (GetUserType() == "CLIENTE") return Unauthorized();
             if (GetUserType() == "COLABORADOR")
             {
-                if (await _resquestService.GetAsyncByRequestId(request.IdRequest) == null) return BadRequest();
+                if (await _resquestService.GetAsyncByRequestId(request.IdRequest) == null) return BadRequest("1");
                 else
                 {
                     try
                     {
-                        request.State++;
+                        request.State = request.State + 1;
                         if (request.State == 3)
                         {
                             historic.IdClient = request.IdCliente;
                             historic.IdRequest = request.IdRequest;
-                            //historic.IdProduct = request.IdProduct;
+                            historic.ProductAndQuantity = request.ProductAndQuantity;
                             historic.DateExpected = request.DatePickUp;
                             historic.DateRequest = request.DateRequest;
                             historic.TotalPrice = request.Value;
@@ -108,7 +113,7 @@ namespace SmartBar.Controllers
                             return Ok();
                         }
                     }
-                    catch { return BadRequest(); }
+                    catch { return BadRequest("2"); }
                 }
             }
             else return NotFound();
