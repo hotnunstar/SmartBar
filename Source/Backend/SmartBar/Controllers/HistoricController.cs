@@ -77,37 +77,6 @@ namespace SmartBar.Controllers
             return BadRequest("Vazio");
         }
 
-        /*[HttpPost, Authorize]
-        public async Task<IActionResult> PostHistoric(HistoricModel historic)
-        {
-            RequestModel request = new RequestModel();
-            if (await _requestService.GetAsyncByRequestId(request.IdRequest) == null)
-            {
-                return BadRequest("ID inexistente");
-            }
-            else
-            {
-                try
-                {
-                    historic.IdRequest = request.IdRequest;
-                    historic.IdClient = request.IdClient;
-                    historic.IdProduct = request.IdProduct;
-                    historic.DateExpected = request.DateExpected;
-                    historic.DateRequest = request.DateRequest;
-                    historic.TotalPrice = request.TotalPrice;
-                    historic.State = request.State;
-
-                    if (historic.State != 3) //Estado Concluído
-                    {
-                        return BadRequest("O Estado não é o Concluído");
-                    }
-                    await _historicService.CreateAsync(historic);
-                    return Ok();
-                }
-                catch { return BadRequest(); }
-            }
-        }*/
-
         private string GetUserID() { return this.User.Claims.First(i => i.Type == "id").Value; }
     }
 }

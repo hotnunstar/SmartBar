@@ -29,9 +29,15 @@ public class RequestService
 
 
     /// <summary>
+    /// Obter o Pedido por IdRequest
+    /// </summary>
+    /// <param name="idRequest"></param>
+    /// <returns></returns>
+    public async Task<RequestModel> GetAsyncByRequestId(string idRequest) =>
+        await _requestCollection.Find(x => x.IdRequest == idRequest).FirstOrDefaultAsync();
+
+    /// <summary>
     /// Obter os pedidos de cada cliente em determinado estado
-    /// 
-    /// --Objetivo de mostrar o Histórico de cada cliente--
     /// </summary>
     /// <param name="state"></param>
     /// <param name="idClient"></param>
@@ -41,8 +47,6 @@ public class RequestService
 
     /// <summary>
     /// Obter os pedidos por estado
-    /// 
-    /// --Histórico na página Colaborador, e receber os pedidos de todos os clientes--
     /// </summary>
     /// <param name="state"></param>
     /// <returns></returns>

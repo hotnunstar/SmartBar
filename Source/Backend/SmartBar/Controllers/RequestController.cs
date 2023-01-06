@@ -12,6 +12,7 @@ namespace SmartBar.Controllers
     {
         private readonly RequestService _resquestService;
         private readonly ProductService _productService;
+        private readonly HistoricService _historicService;
 
 
         /// <summary>
@@ -19,10 +20,11 @@ namespace SmartBar.Controllers
         /// </summary>
         /// <param name="resquestService"></param>
         /// <param name="productService"></param>
-        public RequestController(RequestService resquestService, ProductService productService)
+        public RequestController(RequestService resquestService, ProductService productService, HistoricService historicService)
         {
             _resquestService = resquestService;
             _productService = productService;
+            _historicService = historicService;
         }
 
 
@@ -71,6 +73,48 @@ namespace SmartBar.Controllers
             await _resquestService.CreateAsync(request);
             return CreatedAtAction(nameof(GetAll), new { id = request.IdRequest }, request);
         }
+
+        [HttpPut, Authorize]
+        public async Task<ActionResult> PutRequest(RequestModel request)
+        {
+            HistoricModel historic = new();
+
+            if (GetUserType() == "CLIENTE") return Unauthorized();
+            if (GetUserType() == "COLABORADOR")
+            {
+                if (await _resquestService.GetAsyncByRequestId(request.IdRequest) == null) return BadRequest();
+                else
+                {
+                    try
+                    {
+                        request.State++;
+                        if (request.State == 3)
+                        {
+                            historic.IdClient = request.IdCliente;
+                            historic.IdRequest = request.IdRequest;
+                            //historic.IdProduct = request.IdProduct;
+                            historic.DateExpected = request.DatePickUp;
+                            historic.DateRequest = request.DateRequest;
+                            historic.TotalPrice = request.Value;
+                            historic.State = request.State;
+                            await _historicService.CreateAsync(historic);
+                            await _resquestService.DeleteAsync(request.IdRequest);
+                            return Ok();
+                        }
+                        if (request.State > 3) { return BadRequest("Estado Impossível"); }
+                        else
+                        {
+                            await _resquestService.UpdateAsync(request.IdRequest, request);
+                            return Ok();
+                        }
+                    }
+                    catch { return BadRequest(); }
+                }
+            }
+            else return NotFound();
+        }
+
+        private string GetUserType() { return this.User.Claims.First(i => i.Type == "userType").Value; }
 
     }
 }
