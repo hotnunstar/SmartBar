@@ -5,35 +5,31 @@ import com.ipca.smartbar.client.products.Product
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface ApiServices {
 
     //region Products Client
     @GET("/api/Product/Menus")
-    suspend fun getProductsHotFood(): Response<List<Product>>
+    suspend fun getProductsHotFood(@Header("Authorization") token: String?): Response<List<Product>>
 
     @GET("/api/Product/Snacks")
-    suspend fun getProductsPackaged(): Response<List<Product>>
+    suspend fun getProductsPackaged(@Header("Authorization") token: String?): Response<List<Product>>
 
     @GET("/api/Product/HotDrink")
-    suspend fun getProductsHotDrink(): Response<List<Product>>
+    suspend fun getProductsHotDrink(@Header("Authorization") token: String?): Response<List<Product>>
 
-    @GET("/api/Product/ColDrink")
+    @GET("/api/Product/ColdDrink")
     suspend fun getProductsColdDrink(@Header("Authorization") token: String?): Response<List<Product>>
     //endregion
 
     //region Requests
     @Headers("Content-Type: application/json")
-
     @POST("/api/Request")
-    suspend fun postPedido(@Body pedido:Pedido,@Header("Authorization") token: String?): Response<ResponseBody>
+    suspend fun postPedido(@Body pedido:Pedido, @Header("Authorization") token: String?): Response<ResponseBody>
 
+    @GET("/api/Request/{state}")
+    suspend fun getRequests(@Path("state") state: Int, @Header("Authorization") token: String?): Response<ResponseBody>
     //endregion
 
 

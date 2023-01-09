@@ -10,6 +10,7 @@ import com.ipca.smartbar.R
 import com.ipca.smartbar.bar.historic.BarHistoricActivity
 import com.ipca.smartbar.bar.products.navigation.*
 import com.ipca.smartbar.bar.profile.BarProfileActivity
+import com.ipca.smartbar.bar.requests.BarRequestsActivity
 import com.ipca.smartbar.databinding.ActivityBarProductsBinding
 import com.ipca.smartbar.getToken
 
@@ -94,7 +95,7 @@ class BarProductsActivity : AppCompatActivity() {
                 true
             }
             R.id.action_requests_staff -> {
-                val intent = Intent(this@BarProductsActivity, BarProfileActivity::class.java)
+                val intent = Intent(this@BarProductsActivity, BarRequestsActivity::class.java)
                 startActivity(intent)
                 true
             }

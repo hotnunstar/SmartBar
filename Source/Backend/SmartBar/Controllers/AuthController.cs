@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using MongoDB.Bson.IO;
-using Newtonsoft.Json.Linq;
 using SmartBar.Models;
 using SmartBar.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Text.Json.Nodes;
 
 namespace SmartBar.Controllers
 {

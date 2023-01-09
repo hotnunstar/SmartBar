@@ -9,11 +9,12 @@ namespace SmartBar.Models
         [BsonRepresentation(BsonType.ObjectId)]
         string idRequest;
         string idCliente;
+        string idBar;
         List<ProductRequest> productAndQuantity;
-        DateTime datePickUp;
         DateTime dateRequest;
         double value;
         int state;
+        string horas;
         string firebaseToken;
 
         /// <summary>
@@ -26,22 +27,24 @@ namespace SmartBar.Models
         /// </summary>
         /// <param name="IdRequest"></param>
         /// <param name="IdCliente"></param>
-        /// <param name="productAndQuantity"></param>
-        /// <param name="DatePickUp"></param>
+        /// <param name="ProductAndQuantity"></param>
         /// <param name="DateRequest"></param>
         /// <param name="Value"></param>
         /// <param name="State"></param>
         /// <param name="FirebaseToken"></param>
-        public RequestModel(string IdRequest, string IdCliente, List<ProductRequest> productAndQuantity, DateTime DatePickUp, DateTime DateRequest, double Value, int State, string FirebaseToken)
+        /// <param name="IdBar"></param>
+        /// <param name="Horas"></param>
+        public RequestModel(string IdRequest, string IdCliente, List<ProductRequest> ProductAndQuantity, DateTime DateRequest, double Value, int State, string FirebaseToken, string IdBar, string Horas)
         {
             idRequest = IdRequest;
             idCliente = IdCliente;
-            this.productAndQuantity = productAndQuantity;
-            datePickUp = DatePickUp;
+            productAndQuantity = ProductAndQuantity;
             dateRequest = DateRequest;
             value = Value;
             state = State;
             firebaseToken = FirebaseToken;
+            idBar = IdBar;
+            horas = Horas;
         }
 
         /// <summary>
@@ -58,11 +61,6 @@ namespace SmartBar.Models
         /// Lista de ID´s e quantidades de Produtos que o Pedido tem
         /// </summary>
         public List<ProductRequest> ProductAndQuantity { get { return productAndQuantity; } set { productAndQuantity = value; } }
-
-        /// <summary>
-        /// Data de levantamento do Pedido
-        /// </summary>
-        public DateTime DatePickUp { get { return datePickUp; } set { datePickUp = value; } }
 
         /// <summary>
         /// Data que o Pedido foi efetuado
@@ -83,5 +81,15 @@ namespace SmartBar.Models
         /// Token da firebase (para push notification)
         /// </summary>
         public string FirebaseToken { get { return firebaseToken; } set { firebaseToken = value; } }
+
+        /// <summary>
+        /// Id do bar
+        /// </summary>
+        public string IdBar { get { return idBar; } set { idBar = value; } }
+
+        /// <summary>
+        /// hora prevista para o levantamento do pedido
+        /// </summary>
+        public string Horas { get { return horas; } set { horas = value; } }
     }
 }

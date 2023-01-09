@@ -18,6 +18,7 @@ namespace SmartBar.Controllers
         private readonly UserService _userService;
         private readonly HistoricService _historicService;
 
+
         /// <summary>
         /// Construtor do controlador de pedidos
         /// </summary>
@@ -33,15 +34,36 @@ namespace SmartBar.Controllers
             _historicService = historicService;
         }
 
+
         /// <summary>
         /// Obter todos os pedidos em aberto
         /// </summary>
         /// <returns></returns>
         [HttpGet, Authorize]
-        public async Task<List<RequestModel>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var list = await _resquestService.GetAsync();
-            return list;
+            if (list.Count > 0)
+            {
+                return Ok(list);
+            }
+            else return NotFound("Não foram encontrados pedidos ativos");
+        }
+
+        /// <summary>
+        /// Obter pedidos em aberto por determinado estado
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        [HttpGet("{state}"), Authorize]
+        public async Task<IActionResult> GetByState(int state)
+        {
+            var list = await _resquestService.GetAsyncByState(state);
+            if (list.Count > 0)
+            {
+                return Ok(list);
+            }
+            else return NotFound("Não foram encontrados pedidos ativos");
         }
 
         /// <summary>
@@ -54,15 +76,14 @@ namespace SmartBar.Controllers
         {
             UserModel user = new();
             List<ProductModel> productsList = await _productService.GetAsync(); //lista de produtos
-            List<ProductRequest> productRequest = new List<ProductRequest>(); 
-            productRequest = request.ProductAndQuantity; // lista de produtos ao pedido do cliente
-                          
-            var getRequest = await _userService.GetAsyncById(request.IdCliente);
-
-            if(getRequest != null) user = getRequest;
-            else return BadRequest("Utilizador não encontrado");
-            
+            List<ProductRequest> productRequest = new List<ProductRequest>();
+            productRequest = request.ProductAndQuantity; // lista de produtos ao pedido do cliente 
+            request.IdCliente = GetUtilizadorID();
+            user = await _userService.GetAsyncById(request.IdCliente);
+            if (user == null) return BadRequest("Utilizador não encontrado");
+  
             double auxSaldo = 0;
+            DateTime dateRequest = DateTime.Now;
             double auxSaldoInicial = user.Balance;
             int aux = 0;
             auxSaldo = user.Balance - request.Value;
@@ -95,14 +116,15 @@ namespace SmartBar.Controllers
             }
             request.IdRequest = ""; //Atribuir ID default
             request.State = 1; //Estado Inicial
-            request.DateRequest = DateTime.Now;
-            request.DatePickUp = request.DateRequest.AddHours(1);
+            request.DateRequest = dateRequest;
             await _resquestService.CreateAsync(request);
             return CreatedAtAction(nameof(GetAll), new { id = request.IdRequest }, request);
+            
         }
 
         /// <summary>
-        /// Encrementa o State do Pedido até o Concluído(3) e quando este chega a 3 é passado a Histórico
+        /// Incrementa o estado do Pedido até "concluído" (estado 3) e depois é convertido em histórico
+        /// Se o pedido for cancelado, o seu estado será o 4
         /// </summary>
         /// <param name="idRequest"></param>
         /// <returns></returns>
@@ -119,20 +141,43 @@ namespace SmartBar.Controllers
                 try{
                     if (request.State == 1)
                     {
+                        request.State = request.State + 1;
+                        if (request.State == 3)
+                        {
+                            HistoricModel historic = new();
+                            historic.IdClient = request.IdCliente;
+                            historic.IdRequest = request.IdRequest;
+                            historic.ProductAndQuantity = request.ProductAndQuantity;
+                            //historic.DateExpected = request.DatePickUp;
+                            historic.DateRequest = request.DateRequest;
+                            historic.TotalPrice = request.Value;
+                            historic.State = request.State;
+                            await _historicService.CreateAsync(historic);
+                            await _resquestService.DeleteAsync(request.IdRequest);
+                            return Ok();
+                        }
+                        if (request.State > 3) { return BadRequest("Estado Impossível"); }
+                        else
+                        {
+                            await _resquestService.UpdateAsync(request.IdRequest, request);
+                            return Ok();
+                        }
+
                         request.State++;
                         await _resquestService.UpdateAsync(idRequest, request);
                         // FALTA ENVIAR NOTIFICAÇÃO PARA O UTILIZADOR A CERCA DA ATUALIZAÇÃO DO PEDIDO
                         return Accepted();
                     }
-                    if (request.State == 2)
+                    if (request.State == 2 || request.State == 4)
                     {
-                        request.State++;
+                        if(request.State == 2) request.State++; // Só passa para o estado 3 se estiver no estado 2. Se o seu estado for o 4, este é mantido.
+
                         HistoricModel historic = new()
                         {
                             IdClient = request.IdCliente,
                             IdRequest = request.IdRequest,
                             ProductAndQuantity = request.ProductAndQuantity,
-                            DateExpected = request.DatePickUp,
+                            //DateExpected = request.DatePickUp,
                             DateRequest = request.DateRequest,
                             TotalPrice = request.Value,
                             State = request.State
@@ -144,7 +189,7 @@ namespace SmartBar.Controllers
                         // FALTA ENVIAR NOTIFICAÇÃO PARA O UTILIZADOR A CERCA DA ATUALIZAÇÃO DO PEDIDO
                         return Accepted();
                     }
-                    if (request.State >= 3) { return BadRequest("Estado Impossível"); }
+                    if (request.State > 4) { return BadRequest("Estado Impossível"); }
                 }
                 catch { return BadRequest("Erro na atualização do pedido"); }
             }
@@ -152,5 +197,7 @@ namespace SmartBar.Controllers
         }
 
         private string GetUserType() { return this.User.Claims.First(i => i.Type == "userType").Value; }
+        private string GetUtilizadorID() { return this.User.Claims.First(i => i.Type == "id").Value; }
+
     }
 }

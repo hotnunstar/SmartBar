@@ -10,22 +10,22 @@ class BackendDataSource {
     var client = Backend.getInstance()
     var apiServices = client.create(ApiServices::class.java)
 
-    suspend fun getProductsHotFood(): Response<List<Product>>
+    suspend fun getProductsHotFood(token:String?): Response<List<Product>>
     {
-        return apiServices.getProductsHotFood()
+        return apiServices.getProductsHotFood(token)
     }
 
-    suspend fun getProductsPackaged():Response<List<Product>>
+    suspend fun getProductsPackaged(token:String?):Response<List<Product>>
     {
-        return apiServices.getProductsPackaged()
+        return apiServices.getProductsPackaged(token)
     }
-    suspend fun getProductsHotDrink() : Response<List<Product>>
+    suspend fun getProductsHotDrink(token:String?) : Response<List<Product>>
     {
-        return apiServices.getProductsHotDrink()
+        return apiServices.getProductsHotDrink(token)
     }
-    suspend fun getProductsColdDrink(token:String?) : Response<ResponseBody>
+    suspend fun getProductsColdDrink(token:String?) : Response<List<Product>>
     {
-        return apiServices.getColdDrinks(token)
+        return apiServices.getProductsColdDrink(token)
     }
     suspend fun postPedido(pedido:Pedido,token:String?): Response<ResponseBody>
     {

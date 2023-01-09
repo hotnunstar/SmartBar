@@ -21,11 +21,11 @@ class ClientProductsActivity : AppCompatActivity() {
         setContentView(binding.root)
         if(savedInstanceState == null)
         {
-            /*val fragment = HotFoodFragment()
+            val fragment = HotFoodFragment(getToken())
             supportFragmentManager.beginTransaction().
                     replace(R.id.content_frame,fragment).
                     addToBackStack(null).
-                    commitAllowingStateLoss()*/
+                    commitAllowingStateLoss()
         }
         setUpBottomNavigation()
     }
@@ -77,7 +77,7 @@ class ClientProductsActivity : AppCompatActivity() {
             when(item.itemId)
             {
                 R.id.action_product_hot_food ->{
-                    val fragment = HotFoodFragment()
+                    val fragment = HotFoodFragment(getToken())
                     supportFragmentManager.beginTransaction().
                     replace(R.id.content_frame,fragment).
                     addToBackStack(null).
@@ -94,7 +94,7 @@ class ClientProductsActivity : AppCompatActivity() {
                     true
                 }
                 R.id.action_products_hot_drink -> {
-                    val fragment = HotDrinkFragment()
+                    val fragment = HotDrinkFragment(getToken())
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.content_frame, fragment)
                         .addToBackStack(null).commitAllowingStateLoss()
