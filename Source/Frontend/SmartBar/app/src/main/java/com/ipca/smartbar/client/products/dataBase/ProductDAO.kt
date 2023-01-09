@@ -2,6 +2,7 @@ package com.ipca.smartbar.client.products.dataBase
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.ipca.smartbar.client.cart.ProductPedido
 import com.ipca.smartbar.client.products.Product
 
 

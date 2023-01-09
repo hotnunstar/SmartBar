@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -57,7 +58,11 @@ class PackagedFragment(private val token:String?) : Fragment() {
             loadList(pair.first)
             adapter.notifyDataSetChanged()
         } else {
-            //fazer um toast
+            Toast.makeText(
+                context,
+                "Nao existe produtos",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

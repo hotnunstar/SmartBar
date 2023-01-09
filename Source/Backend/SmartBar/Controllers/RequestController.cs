@@ -79,11 +79,12 @@ namespace SmartBar.Controllers
             List<ProductRequest> productRequest = new List<ProductRequest>();
             productRequest = request.ProductAndQuantity; // lista de produtos ao pedido do cliente 
             request.IdCliente = GetUtilizadorID();
+            request.FirebaseToken = GetFirebaseToken();
             user = await _userService.GetAsyncById(request.IdCliente);
             if (user == null) return BadRequest("Utilizador não encontrado");
   
             double auxSaldo = 0;
-            DateTime dateRequest = DateTime.Now;
+            string dateRequest = DateTime.Now.ToString("dd/MM/yyyy");
             double auxSaldoInicial = user.Balance;
             int aux = 0;
             auxSaldo = user.Balance - request.Value;
@@ -180,6 +181,7 @@ namespace SmartBar.Controllers
 
         private string GetUserType() { return this.User.Claims.First(i => i.Type == "userType").Value; }
         private string GetUtilizadorID() { return this.User.Claims.First(i => i.Type == "id").Value; }
+        private string GetFirebaseToken() { return this.User.Claims.First(i => i.Type == "firebaseToken").Value; }
 
     }
 }
