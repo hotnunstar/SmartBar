@@ -16,7 +16,7 @@ data class Product(
     var id: String,
     @Json(name = "name")
     var nome: String?,
-    @Json(name = "image")
+    @Json(name = "picture")
     var image: String?=null,
     @Json(name = "price")
     var preco: Double=0.0,

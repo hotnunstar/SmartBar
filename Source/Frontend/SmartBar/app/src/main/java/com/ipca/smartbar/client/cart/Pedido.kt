@@ -23,5 +23,7 @@ data class Pedido(
     @Json(name = "firebaseToken")
     var firebaseToken:String,
     @Json(name = "horas")
-    var horas:String
+    var horas:String,
+    @Json(name = "dateRequest")
+var dateRequest:String
 )

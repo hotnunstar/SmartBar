@@ -11,7 +11,7 @@ namespace SmartBar.Models
         string idCliente;
         string idBar;
         List<ProductRequest> productAndQuantity;
-        DateTime dateRequest;
+        string dateRequest;
         double value;
         int state;
         string horas;
@@ -32,7 +32,7 @@ namespace SmartBar.Models
         /// <param name="Value"></param>
         /// <param name="State"></param>
         /// <param name="FirebaseToken"></param>
-        public RequestModel(string IdRequest, string IdCliente, List<ProductRequest> productAndQuantity, DateTime DateRequest, double Value, int State, string FirebaseToken, string idBar, string horas)
+        public RequestModel(string IdRequest, string IdCliente, List<ProductRequest> productAndQuantity, string DateRequest, double Value, int State, string FirebaseToken, string idBar, string horas)
         {
             idRequest = IdRequest;
             idCliente = IdCliente;
@@ -63,7 +63,7 @@ namespace SmartBar.Models
         /// <summary>
         /// Data que o Pedido foi efetuado
         /// </summary>
-        public DateTime DateRequest { get { return dateRequest; } set { dateRequest = value;} }
+        public string DateRequest { get { return dateRequest; } set { dateRequest = value;} }
 
         /// <summary>
         /// Valor total do Pedido
