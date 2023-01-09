@@ -40,10 +40,30 @@ namespace SmartBar.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet, Authorize]
-        public async Task<List<RequestModel>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var list = await _resquestService.GetAsync();
-            return list;
+            if (list.Count > 0)
+            {
+                return Ok(list);
+            }
+            else return NotFound("Não foram encontrados pedidos ativos");
+        }
+
+        /// <summary>
+        /// Obter pedidos em aberto por determinado estado
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        [HttpGet("{state}"), Authorize]
+        public async Task<IActionResult> GetByState(int state)
+        {
+            var list = await _resquestService.GetAsyncByState(state);
+            if (list.Count > 0)
+            {
+                return Ok(list);
+            }
+            else return NotFound("Não foram encontrados pedidos ativos");
         }
 
         /// <summary>
@@ -104,7 +124,8 @@ namespace SmartBar.Controllers
         }
 
         /// <summary>
-        /// Encrementa o State do Pedido até o Concluído(3) e quando este chega a 3 é passado a Histórico
+        /// Incrementa o estado do Pedido até "concluído" (estado 3) e depois é convertido em histórico
+        /// Se o pedido for cancelado, o seu estado será o 4
         /// </summary>
         /// <param name="idRequest"></param>
         /// <returns></returns>
@@ -148,9 +169,10 @@ namespace SmartBar.Controllers
                         // FALTA ENVIAR NOTIFICAÇÃO PARA O UTILIZADOR A CERCA DA ATUALIZAÇÃO DO PEDIDO
                         return Accepted();
                     }
-                    if (request.State == 2)
+                    if (request.State == 2 || request.State == 4)
                     {
-                        request.State++;
+                        if(request.State == 2) request.State++; // Só passa para o estado 3 se estiver no estado 2. Se o seu estado for o 4, este é mantido.
+
                         HistoricModel historic = new()
                         {
                             IdClient = request.IdCliente,
@@ -168,7 +190,7 @@ namespace SmartBar.Controllers
                         // FALTA ENVIAR NOTIFICAÇÃO PARA O UTILIZADOR A CERCA DA ATUALIZAÇÃO DO PEDIDO
                         return Accepted();
                     }
-                    if (request.State >= 3) { return BadRequest("Estado Impossível"); }
+                    if (request.State > 4) { return BadRequest("Estado Impossível"); }
                 }
                 catch { return BadRequest("Erro na atualização do pedido"); }
             }

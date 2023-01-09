@@ -1,7 +1,5 @@
 package com.ipca.smartbar.bar.products
 
-import android.graphics.Bitmap
-import androidx.core.graphics.createBitmap
 import org.json.JSONObject
 
 class BarProductsModel {
