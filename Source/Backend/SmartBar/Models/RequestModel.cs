@@ -27,22 +27,24 @@ namespace SmartBar.Models
         /// </summary>
         /// <param name="IdRequest"></param>
         /// <param name="IdCliente"></param>
-        /// <param name="productAndQuantity"></param>
+        /// <param name="ProductAndQuantity"></param>
         /// <param name="DateRequest"></param>
         /// <param name="Value"></param>
         /// <param name="State"></param>
         /// <param name="FirebaseToken"></param>
-        public RequestModel(string IdRequest, string IdCliente, List<ProductRequest> productAndQuantity, DateTime DateRequest, double Value, int State, string FirebaseToken, string idBar, string horas)
+        /// <param name="IdBar"></param>
+        /// <param name="Horas"></param>
+        public RequestModel(string IdRequest, string IdCliente, List<ProductRequest> ProductAndQuantity, DateTime DateRequest, double Value, int State, string FirebaseToken, string IdBar, string Horas)
         {
             idRequest = IdRequest;
             idCliente = IdCliente;
-            this.productAndQuantity = productAndQuantity;
+            productAndQuantity = ProductAndQuantity;
             dateRequest = DateRequest;
             value = Value;
             state = State;
             firebaseToken = FirebaseToken;
-            this.idBar = idBar;
-            this.horas = horas;
+            idBar = IdBar;
+            horas = Horas;
         }
 
         /// <summary>
