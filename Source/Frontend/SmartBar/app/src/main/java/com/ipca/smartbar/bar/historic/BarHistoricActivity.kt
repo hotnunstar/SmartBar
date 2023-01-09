@@ -65,8 +65,6 @@ class BarHistoricActivity : AppCompatActivity() {
             tvTotalPriceHist.text = hist.totalPrice.toString()
             tvDateRequestHist.text = hist.dateRequest
 
-            tvDateRequestHist.text = (tvDateRequestHist.text as String).replace("T", " ")
-
             return rowView
         }
     }
