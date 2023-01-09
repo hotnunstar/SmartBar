@@ -42,6 +42,11 @@ interface ApiServices {
     suspend fun getCHByClientID(@Header("Authorization") token: String?): Response<ResponseBody>
     //endregion
 
+    //region Historic Bar
+    @GET("/api/Historic/GetHistoric")
+    suspend fun getAllHistoric(@Header("Authorization") token: String?): Response<ResponseBody>
+    //endregion
+
     //region Login
     @Headers("Content-Type: application/json")
     @POST("/api/Auth")

@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.R
+import com.ipca.smartbar.bar.historic.BarHistoricActivity
 import com.ipca.smartbar.bar.products.BarProductsActivity
 import com.ipca.smartbar.deleteToken
 import com.ipca.smartbar.generic.LoginActivity
@@ -82,7 +83,7 @@ class BarProfileActivity : AppCompatActivity() {
                     true
                 }
                 R.id.action_historic_staff -> {
-                    val intent = Intent(this@BarProfileActivity, BarProfileActivity::class.java)
+                    val intent = Intent(this@BarProfileActivity, BarHistoricActivity::class.java)
                     startActivity(intent)
                     true
                 }

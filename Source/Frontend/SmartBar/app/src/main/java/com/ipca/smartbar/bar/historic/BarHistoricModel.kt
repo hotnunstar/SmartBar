@@ -1,13 +1,11 @@
-package com.ipca.smartbar.client.historic
+package com.ipca.smartbar.bar.historic
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import org.json.JSONArray
 import org.json.JSONObject
 
-
-
-class ClientHistoricModel{
+class BarHistoricModel {
     var idRequest : String? = ""
     var idClient : String? = ""
     var productAndQuantity : JSONArray? = null
@@ -52,8 +50,8 @@ class ClientHistoricModel{
     companion object
     {
         @RequiresApi(Build.VERSION_CODES.O)
-        fun fromJSON(jsonObject: JSONObject) : ClientHistoricModel {
-            return ClientHistoricModel(
+        fun fromJSON(jsonObject: JSONObject) : BarHistoricModel {
+            return BarHistoricModel(
                 jsonObject.getString("idRequest"),
                 jsonObject.getString("idClient"),
                 jsonObject.getJSONArray("productAndQuantity"),
