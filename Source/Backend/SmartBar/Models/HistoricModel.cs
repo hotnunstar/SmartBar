@@ -12,11 +12,12 @@ namespace SmartBar.Models
         [BsonRepresentation(BsonType.ObjectId)]
         string idRequest;
         string idClient;
+        string idBar;
         List<ProductRequest> productAndQuantity;
-        DateTime dateExpected;
-        DateTime dateRequest;
+        string dateRequest;
         double totalPrice;
         int state;
+        string horas;
 
         /// <summary>
         /// Construtor vazio do Histórico
@@ -28,20 +29,22 @@ namespace SmartBar.Models
         /// </summary>
         /// <param name="idRequest"></param>
         /// <param name="idClient"></param>
+        /// <param name="idBar"></param>
         /// <param name="productAndQuantity"></param>
-        /// <param name="dateExpected"></param>
         /// <param name="dateRequest"></param>
         /// <param name="totalPrice"></param>
         /// <param name="state"></param>
-        public HistoricModel(string idRequest, string idClient, List<ProductRequest> productAndQuantity, DateTime dateExpected, DateTime dateRequest, double totalPrice, int state)
+        /// <param name="horas"></param>
+        public HistoricModel(string idRequest, string idClient, string idBar, List<ProductRequest> productAndQuantity, string dateRequest, double totalPrice, int state, string horas)
         {
             this.idRequest = idRequest;
             this.idClient = idClient;
+            this.idBar = idBar;
             this.productAndQuantity = productAndQuantity;
-            this.dateExpected = dateExpected;
             this.dateRequest = dateRequest;
             this.totalPrice = totalPrice;
             this.state = state;
+            this.horas = horas;
         }
 
         /// <summary>
@@ -55,19 +58,19 @@ namespace SmartBar.Models
         public string IdClient { get { return idClient; } set { idClient = value; } }
 
         /// <summary>
+        /// ID do bar a que pertence o Pedido
+        /// </summary>
+        public string IdBar { get { return idBar; } set { idBar = value; } }
+
+        /// <summary>
         /// Lista de ID´s de Produtos que o Pedido tem
         /// </summary>
         public List<ProductRequest> ProductAndQuantity { get { return productAndQuantity; } set { productAndQuantity = value; } }
 
         /// <summary>
-        /// Data de levantamento do Pedido
+        /// Data do pedido que foi efetuado
         /// </summary>
-        public DateTime DateExpected { get { return dateExpected; } set { dateExpected = value; } }
-
-        /// <summary>
-        /// Data que o Pedido foi efetuado
-        /// </summary>
-        public DateTime DateRequest { get { return dateRequest; } set { dateRequest = value; } }
+        public string DateRequest { get { return dateRequest; } set { dateRequest = value; } }
 
         /// <summary>
         /// Preço total do Pedido
@@ -78,6 +81,11 @@ namespace SmartBar.Models
         /// Estado que o pedido se encontra
         /// </summary>
         public int State { get { return state; } set { state = value; } }
+
+        /// <summary>
+        /// Hora prevista para o levantamento do Pedido
+        /// </summary>
+        public string Horas { get { return horas; } set { horas = value; } }
     }
 }
 

@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.ipca.smartbar.R
+import com.ipca.smartbar.bar.historic.BarHistoricActivity
 import com.ipca.smartbar.bar.products.navigation.*
 import com.ipca.smartbar.bar.profile.BarProfileActivity
 import com.ipca.smartbar.bar.requests.BarRequestsActivity
@@ -99,7 +100,7 @@ class BarProductsActivity : AppCompatActivity() {
                 true
             }
             R.id.action_historic_staff -> {
-                val intent = Intent(this@BarProductsActivity, BarProfileActivity::class.java)
+                val intent = Intent(this@BarProductsActivity, BarHistoricActivity::class.java)
                 startActivity(intent)
                 true
             }

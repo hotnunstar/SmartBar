@@ -32,7 +32,20 @@ namespace SmartBar.Controllers
             if (productsList.Count > 0)return Ok(productsList);
             else return NotFound();
         }
- 
+
+        /// <summary>
+        /// Obter um produto através do seu ID
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <returns>Ok(produto) ou NotFound()</returns>
+        [HttpGet("{productID}"), Authorize]
+        public async Task<IActionResult> GetProductByID(string productID)
+        {
+            var product = await _productService.GetAsync(productID);
+            if (product == null) return NotFound("Produto não encontrado");
+            else return Ok(product);
+        }
+
         /// <summary>
         /// Obter a lista de menus (tipo 1)
         /// </summary>

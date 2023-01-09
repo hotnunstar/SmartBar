@@ -32,13 +32,9 @@ namespace SmartBar.Models
         /// <param name="Value"></param>
         /// <param name="State"></param>
         /// <param name="FirebaseToken"></param>
-<<<<<<< HEAD
-        public RequestModel(string IdRequest, string IdCliente, List<ProductRequest> productAndQuantity, string DateRequest, double Value, int State, string FirebaseToken, string idBar, string horas)
-=======
         /// <param name="IdBar"></param>
         /// <param name="Horas"></param>
-        public RequestModel(string IdRequest, string IdCliente, List<ProductRequest> ProductAndQuantity, DateTime DateRequest, double Value, int State, string FirebaseToken, string IdBar, string Horas)
->>>>>>> f949752aced3cb292fd2ef3b1af9f5a65f3c9020
+        public RequestModel(string IdRequest, string IdCliente, List<ProductRequest> ProductAndQuantity, string DateRequest, double Value, int State, string FirebaseToken, string IdBar, string Horas)
         {
             idRequest = IdRequest;
             idCliente = IdCliente;

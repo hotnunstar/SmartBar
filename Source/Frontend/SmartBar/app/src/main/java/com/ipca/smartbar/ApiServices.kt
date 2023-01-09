@@ -38,6 +38,11 @@ interface ApiServices {
     suspend fun getCHByClientID(@Header("Authorization") token: String?): Response<ResponseBody>
     //endregion
 
+    //region Historic Bar
+    @GET("/api/Historic/GetHistoric")
+    suspend fun getAllHistoric(@Header("Authorization") token: String?): Response<ResponseBody>
+    //endregion
+
     //region Login
     @Headers("Content-Type: application/json")
     @POST("/api/Auth")
@@ -70,5 +75,8 @@ interface ApiServices {
     @Headers("Content-Type: application/json")
     @PUT("/api/Product")
     suspend fun putProductBar(@Header("Authorization") token: String?, @Body requestBody: RequestBody): Response<ResponseBody>
+
+    @GET("/api/Product/{productID}")
+    suspend fun getProductByID(@Path("productID") productID: String, @Header("Authorization") token: String?): Response<ResponseBody>
     //endregion
 }

@@ -68,7 +68,11 @@ class ClientHistoricActivity : AppCompatActivity() {
             tvTotalPriceHist.text = hist.totalPrice.toString()
             tvDateRequestHist.text = hist.dateRequest
 
-            tvDateRequestHist.text = (tvDateRequestHist.text as String).replace("T", " ")
+            rowView.setOnClickListener{
+                val intent = Intent(this@ClientHistoricActivity, ClientHistoricDetailActivity::class.java)
+                intent.putExtra("request", tvRequestHist.text)
+                startActivity(intent)
+            }
 
             return rowView
         }

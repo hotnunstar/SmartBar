@@ -67,6 +67,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".client.historic.ClientHistoricDetailActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".client.cart.ClientCartActivity"
             android:exported="false">
             <meta-data

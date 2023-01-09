@@ -43,37 +43,16 @@ namespace SmartBar.Controllers
         [HttpGet, Authorize]
         public async Task<IActionResult> GetAllByClient()
         {
-            const int MAXLENGTH = 19;
-            string auxDateRequest, auxDateExpected;
             string idClient = GetUserID();
 
-            if (idClient != null)
+            /*if (idClient != null)
             {
                 var historic = await _historicService.GetAsyncByClient(idClient);
                 if(historic.Count > 0)
                 {
-                    foreach (var item in historic)
-                    {
-                        //Formatação para o kotlin aceitar as datas
-                        auxDateRequest = item.DateRequest.ToString();
-                        if(auxDateRequest.Length > MAXLENGTH)
-                        {
-                            auxDateRequest.Substring(0, MAXLENGTH);
-                        }
-                        item.DateRequest = Convert.ToDateTime(auxDateRequest.Substring(0, MAXLENGTH));
-
-
-                        auxDateExpected = item.DateExpected.ToString();
-                        if(auxDateExpected.Length > MAXLENGTH)
-                        {
-                            auxDateExpected.Substring(0, MAXLENGTH);
-                        }
-                        item.DateExpected = Convert.ToDateTime(auxDateExpected.Substring(0, MAXLENGTH));
-                        
-                    }
                     return Ok(historic);
                 }
-            }
+            }*/
             return BadRequest("Vazio");
         }
 
