@@ -1,0 +1,1139 @@
+{
+	"info": {
+		"_postman_id": "c1c02fb9-6209-4778-8514-c831eafc93a1",
+		"name": "SmartBar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19778889"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Client Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is sucessful with a status code of 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"const response = responseBody\r",
+									"pm.collectionVariables.set(\"ClientToken\", response);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userType\": \"CLIENTE\",\r\n  \"email\": \"teste@alunos.ipca.pt\",\r\n  \"password\": \"teste\",\r\n  \"firebaseToken\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Auth",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Auth"
+							]
+						},
+						"description": "Controlador usado para retornar o token de autenticação quando o login de um cliente é efetuado com sucesso."
+					},
+					"response": []
+				},
+				{
+					"name": "Colaborator Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is sucessful with a status code of 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"const response = responseBody\r",
+									"pm.collectionVariables.set(\"ColaboratorToken\", response);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userType\": \"COLABORADOR\",\r\n  \"email\": \"bar1@baduarte.pt\",\r\n  \"password\": \"teste\",\r\n  \"firebaseToken\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Auth",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Auth"
+							]
+						},
+						"description": "Controlador usado para retornar o token de autenticação quando o login de um bar é efetuado com sucesso."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints de autenticação",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User Side",
+			"item": [
+				{
+					"name": "Get User by Email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that client name is \\\"User Teste\\\"\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"User Teste\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{url}}/api/User/GetUserByEmail?email=teste@alunos.ipca.pt&password=teste",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"GetUserByEmail"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "teste@alunos.ipca.pt"
+								},
+								{
+									"key": "password",
+									"value": "teste"
+								}
+							]
+						},
+						"description": "Controlador usado para verificar se as credenciais utilizadas pelo cliente no login estão de acordo com a base de dados."
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that client name is \\\"User Teste\\\"\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"User Teste\");\r",
+									"    pm.collectionVariables.set(\"ClientID\", jsonData.id);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/User/GetUserById",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"GetUserById"
+							]
+						},
+						"description": "Controlador usado para obter os dados do cliente através do ID que se encontra no token."
+					},
+					"response": []
+				},
+				{
+					"name": "Post User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+									"});\r",
+									"\r",
+									"var tryNumber = pm.collectionVariables.get(\"UserTry\");\r",
+									"tryNumber = parseInt(tryNumber) + 1\r",
+									"pm.collectionVariables.set(\"UserTry\", tryNumber);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"\",\r\n  \"email\": \"postmanUserTest{{UserTry}}@alunos.ipca.pt\",\r\n  \"password\": \"postmanusertest\",\r\n  \"name\": \"Postman User Test {{UserTry}}\",\r\n  \"balance\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/User",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User"
+							]
+						},
+						"description": "Controlador utilizado para inserir clientes de teste."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints referentes ao cliente.",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{ClientToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Bar Side",
+			"item": [
+				{
+					"name": "Get Bar by Email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that bar description is \\\"Bar do Campus\\\"\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.description).to.eql(\"Bar do Campus\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Bar/GetBarByEmail?email=bar1@baduarte.pt&password=teste",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Bar",
+								"GetBarByEmail"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "bar1@baduarte.pt"
+								},
+								{
+									"key": "password",
+									"value": "teste"
+								}
+							]
+						},
+						"description": "Controlador usado para verificar se as credenciais utilizadas pelo bar no login estão de acordo com a base de dados."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bar by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check that bar description is \\\"Bar do Campus\\\"\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.description).to.eql(\"Bar do Campus\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Bar/GetBarById",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Bar",
+								"GetBarById"
+							]
+						},
+						"description": "Controlador usado para obter os dados do bar através do ID que se encontra no token."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Bar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+									"});\r",
+									"\r",
+									"var tryNumber = pm.collectionVariables.get(\"BarTry\");\r",
+									"tryNumber = parseInt(tryNumber) + 1\r",
+									"pm.collectionVariables.set(\"BarTry\", tryNumber);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"string\",\r\n  \"email\": \"postmanBarTest{{BarTry}}@baduarte.pt\",\r\n  \"password\": \"postmanbartest\",\r\n  \"description\": \"Bar de Teste {{BarTry}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Bar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Bar"
+							]
+						},
+						"description": "Controlador utilizado para inserir bares de teste."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints referentes ao bar.",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{ColaboratorToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Post Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var tryNumber = pm.collectionVariables.get(\"ProductTry\");\r",
+									"tryNumber = parseInt(tryNumber) + 1\r",
+									"pm.collectionVariables.set(\"ProductTry\", tryNumber);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"\",\r\n  \"name\": \"Postman Product Test{{ProductTry}}\",\r\n  \"picture\": \"picture\",\r\n  \"price\": 4.20,\r\n  \"stock\": 8,\r\n  \"type\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Product",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Product"
+							]
+						},
+						"description": "Controlador utilizado para inserir um produto."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"var productNumber = pm.collectionVariables.get(\"ProductTry\");\r",
+									"productNumber = parseInt(productNumber) - 1\r",
+									"pm.collectionVariables.set(\"PreviousProduct\", productNumber);\r",
+									"\r",
+									"for(let x = 0; x < response.length; x++){\r",
+									"    if (response[x].name == `Postman Product Test${productNumber}`){\r",
+									"        pm.collectionVariables.set(\"productID\", response[x].id);\r",
+									"    }\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Product",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Product"
+							]
+						},
+						"description": "Controlador utilizado para obter a lista de todos os produtos."
+					},
+					"response": []
+				},
+				{
+					"name": "Put Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"PUT is successful accepted\", function () {\r",
+									"  pm.response.to.have.status(202);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"{{productID}}\",\r\n  \"name\": \"Postman Product Test{{PreviousProduct}} EDITED\",\r\n  \"picture\": \"picture\",\r\n  \"price\": 4.20,\r\n  \"stock\": 8,\r\n  \"type\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Product",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Product"
+							]
+						},
+						"description": "Controlador utilizador para editar algum elemento da lista de produtos."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products Type 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"All products type is 1 (Menus)\", function(){\r",
+									"    const response = pm.response.json();\r",
+									"    for(let x = 0; x < response.length; x++){\r",
+									"        pm.expect(response[x].type).to.eql(1);\r",
+									"    }\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Product/Menus",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"Menus"
+							]
+						},
+						"description": "Controlador utilizado para obter todos os produtos de tipo 1 (menus)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products Type 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"All products type is 2 (Snacks)\", function(){\r",
+									"    const response = pm.response.json();\r",
+									"    for(let x = 0; x < response.length; x++){\r",
+									"        pm.expect(response[x].type).to.eql(2);\r",
+									"    }\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Product/Snacks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"Snacks"
+							]
+						},
+						"description": "Controlador utilizado para obter todos os produtos de tipo 2 (snacks)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products Type 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"All products type is 3 (HotDrink)\", function(){\r",
+									"    const response = pm.response.json();\r",
+									"    for(let x = 0; x < response.length; x++){\r",
+									"        pm.expect(response[x].type).to.eql(3);\r",
+									"    }\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Product/HotDrink",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"HotDrink"
+							]
+						},
+						"description": "Controlador utilizado para obter todos os produtos de tipo 3 (bebidas quentes)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products Type 4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"All products type is 4 (ColdDrink)\", function(){\r",
+									"    const response = pm.response.json();\r",
+									"    for(let x = 0; x < response.length; x++){\r",
+									"        pm.expect(response[x].type).to.eql(4);\r",
+									"    }\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Product/ColdDrink",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"ColdDrink"
+							]
+						},
+						"description": "Controlador utilizado para obter todos os produtos de tipo 4 (bebidas frias)."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints referentes aos produtos.",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{ColaboratorToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Requests",
+			"item": [
+				{
+					"name": "New Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idRequest\": \"\",\r\n  \"idCliente\": \"{{ClientID}}\",\r\n  \"productAndQuantity\": [\r\n    {\r\n      \"idProduct\": \"{{productID}}\",\r\n      \"quantity\": 2\r\n    }\r\n  ],\r\n  \"datePickUp\": \"2023-01-06T16:02:00.908Z\",\r\n  \"dateRequest\": \"2023-01-06T16:02:00.908Z\",\r\n  \"value\": 2,\r\n  \"state\": 0,\r\n  \"firebaseToken\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Request",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Request"
+							]
+						},
+						"description": "Controlador utilizador para o cliente fazer um novo pedido."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Requests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"var size = response.length;\r",
+									"size = parseInt(size) - 1;\r",
+									"pm.collectionVariables.set(\"RequestID\", response[size].idRequest);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Request",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Request"
+							]
+						},
+						"description": "Controlador utilizado para o bar ter acesso aos pedidos em aberto."
+					},
+					"response": []
+				},
+				{
+					"name": "Put Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful PUT request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ColaboratorToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Request?idRequest={{RequestID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Request"
+							],
+							"query": [
+								{
+									"key": "idRequest",
+									"value": "{{RequestID}}"
+								}
+							]
+						},
+						"description": "Controlador utilizador para alterar o estado de um pedido."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints referentes aos pedidos.",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{ClientToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Historic",
+			"item": [
+				{
+					"name": "Get All Historic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Historic/GetHistoric",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Historic",
+								"GetHistoric"
+							]
+						},
+						"description": "Controlador utilizado para obter o registo de todos os pedidos no estado \"Concluido\""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Historic by Client",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request is successful with a status code of 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ClientToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/Historic/GetHistoricByClient",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Historic",
+								"GetHistoricByClient"
+							]
+						},
+						"description": "Controlador utilizado para obter todos os pedidos concluidos de determinado utilizador"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints referentes aos históricos de pedidos",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{ColaboratorToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://localhost:7097",
+			"type": "string"
+		},
+		{
+			"key": "ClientID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "productID",
+			"value": ""
+		},
+		{
+			"key": "ClientToken",
+			"value": ""
+		},
+		{
+			"key": "ColaboratorToken",
+			"value": ""
+		},
+		{
+			"key": "UserTry",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "BarTry",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "ProductTry",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "PreviousProduct",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "RequestID",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

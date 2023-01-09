@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.R
 import com.ipca.smartbar.bar.products.BarProductsActivity
+import com.ipca.smartbar.bar.requests.BarRequestsActivity
 import com.ipca.smartbar.deleteToken
 import com.ipca.smartbar.generic.LoginActivity
 import com.ipca.smartbar.getToken
@@ -77,7 +78,7 @@ class BarProfileActivity : AppCompatActivity() {
                     true
                 }
                 R.id.action_requests_staff -> {
-                    val intent = Intent(this@BarProfileActivity, BarProfileActivity::class.java)
+                    val intent = Intent(this@BarProfileActivity, BarRequestsActivity::class.java)
                     startActivity(intent)
                     true
                 }

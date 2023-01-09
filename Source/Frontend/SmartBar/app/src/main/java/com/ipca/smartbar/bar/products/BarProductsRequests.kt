@@ -1,6 +1,5 @@
 package com.ipca.smartbar.bar.products
 
-import android.util.Log
 import com.ipca.smartbar.ApiServices
 import com.ipca.smartbar.Constants
 import kotlinx.coroutines.CoroutineScope
