@@ -49,7 +49,7 @@ namespace SmartBar.Services
         /// <summary>
         /// Criar um novo cliente
         /// </summary>
-        /// <param name="newColaborator"></param>
+        /// <param name="newUser"></param>
         /// <returns>O novo cliente criado</returns>
         public async Task CreateAsync(UserModel newUser) =>
             await _userCollection.InsertOneAsync(newUser);
@@ -58,7 +58,7 @@ namespace SmartBar.Services
         /// Atualizar determinado cliente
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="updatedColaborator"></param>
+        /// <param name="updatedUser"></param>
         /// <returns>O cliente atualizado</returns>
         public async Task UpdateAsync(string id, UserModel updatedUser) =>
             await _userCollection.ReplaceOneAsync(x => x.Id == id, updatedUser);

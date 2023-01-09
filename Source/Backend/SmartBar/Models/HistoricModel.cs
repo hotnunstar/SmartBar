@@ -3,6 +3,9 @@ using MongoDB.Bson;
 
 namespace SmartBar.Models
 {
+    /// <summary>
+    /// Modelo de um historico
+    /// </summary>
     public class HistoricModel
     {
         [BsonId]
