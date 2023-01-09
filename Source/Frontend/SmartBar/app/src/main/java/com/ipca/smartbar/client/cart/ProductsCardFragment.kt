@@ -33,6 +33,7 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.Date
+import kotlin.math.roundToInt
 
 
 class ProductsCardFragment(private val token:String?) : Fragment(){
@@ -46,6 +47,8 @@ class ProductsCardFragment(private val token:String?) : Fragment(){
     var idRequest:String=""
     var firebase:String=""
     var bar : String=""
+    var controller = true
+    var dateRequest:String=""
     var horario : String=""
     var idCliente = checkUserId(token!!)
     @RequiresApi(Build.VERSION_CODES.O)
@@ -74,23 +77,34 @@ class ProductsCardFragment(private val token:String?) : Fragment(){
 
 
             val listaFinal = CriaPair()
-            var pedido = Pedido(listProducts = listaFinal, preco = preco, bar = bar,
-                idCliente = idCliente, state = state, id = idRequest, firebaseToken = firebase, horas = horasPedido)
-            if(listaFinal.size==0)
-            {
-                Toast.makeText(context, "Escolher produtos para efetuar a compra", Toast.LENGTH_SHORT).show()
+            var pedido = Pedido(
+                listProducts = listaFinal,
+                preco = preco,
+                bar = bar,
+                idCliente = idCliente,
+                state = state,
+                id = idRequest,
+                firebaseToken = firebase,
+                horas = horasPedido,
+                dateRequest = dateRequest
+            )
+            if (listaFinal.size == 0) {
+                Toast.makeText(
+                    context,
+                    "Escolher produtos para efetuar a compra",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                var result: Pair<String, Boolean>
+                lifecycleScope.launch(Dispatchers.IO)
+                {
+
+                    result = Repository.confirmarPedido(pedido, token)
+                    controller = controlaResult(result)
+                    if (controller) deleteProductFinal(products)
+                }
             }
-            var result:Pair<String,Boolean>
-            lifecycleScope.launch(Dispatchers.IO)
-            {
-
-                  result = Repository.confirmarPedido(pedido,token)
-                controlaResult(result)
-
-            }
-
         }
-
     }
 
     fun retornaProdutosDb() {
@@ -114,7 +128,13 @@ class ProductsCardFragment(private val token:String?) : Fragment(){
         adapter.notifyDataSetChanged()
 
     }
-
+    fun deleteProductFinal(products:ArrayList<Product>)
+    {
+        for(product in products)
+        {
+            deleteProduct(product)
+        }
+    }
      fun deleteProduct(product:Product)
     {
         lifecycleScope.launch(Dispatchers.IO)
@@ -203,7 +223,8 @@ class ProductsCardFragment(private val token:String?) : Fragment(){
 
         }
         preco=aux
-        binding.textViewTotalPrice.text = aux.toString()
+        val roundoff = (preco*100).roundToInt().toDouble() / 100
+        binding.textViewTotalPrice.text =  roundoff.toString()
     }
     fun apdateProduct(product:Product, products2: ArrayList<Product>){
     lifecycleScope.launch(Dispatchers.IO)
@@ -224,7 +245,8 @@ class ProductsCardFragment(private val token:String?) : Fragment(){
         }
         return listPair
     }
-    suspend fun controlaResult(item: Pair<String, Boolean>)
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun controlaResult(item: Pair<String, Boolean>) : Boolean
     {
         if(item.second==false)
         {
@@ -232,9 +254,16 @@ class ProductsCardFragment(private val token:String?) : Fragment(){
             {
                 Toast.makeText(context, item.first, Toast.LENGTH_SHORT).show()
             }
-
-
+            return false
+        } else if(item.second==true)
+        {
+            withContext(Dispatchers.Main)
+            {
+                Toast.makeText(context, "Pedido efetuado com sucesso \n aguardar confirmação", Toast.LENGTH_SHORT).show()
+            }
+            return true
         }
+        return true
     }
 
 

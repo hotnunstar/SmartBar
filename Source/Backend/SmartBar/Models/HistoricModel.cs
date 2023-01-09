@@ -68,7 +68,7 @@ namespace SmartBar.Models
         public List<ProductRequest> ProductAndQuantity { get { return productAndQuantity; } set { productAndQuantity = value; } }
 
         /// <summary>
-        /// Data que o Pedido foi efetuado
+        /// Data do pedido que foi efetuado
         /// </summary>
         public string DateRequest { get { return dateRequest; } set { dateRequest = value; } }
 
