@@ -1,8 +1,6 @@
 package com.ipca.smartbar.bar.requests.navigation
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +20,7 @@ class BarRequestDetailsFragment(private val token: String?,
     private var _binding: FragmentBarRequestDetailsBinding? = null
     private val binding get() = _binding!!
     private val adapter = RequestDetailsAdapter()
-    var products: ArrayList<BarProductsModel> = ArrayList()
+    private var products = ArrayList<BarProductsModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,39 +34,28 @@ class BarRequestDetailsFragment(private val token: String?,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val textViewRequestID = binding.textViewRequestID
-        val textViewRequestDate = binding.textViewRequestDate
-        val textViewRequestPickUpHour = binding.textViewRequestPickUpHour
-        val textViewRequestTotalValue = binding.textViewRequestTotalValue
-        val buttonConfirmRequest = binding.buttonConfirmProductRequest
-        val buttonCancelRequest = binding.buttonCancellProductRequest
 
-        textViewRequestID.append(" ${request.idRequest}")
-        textViewRequestDate.append(" ${request.dateRequest}")
-        textViewRequestPickUpHour.append(" ${request.horas}h")
-        textViewRequestTotalValue.append(" ${request.value}€")
-
-        val arraySize = request.productAndQuantity!!.size
-        for (index in 0 until arraySize)
-        {
-            BarRequestsRequests.getProductByID(lifecycleScope, token, request.productAndQuantity!![index].idProduct){
-                if (it != null) {
-                    products.add(it)
-                    adapter.notifyDataSetChanged()
-                    binding.listViewProducts.adapter = adapter
-                    binding.viewProgressBarBarRequestDetails.visibility = View.GONE
-                    binding.progressBarBarRequestDetails.visibility = View.GONE
-                }
-            }
+        BarRequestsRequests.getProductByID(lifecycleScope, token, request.productAndQuantity!!){
+            products = it
+            adapter.notifyDataSetChanged()
+            binding.viewProgressBarBarRequestDetails.visibility = View.GONE
+            binding.progressBarBarRequestDetails.visibility = View.GONE
         }
+        binding.listViewProducts.adapter = adapter
+
+        binding.textViewRequestID.append(" ${request.idRequest}")
+        binding.textViewRequestDate.append(" ${request.dateRequest}")
+        binding.textViewRequestPickUpHour.append(" ${request.horas}h")
+        binding.textViewRequestTotalValue.append(" ${request.value}€")
+
         if(request.state == 1)
         {
-            buttonConfirmRequest.text = "Aceitar pedido"
-            buttonCancelRequest.text = "Recusar pedido"
+            binding.buttonConfirmProductRequest.text = "Aceitar pedido"
+            binding.buttonCancellProductRequest.text = "Recusar pedido"
         }
         if(request.state == 2){
-            buttonConfirmRequest.text = "Pronto para levantamento!"
-            buttonCancelRequest.visibility = View.GONE
+            binding.buttonConfirmProductRequest.text = "Pronto para levantamento!"
+            binding.buttonCancellProductRequest.visibility = View.GONE
         }
     }
 
@@ -79,11 +66,11 @@ class BarRequestDetailsFragment(private val token: String?,
 
     inner class RequestDetailsAdapter: BaseAdapter(){
         override fun getCount(): Int {
-            return request.productAndQuantity!!.size
+            return products.size
         }
 
         override fun getItem(position: Int): Any {
-            return request.productAndQuantity!![position]
+            return products[position]
         }
 
         override fun getItemId(position: Int): Long {
@@ -95,6 +82,7 @@ class BarRequestDetailsFragment(private val token: String?,
             val textViewProductName = rowView.findViewById<TextView>(R.id.textViewProductLineName)
             val textViewProductQuantity = rowView.findViewById<TextView>(R.id.textViewProductLineQuantity)
             val textViewTotalPrice = rowView.findViewById<TextView>(R.id.textViewProductLinePrice)
+
             val product = products[position]
             val productTotalPrice = request.productAndQuantity!![position].quantity * product.price
             textViewProductName.append(" ${product.name}")
