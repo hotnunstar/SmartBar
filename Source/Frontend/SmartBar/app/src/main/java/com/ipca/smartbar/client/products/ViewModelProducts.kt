@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ViewModelProducts() : ViewModel(){
-    val products = MutableLiveData<Pair<ArrayList<Product>,Boolean>>()
+    val products = MutableLiveData<Pair<ArrayList<Product>,String>>()
 
 
     fun getProductsColdDrink(token:String?)
@@ -23,25 +23,25 @@ class ViewModelProducts() : ViewModel(){
             products.postValue(Repository.getProductsColdDrink(token))
         }
     }
-    fun getProductsPackaged()
+    fun getProductsPackaged(token:String?)
     {
         viewModelScope.launch(Dispatchers.IO)
         {
-            products.postValue(Repository.getProductsPackaged())
+            products.postValue(Repository.getProductsPackaged(token))
         }
     }
-    fun getProductsHotFood()
+    fun getProductsHotFood(token:String?)
     {
         viewModelScope.launch(Dispatchers.IO)
         {
-            products.postValue(Repository.getProductsHotFood())
+            products.postValue(Repository.getProductsHotFood(token))
         }
     }
-    fun getProductsHotDrink()
+    fun getProductsHotDrink(token:String?)
     {
         viewModelScope.launch(Dispatchers.IO)
         {
-            products.postValue(Repository.getProductsHotDrink())
+            products.postValue(Repository.getProductsHotDrink(token))
         }
     }
 

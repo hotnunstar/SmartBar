@@ -12,35 +12,24 @@ namespace SmartBar.Controllers
     {
         private readonly RequestService _resquestService;
         private readonly ProductService _productService;
-<<<<<<< HEAD
         private readonly UserService _userService;
-=======
         private readonly HistoricService _historicService;
 
->>>>>>> 56c7d320236170be0b13710874a42340d7500dc5
 
         /// <summary>
         /// Construtor do controlador de pedidos
         /// </summary>
         /// <param name="resquestService"></param>
         /// <param name="productService"></param>
-<<<<<<< HEAD
-        public RequestController(RequestService resquestService, ProductService productService, UserService userService)
+        /// <param name="userService"></param>
+        /// <param name="historicService"></param>
+        public RequestController(RequestService resquestService, ProductService productService, UserService userService, HistoricService historicService)
         {
             _resquestService = resquestService;
             _productService = productService;
             _userService = userService;
-=======
-        public RequestController(RequestService resquestService, ProductService productService, HistoricService historicService)
-        {
-            _resquestService = resquestService;
-            _productService = productService;
             _historicService = historicService;
->>>>>>> 56c7d320236170be0b13710874a42340d7500dc5
         }
-
-
-
 
         [HttpGet]
         public async Task<List<RequestModel>> GetAll()
@@ -59,10 +48,12 @@ namespace SmartBar.Controllers
         public async Task<IActionResult> PostRequest(RequestModel request)
         {
             List<ProductModel> productsList = await _productService.GetAsync(); //lista de produtos
-            List<ProductRequest> productRequest = new List<ProductRequest>(); 
+            List<ProductRequest> productRequest = new List<ProductRequest>();
             productRequest = request.ProductAndQuantity; // lista de produtos ao pedido do cliente 
+            request.IdCliente = GetUtilizadorID();
             UserModel user = await _userService.GetAsyncById(request.IdCliente);
             double auxSaldo = 0;
+            DateTime dateRequest = DateTime.Now;
             double auxSaldoInicial = user.Balance;
             int aux = 0;
             auxSaldo = user.Balance - request.Value;
@@ -95,10 +86,10 @@ namespace SmartBar.Controllers
             }
             request.IdRequest = ""; //Atribuir ID default
             request.State = 1; //Estado Inicial
-            request.DateRequest = DateTime.Now;
-            request.DatePickUp = request.DateRequest.AddHours(1);
+            request.DateRequest = dateRequest;
             await _resquestService.CreateAsync(request);
             return CreatedAtAction(nameof(GetAll), new { id = request.IdRequest }, request);
+            
         }
 
         /// <summary>
@@ -126,7 +117,7 @@ namespace SmartBar.Controllers
                             historic.IdClient = request.IdCliente;
                             historic.IdRequest = request.IdRequest;
                             historic.ProductAndQuantity = request.ProductAndQuantity;
-                            historic.DateExpected = request.DatePickUp;
+                            //historic.DateExpected = request.DatePickUp;
                             historic.DateRequest = request.DateRequest;
                             historic.TotalPrice = request.Value;
                             historic.State = request.State;
@@ -148,6 +139,7 @@ namespace SmartBar.Controllers
         }
 
         private string GetUserType() { return this.User.Claims.First(i => i.Type == "userType").Value; }
+        private string GetUtilizadorID() { return this.User.Claims.First(i => i.Type == "id").Value; }
 
     }
 }

@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class ProductPedido(
-    @Json(name = "id")
+    @Json(name = "idProduct")
     var id: String,
-    @Json(name = "quantidade")
+    @Json(name = "quantity")
     var quantity: Int)

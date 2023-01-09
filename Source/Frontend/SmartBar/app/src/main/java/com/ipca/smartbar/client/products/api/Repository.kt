@@ -1,5 +1,6 @@
 package com.ipca.smartbar.client.products.api
 
+
 import android.util.Log
 import com.ipca.smartbar.client.cart.Pedido
 import com.ipca.smartbar.client.products.Product
@@ -8,48 +9,46 @@ import com.ipca.smartbar.client.products.Product
 object Repository {
     var backendDataSource = BackendDataSource()
 
-    suspend fun getProductsHotFood() :  Pair<ArrayList<Product>,Boolean>
+    suspend fun getProductsHotFood(token:String?) :  Pair<ArrayList<Product>,String>
     {
-        val response = backendDataSource.getProductsHotFood()
+        val response = backendDataSource.getProductsHotFood(token)
         val result = response.body()
         return if(response.isSuccessful && result != null) {
-            Pair(ArrayList(result),true)
+            Pair(ArrayList(result),"")
         } else {
-            Pair(ArrayList(),false)
+            Pair(ArrayList(),response.message())
         }
     }
-    suspend fun getProductsPackaged(): Pair<ArrayList<Product>,Boolean>
+    suspend fun getProductsPackaged(token:String?): Pair<ArrayList<Product>,String>
     {
-        val response = backendDataSource.getProductsPackaged()
+        val response = backendDataSource.getProductsPackaged(token)
         val result = response.body()
         return if(response.isSuccessful && result != null) {
-            Pair(ArrayList(result),true)
+            Pair(ArrayList(result),"")
         } else {
-            Pair(ArrayList(),false)
+            Pair(ArrayList(),response.message())
         }
     }
-    suspend fun getProductsHotDrink(): Pair<ArrayList<Product>,Boolean>
+    suspend fun getProductsHotDrink(token:String?): Pair<ArrayList<Product>,String>
     {
-        val response = backendDataSource.getProductsHotDrink()
+        val response = backendDataSource.getProductsHotDrink(token)
         val result = response.body()
         return if(response.isSuccessful && result != null) {
-            Pair(ArrayList(result),true)
+            Pair(ArrayList(result),"")
         } else {
-            Pair(ArrayList(),false)
+            Pair(ArrayList(),response.message())
         }
     }
-    suspend fun getProductsColdDrink(token:String?): Pair<ArrayList<Product>,Boolean>
+    suspend fun getProductsColdDrink(token:String?): Pair<ArrayList<Product>,String>
     {
 
         val response = backendDataSource.getProductsColdDrink(token)
-        val result = response.body()?.string()
-        Log.e("", result!!)
-        return Pair(ArrayList(),false)
-        /*return if(response.isSuccessful && result != null) {
-            Pair(ArrayList(result),true)
+        val result = response.body()
+        return if(response.isSuccessful && result != null) {
+            Pair(ArrayList(result),"")
         } else {
-            Pair(ArrayList(),false)
-        }*/
+            Pair(ArrayList(),response.message())
+        }
     }
     suspend fun confirmarPedido(pedido: Pedido,token:String?): Pair<String,Boolean>
     {
@@ -60,7 +59,7 @@ object Repository {
         }
         else
         {
-            return Pair(response.message(),false)
+            return Pair(response.errorBody()!!.string(),false)
         }
 
 }
