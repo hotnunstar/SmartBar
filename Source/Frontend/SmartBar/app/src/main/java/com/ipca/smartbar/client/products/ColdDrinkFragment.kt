@@ -57,9 +57,9 @@ class ColdDrinkFragment(private val token:String?) : Fragment() {
     {
         viewModel.products.observe(viewLifecycleOwner, Observer(::BindValue))
     }
-    private fun BindValue(pair: Pair<ArrayList<Product>,Boolean>)
+    private fun BindValue(pair: Pair<ArrayList<Product>,String>)
     {
-        if(pair.second)
+        if(pair.second =="")
         {
             LoadProducts(pair.first)
             adapter.notifyDataSetChanged()

@@ -11,15 +11,15 @@ interface ApiServices {
 
     //region Products Client
     @GET("/api/Product/Menus")
-    suspend fun getProductsHotFood(): Response<List<Product>>
+    suspend fun getProductsHotFood(@Header("Authorization") token: String?): Response<List<Product>>
 
     @GET("/api/Product/Snacks")
-    suspend fun getProductsPackaged(): Response<List<Product>>
+    suspend fun getProductsPackaged(@Header("Authorization") token: String?): Response<List<Product>>
 
     @GET("/api/Product/HotDrink")
-    suspend fun getProductsHotDrink(): Response<List<Product>>
+    suspend fun getProductsHotDrink(@Header("Authorization") token: String?): Response<List<Product>>
 
-    @GET("/api/Product/ColDrink")
+    @GET("/api/Product/ColdDrink")
     suspend fun getProductsColdDrink(@Header("Authorization") token: String?): Response<List<Product>>
     //endregion
 

@@ -18,6 +18,7 @@ namespace SmartBar.Controllers
         private readonly UserService _userService;
         private readonly HistoricService _historicService;
 
+
         /// <summary>
         /// Construtor do controlador de pedidos
         /// </summary>
@@ -32,6 +33,7 @@ namespace SmartBar.Controllers
             _userService = userService;
             _historicService = historicService;
         }
+
 
         /// <summary>
         /// Obter todos os pedidos em aberto
@@ -74,15 +76,14 @@ namespace SmartBar.Controllers
         {
             UserModel user = new();
             List<ProductModel> productsList = await _productService.GetAsync(); //lista de produtos
-            List<ProductRequest> productRequest = new List<ProductRequest>(); 
-            productRequest = request.ProductAndQuantity; // lista de produtos ao pedido do cliente
-                          
-            var getRequest = await _userService.GetAsyncById(request.IdCliente);
-
-            if(getRequest != null) user = getRequest;
-            else return BadRequest("Utilizador não encontrado");
-            
+            List<ProductRequest> productRequest = new List<ProductRequest>();
+            productRequest = request.ProductAndQuantity; // lista de produtos ao pedido do cliente 
+            request.IdCliente = GetUtilizadorID();
+            user = await _userService.GetAsyncById(request.IdCliente);
+            if (user == null) return BadRequest("Utilizador não encontrado");
+  
             double auxSaldo = 0;
+            DateTime dateRequest = DateTime.Now;
             double auxSaldoInicial = user.Balance;
             int aux = 0;
             auxSaldo = user.Balance - request.Value;
@@ -115,10 +116,10 @@ namespace SmartBar.Controllers
             }
             request.IdRequest = ""; //Atribuir ID default
             request.State = 1; //Estado Inicial
-            request.DateRequest = DateTime.Now;
-            request.DatePickUp = request.DateRequest.AddHours(1);
+            request.DateRequest = dateRequest;
             await _resquestService.CreateAsync(request);
             return CreatedAtAction(nameof(GetAll), new { id = request.IdRequest }, request);
+            
         }
 
         /// <summary>
@@ -140,6 +141,28 @@ namespace SmartBar.Controllers
                 try{
                     if (request.State == 1)
                     {
+                        request.State = request.State + 1;
+                        if (request.State == 3)
+                        {
+                            HistoricModel historic = new();
+                            historic.IdClient = request.IdCliente;
+                            historic.IdRequest = request.IdRequest;
+                            historic.ProductAndQuantity = request.ProductAndQuantity;
+                            //historic.DateExpected = request.DatePickUp;
+                            historic.DateRequest = request.DateRequest;
+                            historic.TotalPrice = request.Value;
+                            historic.State = request.State;
+                            await _historicService.CreateAsync(historic);
+                            await _resquestService.DeleteAsync(request.IdRequest);
+                            return Ok();
+                        }
+                        if (request.State > 3) { return BadRequest("Estado Impossível"); }
+                        else
+                        {
+                            await _resquestService.UpdateAsync(request.IdRequest, request);
+                            return Ok();
+                        }
+
                         request.State++;
                         await _resquestService.UpdateAsync(idRequest, request);
                         // FALTA ENVIAR NOTIFICAÇÃO PARA O UTILIZADOR A CERCA DA ATUALIZAÇÃO DO PEDIDO
@@ -154,7 +177,7 @@ namespace SmartBar.Controllers
                             IdClient = request.IdCliente,
                             IdRequest = request.IdRequest,
                             ProductAndQuantity = request.ProductAndQuantity,
-                            DateExpected = request.DatePickUp,
+                            //DateExpected = request.DatePickUp,
                             DateRequest = request.DateRequest,
                             TotalPrice = request.Value,
                             State = request.State
@@ -174,5 +197,7 @@ namespace SmartBar.Controllers
         }
 
         private string GetUserType() { return this.User.Claims.First(i => i.Type == "userType").Value; }
+        private string GetUtilizadorID() { return this.User.Claims.First(i => i.Type == "id").Value; }
+
     }
 }

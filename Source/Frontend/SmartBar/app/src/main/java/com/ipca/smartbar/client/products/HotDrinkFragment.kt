@@ -16,7 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class HotDrinkFragment : Fragment() {
+class HotDrinkFragment(private val token:String?) : Fragment() {
     private lateinit var binding : FragmentHotDrinkBinding
     private lateinit var adapter: Adapter
     private val viewModel : ViewModelProducts by viewModels()
@@ -32,12 +32,7 @@ class HotDrinkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*products.add(Product("lanche","image",12.0))
-        products.add(Product("lanche","image",12.0))
-        products.add(Product("lanche","image",12.0))
-        products.add(Product("lanche","image",12.0))*/
-
-        viewModel.getProductsHotDrink()
+        viewModel.getProductsHotDrink(token)
         setupObservers()
 
 
@@ -60,8 +55,8 @@ class HotDrinkFragment : Fragment() {
         viewModel.products.observe(viewLifecycleOwner,Observer(::bindValues))
     }
 
-    private fun  bindValues(pair: Pair<ArrayList<Product>,Boolean>) {
-        if(pair.second)
+    private fun  bindValues(pair: Pair<ArrayList<Product>,String>) {
+        if(pair.second =="")
         {
             loadList(pair.first)
             adapter.notifyDataSetChanged()

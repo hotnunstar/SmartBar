@@ -31,7 +31,7 @@ class PackagedFragment(private val token:String?) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getProductsPackaged()
+        viewModel.getProductsPackaged(token)
         setupObservers()
     }
 
@@ -52,8 +52,8 @@ class PackagedFragment(private val token:String?) : Fragment() {
         viewModel.products.observe(viewLifecycleOwner, Observer(::bindValues))
     }
 
-    private fun bindValues(pair: Pair<ArrayList<Product>,Boolean>) {
-        if (pair.second) {
+    private fun bindValues(pair: Pair<ArrayList<Product>,String>) {
+        if (pair.second =="") {
             loadList(pair.first)
             adapter.notifyDataSetChanged()
         } else {
