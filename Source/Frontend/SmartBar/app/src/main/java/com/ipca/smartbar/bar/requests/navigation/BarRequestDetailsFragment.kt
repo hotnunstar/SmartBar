@@ -1,60 +1,107 @@
 package com.ipca.smartbar.bar.requests.navigation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.R
+import com.ipca.smartbar.bar.products.BarProductsModel
+import com.ipca.smartbar.bar.requests.BarRequestsModel
+import com.ipca.smartbar.bar.requests.BarRequestsRequests
+import com.ipca.smartbar.databinding.FragmentBarRequestDetailsBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class BarRequestDetailsFragment(private val token: String?,
+                             private val request: BarRequestsModel) : Fragment() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RequestDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class RequestDetailsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentBarRequestDetailsBinding? = null
+    private val binding get() = _binding!!
+    private val adapter = RequestDetailsAdapter()
+    var products: ArrayList<BarProductsModel> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bar_request_details, container, false)
+    ): View {
+        _binding = FragmentBarRequestDetailsBinding.inflate(inflater, container, false)
+        binding.viewProgressBarBarRequestDetails.visibility = View.VISIBLE
+        binding.progressBarBarRequestDetails.visibility = View.VISIBLE
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RequestDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RequestDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val textViewRequestID = binding.textViewRequestID
+        val textViewRequestDate = binding.textViewRequestDate
+        val textViewRequestPickUpHour = binding.textViewRequestPickUpHour
+        val textViewRequestTotalValue = binding.textViewRequestTotalValue
+        val buttonConfirmRequest = binding.buttonConfirmProductRequest
+        val buttonCancelRequest = binding.buttonCancellProductRequest
+
+        textViewRequestID.append(" ${request.idRequest}")
+        textViewRequestDate.append(" ${request.dateRequest}")
+        textViewRequestPickUpHour.append(" ${request.horas}h")
+        textViewRequestTotalValue.append(" ${request.value}€")
+
+        val arraySize = request.productAndQuantity!!.size
+        for (index in 0 until arraySize)
+        {
+            BarRequestsRequests.getProductByID(lifecycleScope, token, request.productAndQuantity!![index].idProduct){
+                if (it != null) {
+                    products.add(it)
+                    adapter.notifyDataSetChanged()
+                    binding.listViewProducts.adapter = adapter
+                    binding.viewProgressBarBarRequestDetails.visibility = View.GONE
+                    binding.progressBarBarRequestDetails.visibility = View.GONE
                 }
             }
+        }
+        if(request.state == 1)
+        {
+            buttonConfirmRequest.text = "Aceitar pedido"
+            buttonCancelRequest.text = "Recusar pedido"
+        }
+        if(request.state == 2){
+            buttonConfirmRequest.text = "Pronto para levantamento!"
+            buttonCancelRequest.visibility = View.GONE
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    inner class RequestDetailsAdapter: BaseAdapter(){
+        override fun getCount(): Int {
+            return request.productAndQuantity!!.size
+        }
+
+        override fun getItem(position: Int): Any {
+            return request.productAndQuantity!![position]
+        }
+
+        override fun getItemId(position: Int): Long {
+            return 0L
+        }
+
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            val rowView = layoutInflater.inflate(R.layout.row_request_products_line, parent, false)
+            val textViewProductName = rowView.findViewById<TextView>(R.id.textViewProductLineName)
+            val textViewProductQuantity = rowView.findViewById<TextView>(R.id.textViewProductLineQuantity)
+            val textViewTotalPrice = rowView.findViewById<TextView>(R.id.textViewProductLinePrice)
+            val product = products[position]
+            val productTotalPrice = request.productAndQuantity!![position].quantity * product.price
+            textViewProductName.append(" ${product.name}")
+            textViewProductQuantity.append(" ${request.productAndQuantity?.get(position)!!.quantity}")
+            textViewTotalPrice.text = "${productTotalPrice}€"
+
+            return rowView
+        }
     }
 }

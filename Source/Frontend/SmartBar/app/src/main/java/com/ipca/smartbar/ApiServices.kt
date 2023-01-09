@@ -70,5 +70,8 @@ interface ApiServices {
     @Headers("Content-Type: application/json")
     @PUT("/api/Product")
     suspend fun putProductBar(@Header("Authorization") token: String?, @Body requestBody: RequestBody): Response<ResponseBody>
+
+    @GET("/api/Product/{productID}")
+    suspend fun getProductByID(@Path("productID") productID: String, @Header("Authorization") token: String?): Response<ResponseBody>
     //endregion
 }

@@ -47,7 +47,7 @@ namespace SmartBar.Controllers
             string auxDateRequest, auxDateExpected;
             string idClient = GetUserID();
 
-            if (idClient != null)
+            /*if (idClient != null)
             {
                 var historic = await _historicService.GetAsyncByClient(idClient);
                 if(historic.Count > 0)
@@ -73,7 +73,7 @@ namespace SmartBar.Controllers
                     }
                     return Ok(historic);
                 }
-            }
+            }*/
             return BadRequest("Vazio");
         }
 

@@ -13,8 +13,8 @@ namespace SmartBar.Models
         string idRequest;
         string idClient;
         List<ProductRequest> productAndQuantity;
-        DateTime dateExpected;
-        DateTime dateRequest;
+        string dateRequest;
+        String horas;
         double totalPrice;
         int state;
 
@@ -26,22 +26,22 @@ namespace SmartBar.Models
         /// <summary>
         /// Construtor default do Histórico
         /// </summary>
-        /// <param name="idRequest"></param>
-        /// <param name="idClient"></param>
-        /// <param name="productAndQuantity"></param>
-        /// <param name="dateExpected"></param>
-        /// <param name="dateRequest"></param>
-        /// <param name="totalPrice"></param>
-        /// <param name="state"></param>
-        public HistoricModel(string idRequest, string idClient, List<ProductRequest> productAndQuantity, DateTime dateExpected, DateTime dateRequest, double totalPrice, int state)
+        /// <param name="IdRequest"></param>
+        /// <param name="IdClient"></param>
+        /// <param name="ProductAndQuantity"></param>
+        /// <param name="DateRequest"></param>
+        /// <param name="Horas"></param>
+        /// <param name="TotalPrice"></param>
+        /// <param name="State"></param>
+        public HistoricModel(string IdRequest, string IdClient, List<ProductRequest> ProductAndQuantity, string DateRequest, string Horas, double TotalPrice, int State)
         {
-            this.idRequest = idRequest;
-            this.idClient = idClient;
-            this.productAndQuantity = productAndQuantity;
-            this.dateExpected = dateExpected;
-            this.dateRequest = dateRequest;
-            this.totalPrice = totalPrice;
-            this.state = state;
+            idRequest = IdRequest;
+            idClient = IdClient;
+            productAndQuantity = ProductAndQuantity;
+            dateRequest = DateRequest;
+            horas = Horas;
+            totalPrice = TotalPrice;
+            state = State;
         }
 
         /// <summary>
@@ -62,12 +62,12 @@ namespace SmartBar.Models
         /// <summary>
         /// Data de levantamento do Pedido
         /// </summary>
-        public DateTime DateExpected { get { return dateExpected; } set { dateExpected = value; } }
+        public string DateRequest { get { return dateRequest; } set { dateRequest = value; } }
 
         /// <summary>
         /// Data que o Pedido foi efetuado
         /// </summary>
-        public DateTime DateRequest { get { return dateRequest; } set { dateRequest = value; } }
+        public string Horas { get { return horas; } set { horas = value; } }
 
         /// <summary>
         /// Preço total do Pedido
