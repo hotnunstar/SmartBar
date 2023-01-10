@@ -27,6 +27,7 @@ class PackagedFragment(private val token:String?) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPackagedBinding.inflate(inflater, container, false)
+        binding.progressPackaged.visibility=View.VISIBLE
         return binding.root
     }
 
@@ -55,6 +56,7 @@ class PackagedFragment(private val token:String?) : Fragment() {
 
     private fun bindValues(pair: Pair<ArrayList<Product>,String>) {
         if (pair.second =="") {
+            binding.progressPackaged.visibility=View.GONE
             loadList(pair.first)
             adapter.notifyDataSetChanged()
         } else {

@@ -2,18 +2,18 @@ package com.ipca.smartbar.client.products
 
 
 
-import android.app.Application
-import androidx.core.content.ContentProviderCompat.requireContext
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ipca.smartbar.client.cart.BarProfileModel
 import com.ipca.smartbar.client.products.api.Repository
-import com.ipca.smartbar.client.products.dataBase.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ViewModelProducts() : ViewModel(){
     val products = MutableLiveData<Pair<ArrayList<Product>,String>>()
+    val bares = MutableLiveData<Pair<ArrayList<BarProfileModel>,String>>()
 
 
     fun getProductsColdDrink(token:String?)
@@ -44,5 +44,13 @@ class ViewModelProducts() : ViewModel(){
             products.postValue(Repository.getProductsHotDrink(token))
         }
     }
-
+    fun getAllBares(token:String?)
+    {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            bares.postValue(Repository.getAllBares(token))
+        }
+    }
 }
+
+

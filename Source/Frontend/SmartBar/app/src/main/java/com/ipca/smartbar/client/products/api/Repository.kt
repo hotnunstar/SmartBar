@@ -1,7 +1,9 @@
 package com.ipca.smartbar.client.products.api
 
 
-import android.util.Log
+
+
+import com.ipca.smartbar.client.cart.BarProfileModel
 import com.ipca.smartbar.client.cart.Pedido
 import com.ipca.smartbar.client.products.Product
 
@@ -62,5 +64,14 @@ object Repository {
             return Pair(response.errorBody()!!.string(),false)
         }
 
-}
+    }
+    suspend fun getAllBares(token:String?) : Pair<ArrayList<BarProfileModel>,String>{
+        val response = backendDataSource.getAllBares(token)
+        val result=response.body()
+        return if(response.isSuccessful && result != null) {
+            Pair(ArrayList(result),"")
+        } else {
+            Pair(ArrayList(),response.message())
+        }
+    }
 }
