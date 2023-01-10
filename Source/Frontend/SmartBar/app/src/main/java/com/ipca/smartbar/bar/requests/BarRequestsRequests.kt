@@ -8,7 +8,6 @@ import com.ipca.smartbar.Constants
 import com.ipca.smartbar.bar.products.BarProductsModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import org.json.JSONArray
@@ -96,10 +95,28 @@ object BarRequestsRequests {
                     val jsonObject = JSONObject(result)
                     val product = BarProductsModel.fromJSON(jsonObject)
                     products.add(product)
-                    Log.e("PRODUCT", product.name)
                 }
             }
             scope.launch(Dispatchers.Main) { callback(products) }
+        }
+    }
+
+    fun putRequest(scope: CoroutineScope,
+                   token: String?,
+                   idRequest: String,
+                   confirmed: Boolean,
+                   callback: (String) -> Unit){
+        scope.launch(Dispatchers.IO) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(Constants.baseurl)
+                .client(client)
+                .build()
+
+            val service = retrofit.create(ApiServices::class.java)
+            val response = service.putRequests(idRequest, confirmed, token)
+
+            if(response.isSuccessful) scope.launch(Dispatchers.Main) { callback(response.body()!!.string()) }
+            else scope.launch(Dispatchers.Main) { callback(response.errorBody()!!.string()) }
         }
     }
 }

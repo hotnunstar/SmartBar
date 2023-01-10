@@ -30,8 +30,10 @@ interface ApiServices {
 
     @GET("/api/Request/{state}")
     suspend fun getRequests(@Path("state") state: Int, @Header("Authorization") token: String?): Response<ResponseBody>
-    //endregion
 
+    @PUT("/api/Request/{idRequest}")
+    suspend fun putRequests(@Path("idRequest") idRequest: String, @Query("confirmed") confirmed: Boolean, @Header("Authorization") token: String?): Response<ResponseBody>
+    //endregion
 
     //region Historic Client
     @GET("/api/Historic/GetHistoricByClient")

@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.R
 import com.ipca.smartbar.bar.products.BarProductsModel
@@ -42,7 +44,6 @@ class BarRequestDetailsFragment(private val token: String?,
             binding.progressBarBarRequestDetails.visibility = View.GONE
         }
         binding.listViewProducts.adapter = adapter
-
         binding.textViewRequestID.append(" ${request.idRequest}")
         binding.textViewRequestDate.append(" ${request.dateRequest}")
         binding.textViewRequestPickUpHour.append(" ${request.horas}h")
@@ -56,6 +57,26 @@ class BarRequestDetailsFragment(private val token: String?,
         if(request.state == 2){
             binding.buttonConfirmProductRequest.text = "Pronto para levantamento!"
             binding.buttonCancellProductRequest.visibility = View.GONE
+        }
+
+        binding.buttonConfirmProductRequest.setOnClickListener(){
+            BarRequestsRequests.putRequest(lifecycleScope, token, request.idRequest, true){
+                Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
+                val fragment = BarNewRequestsFragment(token)
+                val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerViewBarRequests, fragment)
+                transaction.commit()
+            }
+        }
+
+        binding.buttonCancellProductRequest.setOnClickListener(){
+            BarRequestsRequests.putRequest(lifecycleScope, token, request.idRequest, false){
+                Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
+                val fragment = BarNewRequestsFragment(token)
+                val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerViewBarRequests, fragment)
+                transaction.commit()
+            }
         }
     }
 
