@@ -1,5 +1,7 @@
 package com.ipca.smartbar
 
+
+import com.ipca.smartbar.client.cart.BarProfileModel
 import com.ipca.smartbar.client.cart.Pedido
 import com.ipca.smartbar.client.products.Product
 import okhttp3.RequestBody
@@ -13,6 +15,9 @@ interface ApiServices {
     @GET("/api/Product/Menus")
     suspend fun getProductsHotFood(@Header("Authorization") token: String?): Response<List<Product>>
 
+    @GET("/api/Bar")
+    suspend fun getAllBares(@Header("Authorization") token: String?): Response<List<BarProfileModel>>
+
     @GET("/api/Product/Snacks")
     suspend fun getProductsPackaged(@Header("Authorization") token: String?): Response<List<Product>>
 
@@ -21,6 +26,7 @@ interface ApiServices {
 
     @GET("/api/Product/ColdDrink")
     suspend fun getProductsColdDrink(@Header("Authorization") token: String?): Response<List<Product>>
+
     //endregion
 
     //region Requests

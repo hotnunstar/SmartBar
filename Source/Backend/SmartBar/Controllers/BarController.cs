@@ -64,6 +64,19 @@ namespace SmartBar.Controllers
             return NotFound();
         }
 
+        [HttpGet, Authorize]
+        public async Task<IActionResult> GetAllBares()
+        {
+                var bar = await _barService.GetAsync();
+                if (bar != null)
+                {
+                    return Ok(bar);
+                }
+                return NotFound("Nao existem bares");
+        }
+          
+        
+
         /// <summary>
         /// Inserir um bar
         /// </summary>
