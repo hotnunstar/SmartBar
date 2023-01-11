@@ -61,11 +61,10 @@ namespace SmartBar.Controllers
         [HttpGet("{state}"), Authorize]
         public async Task<IActionResult> GetByState(int state)
         {
-            var list = await _resquestService.GetAsyncByState(state);
-            if (list.Count > 0)
-            {
-                return Ok(list);
-            }
+            var id = GetUtilizadorID();
+            if (id == null) return Unauthorized();
+            var list = await _resquestService.GetAsyncByBarAndState(id, state);
+            if (list.Count > 0) return Ok(list);
             else return NotFound("Não foram encontrados pedidos ativos");
         }
 
@@ -128,7 +127,7 @@ namespace SmartBar.Controllers
 
         /// <summary>
         /// Incrementa o estado do Pedido até "concluído" (estado 3) e depois é convertido em histórico
-        /// Se o pedido for cancelado, o seu estado será o 4
+        /// Se o pedido for cancelado, o seu estado será o 4 e convertido logo em histórico
         /// </summary>
         /// <param name="idRequest"></param>
         /// <param name="confirmed"></param>

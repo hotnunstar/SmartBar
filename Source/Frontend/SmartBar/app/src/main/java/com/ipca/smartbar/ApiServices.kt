@@ -26,7 +26,6 @@ interface ApiServices {
 
     @GET("/api/Product/ColdDrink")
     suspend fun getProductsColdDrink(@Header("Authorization") token: String?): Response<List<Product>>
-
     //endregion
 
     //region Requests
