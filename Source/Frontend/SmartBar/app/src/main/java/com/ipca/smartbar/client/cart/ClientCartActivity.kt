@@ -2,26 +2,17 @@ package com.ipca.smartbar.client.cart
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import androidx.annotation.RequiresApi
 import com.ipca.smartbar.R
 import com.ipca.smartbar.client.historic.ClientHistoricActivity
 import com.ipca.smartbar.client.notifications.ClientNotificationsActivity
 import com.ipca.smartbar.client.products.ClientProductsActivity
-import com.ipca.smartbar.client.products.HotFoodFragment
 import com.ipca.smartbar.client.profile.ClientProfileActivity
 import com.ipca.smartbar.databinding.ActivityClientCartBinding
-import com.ipca.smartbar.databinding.ActivityClientMainBinding
 import com.ipca.smartbar.getToken
-import java.time.LocalDateTime
 
 class ClientCartActivity : AppCompatActivity() {
     private lateinit var binding: ActivityClientCartBinding

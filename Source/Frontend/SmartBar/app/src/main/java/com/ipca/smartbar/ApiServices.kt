@@ -86,4 +86,12 @@ interface ApiServices {
     @GET("/api/Product/{productID}")
     suspend fun getProductByID(@Path("productID") productID: String, @Header("Authorization") token: String?): Response<ResponseBody>
     //endregion
+
+    //region Notifications
+    @GET("/api/PushNotification")
+    suspend fun getPushNotifications(@Header("Authorization") token: String?): Response<ResponseBody>
+
+    @DELETE("/api/PushNotification")
+    suspend fun deletePushNotification(@Query("notificationId") notificationId: String, @Header("Authorization") token: String?): Response<ResponseBody>
+    //endregion
 }

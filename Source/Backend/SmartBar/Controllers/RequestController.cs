@@ -20,6 +20,7 @@ namespace SmartBar.Controllers
         private readonly ProductService _productService;
         private readonly UserService _userService;
         private readonly HistoricService _historicService;
+        private readonly PushNotificationService _pushNotificationService;
 
 
         /// <summary>
@@ -29,12 +30,14 @@ namespace SmartBar.Controllers
         /// <param name="productService"></param>
         /// <param name="userService"></param>
         /// <param name="historicService"></param>
-        public RequestController(RequestService resquestService, ProductService productService, UserService userService, HistoricService historicService)
+        /// <param name="pushNotificationService"></param>
+        public RequestController(RequestService resquestService, ProductService productService, UserService userService, HistoricService historicService, PushNotificationService pushNotificationService)
         {
             _resquestService = resquestService;
             _productService = productService;
             _userService = userService;
             _historicService = historicService;
+            _pushNotificationService = pushNotificationService;
         }
 
 
@@ -142,7 +145,13 @@ namespace SmartBar.Controllers
 
             if (GetUserType() == "COLABORADOR")
             {
-                PushNotificationModel notification = new();
+                PushNotificationModel notification = new PushNotificationModel
+                {
+                    Id = "",
+                    UserId = request.IdCliente,
+                    Date = DateTime.Now.ToString("dd/MM/yyyy")
+                };
+
                 if (confirmed && request.State == 1)
                 {
                     request.State = 2;  // Estado 2 -> Pedido aceite e em preparação
@@ -150,9 +159,10 @@ namespace SmartBar.Controllers
 
                     notification.Token = request.FirebaseToken;
                     notification.Title = "SMARTBAR - Atualização de pedido";
-                    notification.Message = $"O seu pedido efetuado a {request.DateRequest} foi aceite e encontra-se em preparação";
+                    notification.Message = $"O seu pedido efetuado a {request.DateRequest} foi aceite e encontra-se em preparação.";
 
                     await pushNotification(notification);
+                    await _pushNotificationService.CreateAsync(notification);
 
                     return Ok("Pedido aceite e em preparação");
                 }
@@ -164,9 +174,10 @@ namespace SmartBar.Controllers
 
                         notification.Token = request.FirebaseToken;
                         notification.Title = "SMARTBAR - RECUSA DE PEDIDO";
-                        notification.Message = $"O seu pedido efetuado a {request.DateRequest} foi recusado";
+                        notification.Message = $"O seu pedido efetuado a {request.DateRequest} foi recusado.";
 
                         await pushNotification(notification);
+                        await _pushNotificationService.CreateAsync(notification);
                     }
                     else
                     {
@@ -174,9 +185,10 @@ namespace SmartBar.Controllers
 
                         notification.Token = request.FirebaseToken;
                         notification.Title = "SMARTBAR - Atualização de pedido";
-                        notification.Message = $"O seu pedido efetuado a {request.DateRequest} está pronto para levantamento";
+                        notification.Message = $"O seu pedido efetuado a {request.DateRequest} está pronto para levantamento.";
 
                         await pushNotification(notification);
+                        await _pushNotificationService.CreateAsync(notification);
                     }
 
                     HistoricModel historic = new()

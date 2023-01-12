@@ -34,10 +34,9 @@ object BarProductsRequests {
                     val productJSONObject = jsonArray.getJSONObject(index)
                     val product = BarProductsModel.fromJSON(productJSONObject)
                     products.add(product)
-
-                    scope.launch(Dispatchers.Main){
-                        callback(products)
                     }
+                scope.launch(Dispatchers.Main){
+                    callback(products)
                 }
             }
             else{
@@ -68,10 +67,9 @@ object BarProductsRequests {
                     val productJSONObject = jsonArray.getJSONObject(index)
                     val product = BarProductsModel.fromJSON(productJSONObject)
                     products.add(product)
-
-                    scope.launch(Dispatchers.Main){
-                        callback(products)
                     }
+                scope.launch(Dispatchers.Main){
+                    callback(products)
                 }
             }
             else{
@@ -102,10 +100,9 @@ object BarProductsRequests {
                     val productJSONObject = jsonArray.getJSONObject(index)
                     val product = BarProductsModel.fromJSON(productJSONObject)
                     products.add(product)
-
-                    scope.launch(Dispatchers.Main){
-                        callback(products)
                     }
+                scope.launch(Dispatchers.Main){
+                    callback(products)
                 }
             }
             else{
@@ -136,10 +133,9 @@ object BarProductsRequests {
                     val productJSONObject = jsonArray.getJSONObject(index)
                     val product = BarProductsModel.fromJSON(productJSONObject)
                     products.add(product)
-
-                    scope.launch(Dispatchers.Main){
-                        callback(products)
                     }
+                scope.launch(Dispatchers.Main){
+                    callback(products)
                 }
             }
             else{

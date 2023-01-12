@@ -28,7 +28,7 @@
         /// <summary>
         /// Coleção de notificações
         /// </summary>
-        public string NotificationCollectionName { get; set; } = null!;
+        public string PushNotificationCollectionName { get; set; } = null!;
 
         /// <summary>
         /// Coleção de produtos

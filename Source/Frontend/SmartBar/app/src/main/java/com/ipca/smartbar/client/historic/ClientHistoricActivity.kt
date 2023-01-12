@@ -13,9 +13,9 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.R
-import com.ipca.smartbar.client.notifications.ClientNotificationsActivity
 import com.ipca.smartbar.client.products.ClientProductsActivity
 import com.ipca.smartbar.client.cart.ClientCartActivity
+import com.ipca.smartbar.client.notifications.ClientNotificationsActivity
 import com.ipca.smartbar.client.profile.ClientProfileActivity
 import com.ipca.smartbar.databinding.ActivityClientHistoricBinding
 import com.ipca.smartbar.getToken

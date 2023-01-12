@@ -1,7 +1,6 @@
 package com.ipca.smartbar.client.notifications
 
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -9,31 +8,44 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageButton
 import android.widget.ListView
+import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.annotation.RequiresApi
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.ipca.smartbar.R
-import com.ipca.smartbar.client.products.ClientProductsActivity
 import com.ipca.smartbar.client.cart.ClientCartActivity
 import com.ipca.smartbar.client.historic.ClientHistoricActivity
+import com.ipca.smartbar.client.products.ClientProductsActivity
 import com.ipca.smartbar.client.profile.ClientProfileActivity
-import java.time.LocalDateTime
+import com.ipca.smartbar.getToken
 
 class ClientNotificationsActivity : AppCompatActivity() {
 
-    val notification = arrayListOf<Notification>()
+    private val adapter = NotificationsAdapter()
+    private var notifications = ArrayList<ClientNotificationsModel>()
 
-    val adapter = NotificationAdapter()
-
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_client_notifications)
 
-        notification.add(Notification("100", LocalDateTime.now(), "Pedido Encontra-se em preparação"))
+        findViewById<View>(R.id.viewProgressBarClientNotifications).visibility = View.VISIBLE
+        findViewById<ProgressBar>(R.id.progressBarClientNotifications).visibility = View.VISIBLE
 
-        val listViewNotification = findViewById<ListView>(R.id.listViewNotification)
-        listViewNotification.adapter = adapter
+        val token = getToken()
+
+        ClientNotificationsRequests.getNotifications(lifecycleScope, token){
+            if(it.isEmpty()) Toast.makeText(this@ClientNotificationsActivity, "Não existem notificações", Toast.LENGTH_SHORT).show()
+            else {
+                notifications = it
+                adapter.notifyDataSetChanged()
+            }
+            findViewById<View>(R.id.viewProgressBarClientNotifications).visibility = View.GONE
+            findViewById<ProgressBar>(R.id.progressBarClientNotifications).visibility = View.GONE
+        }
+
+        findViewById<ListView>(R.id.listViewNotifications).adapter = adapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -53,6 +65,7 @@ class ClientNotificationsActivity : AppCompatActivity() {
                 val intent = Intent(this@ClientNotificationsActivity, ClientProductsActivity::class.java)
                 startActivity(intent)
                 true
+
             }
             R.id.action_cart_client -> {
                 val intent = Intent(this@ClientNotificationsActivity, ClientCartActivity::class.java)
@@ -76,32 +89,40 @@ class ClientNotificationsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    inner class NotificationAdapter : BaseAdapter() {
+    inner class NotificationsAdapter: BaseAdapter(){
         override fun getCount(): Int {
-            return notification.size
+            return notifications.size
         }
 
         override fun getItem(position: Int): Any {
-            return notification[position]
+            return notifications[position]
         }
 
         override fun getItemId(position: Int): Long {
             return 0L
         }
 
-        override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
-            val rootView = layoutInflater.inflate(R.layout.row_notification, parent, false)
-            val textViewPedidoNotif = rootView.findViewById<TextView>(R.id.textViewPedido)
-            val textViewDataNotif = rootView.findViewById<TextView>(R.id.textViewDataNotification)
-            val textViewNotif = rootView.findViewById<TextView>(R.id.textViewNotification)
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            val rowView = layoutInflater.inflate(R.layout.row_notification, parent, false)
+            val textViewNotificationTitle = rowView.findViewById<TextView>(R.id.textViewNotificationTitle)
+            val textViewNotificationMessage = rowView.findViewById<TextView>(R.id.textViewNotificationMessage)
+            val textViewNotificationDate = rowView.findViewById<TextView>(R.id.textViewNotificationDate)
+            val imageButtonDelete = rowView.findViewById<ImageButton>(R.id.imageButtonNotificationDelete)
+            val notification = notifications[position]
 
-            textViewPedidoNotif.text = notification[position].idPedido
-            textViewDataNotif.text = notification[position].dataAtual.toString()
-            textViewNotif.text = notification[position].notificacao
+            textViewNotificationTitle.text = notification.title
+            textViewNotificationMessage.text = notification.message
+            textViewNotificationDate.append(" ${notification.date}")
 
-            textViewDataNotif.text = (textViewDataNotif.text as String).replace('T', ' ')
-
-            return rootView
+            imageButtonDelete.setOnClickListener() {
+                ClientNotificationsRequests.deleteNotification(lifecycleScope, notification.id, getToken()) {
+                    if (it == "OK") {
+                        val intent = Intent(this@ClientNotificationsActivity, ClientNotificationsActivity::class.java)
+                        startActivity(intent)
+                    } else { Toast.makeText(this@ClientNotificationsActivity, "ERRO AO APAGAR A NOTIFICAÇÃO", Toast.LENGTH_SHORT).show() }
+                }
+            }
+            return rowView
         }
     }
 }
