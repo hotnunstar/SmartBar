@@ -69,7 +69,7 @@ class ClientProductsActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-    fun setUpBottomNavigation()
+    private fun setUpBottomNavigation()
     {
         val bottonBar = binding.bottomNavigation
         bottonBar.setOnItemSelectedListener {

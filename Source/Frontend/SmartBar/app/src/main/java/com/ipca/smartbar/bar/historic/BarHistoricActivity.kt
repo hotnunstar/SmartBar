@@ -19,9 +19,11 @@ import com.google.gson.Gson
 import com.ipca.smartbar.R
 import com.ipca.smartbar.bar.products.BarProductsActivity
 import com.ipca.smartbar.bar.profile.BarProfileActivity
+import com.ipca.smartbar.bar.requests.BarRequestsActivity
 import com.ipca.smartbar.databinding.ActivityBarHistoricBinding
 import com.ipca.smartbar.getToken
 import kotlinx.android.synthetic.main.activity_bar_historic.*
+import kotlinx.android.synthetic.main.activity_bar_requests.*
 import java.util.*
 
 class BarHistoricActivity : AppCompatActivity() {
@@ -142,7 +144,7 @@ class BarHistoricActivity : AppCompatActivity() {
                 true
             }
             R.id.action_requests_staff -> {
-                val intent = Intent(this@BarHistoricActivity, BarProfileActivity::class.java)
+                val intent = Intent(this@BarHistoricActivity, BarRequestsActivity::class.java)
                 startActivity(intent)
                 true
             }

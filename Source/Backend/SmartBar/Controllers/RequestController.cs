@@ -195,6 +195,7 @@ namespace SmartBar.Controllers
                     {
                         IdClient = request.IdCliente,
                         IdRequest = request.IdRequest,
+                        IdBar = request.IdBar,
                         ProductAndQuantity = request.ProductAndQuantity,
                         Horas = request.Horas,
                         DateRequest = request.DateRequest,

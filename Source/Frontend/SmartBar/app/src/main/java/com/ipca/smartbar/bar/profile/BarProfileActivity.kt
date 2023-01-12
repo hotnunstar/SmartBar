@@ -65,33 +65,31 @@ class BarProfileActivity : AppCompatActivity() {
             return super.onCreateOptionsMenu(menu)
         }
 
-        override fun onOptionsItemSelected(item: MenuItem): Boolean {
-            super.onOptionsItemSelected(item)
-            return when (item.itemId) {
-                R.id.action_profile_staff -> {
-                    val intent = Intent(this@BarProfileActivity, BarProfileActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.action_product_settings_staff -> {
-                    val intent = Intent(this@BarProfileActivity, BarProductsActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.action_requests_staff -> {
-                    val intent = Intent(this@BarProfileActivity, BarRequestsActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.action_historic_staff -> {
-                    val intent = Intent(this@BarProfileActivity, BarHistoricActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                else -> {
-                    false
-                }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        super.onOptionsItemSelected(item)
+        return when(item.itemId) {
+            R.id.action_profile_staff -> {
+                val intent = Intent(this@BarProfileActivity, BarProfileActivity::class.java)
+                startActivity(intent)
+                true
             }
-            return super.onOptionsItemSelected(item)
+            R.id.action_product_settings_staff -> {
+                val intent = Intent(this@BarProfileActivity, BarProductsActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.action_requests_staff -> {
+                val intent = Intent(this@BarProfileActivity, BarRequestsActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.action_historic_staff -> {
+                val intent = Intent(this@BarProfileActivity, BarHistoricActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> false
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
