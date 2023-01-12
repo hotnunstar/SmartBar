@@ -28,6 +28,7 @@ class HotDrinkFragment(private val token:String?) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHotDrinkBinding.inflate(inflater,container,false)
+        binding.progressBarHotDrink.visibility=View.VISIBLE
         return binding.root
     }
 
@@ -59,6 +60,7 @@ class HotDrinkFragment(private val token:String?) : Fragment() {
     private fun  bindValues(pair: Pair<ArrayList<Product>,String>) {
         if(pair.second =="")
         {
+            binding.progressBarHotDrink.visibility=View.GONE
             loadList(pair.first)
             adapter.notifyDataSetChanged()
         } else

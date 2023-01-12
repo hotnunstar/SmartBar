@@ -30,6 +30,7 @@ class ColdDrinkFragment(private val token:String?) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentColdDrinkBinding.inflate(inflater,container,false)
+        binding.progressBarColdDrink.visibility=View.VISIBLE
         return binding.root
     }
 
@@ -62,6 +63,7 @@ class ColdDrinkFragment(private val token:String?) : Fragment() {
     {
         if(pair.second =="")
         {
+            binding.progressBarColdDrink.visibility=View.GONE
             LoadProducts(pair.first)
             adapter.notifyDataSetChanged()
         } else

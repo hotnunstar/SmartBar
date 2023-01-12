@@ -1,6 +1,7 @@
 package com.ipca.smartbar.client.products.api
 
 import com.ipca.smartbar.ApiServices
+import com.ipca.smartbar.client.cart.BarProfileModel
 import com.ipca.smartbar.client.cart.Pedido
 import com.ipca.smartbar.client.products.Product
 import okhttp3.ResponseBody
@@ -30,5 +31,10 @@ class BackendDataSource {
     suspend fun postPedido(pedido:Pedido,token:String?): Response<ResponseBody>
     {
         return apiServices.postPedido(pedido,token)
+    }
+
+    suspend fun getAllBares(token:String?):Response<List<BarProfileModel>>
+    {
+        return apiServices.getAllBares(token)
     }
 }

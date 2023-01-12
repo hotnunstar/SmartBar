@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FirebaseAdmin;
+using FirebaseAdmin.Messaging;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartBar.Models;
@@ -58,11 +61,10 @@ namespace SmartBar.Controllers
         [HttpGet("{state}"), Authorize]
         public async Task<IActionResult> GetByState(int state)
         {
-            var list = await _resquestService.GetAsyncByState(state);
-            if (list.Count > 0)
-            {
-                return Ok(list);
-            }
+            var id = GetUtilizadorID();
+            if (id == null) return Unauthorized();
+            var list = await _resquestService.GetAsyncByBarAndState(id, state);
+            if (list.Count > 0) return Ok(list);
             else return NotFound("Não foram encontrados pedidos ativos");
         }
 
@@ -125,12 +127,13 @@ namespace SmartBar.Controllers
 
         /// <summary>
         /// Incrementa o estado do Pedido até "concluído" (estado 3) e depois é convertido em histórico
-        /// Se o pedido for cancelado, o seu estado será o 4
+        /// Se o pedido for cancelado, o seu estado será o 4 e convertido logo em histórico
         /// </summary>
         /// <param name="idRequest"></param>
+        /// <param name="confirmed"></param>
         /// <returns></returns>
-        [HttpPut, Authorize]
-        public async Task<ActionResult> PutRequest(string idRequest)
+        [HttpPut("{idRequest}"), Authorize]
+        public async Task<ActionResult> PutRequest(string idRequest, bool confirmed)
         {
             if (GetUserType() == "CLIENTE") return Unauthorized();
            
@@ -139,44 +142,88 @@ namespace SmartBar.Controllers
 
             if (GetUserType() == "COLABORADOR")
             {
-                if (request == null ) return BadRequest("Pedido não encontrado");
-                try
+                PushNotificationModel notification = new();
+                if (confirmed && request.State == 1)
                 {
-                    if (request.State == 1)
-                    {
-                        request.State++;
-                        await _resquestService.UpdateAsync(request.IdRequest, request);
-                        
-                        // NOTIFICAR O UTILIZADOR QUE O PEDIDO SE ENCONTRA EM PREPARAÇÃO
+                    request.State = 2;  // Estado 2 -> Pedido aceite e em preparação
+                    await _resquestService.UpdateAsync(request.IdRequest, request);
 
-                        return Accepted();
-                    }
-                    else if (request.State == 2)
-                    {
-                        request.State++;
-                        HistoricModel historic = new()
-                        {
-                            IdClient = request.IdCliente,
-                            IdRequest = request.IdRequest,
-                            ProductAndQuantity = request.ProductAndQuantity,
-                            Horas = request.Horas,
-                            DateRequest = request.DateRequest,
-                            TotalPrice = request.Value,
-                            State = request.State
-                        };
+                    notification.Token = request.FirebaseToken;
+                    notification.Title = "SMARTBAR - Atualização de pedido";
+                    notification.Message = $"O seu pedido efetuado a {request.DateRequest} foi aceite e encontra-se em preparação";
 
-                        await _historicService.CreateAsync(historic);
-                        await _resquestService.DeleteAsync(idRequest);
+                    await pushNotification(notification);
 
-                        // NOTIFICAR O UTILIZADOR QUE O PEDIDO SE ENCONTRA PRONTO PARA LEVANTAMENTO
-
-                        return Accepted();
-                    }
-                    else return BadRequest("Erro no estado do pedido");
+                    return Ok("Pedido aceite e em preparação");
                 }
-                catch { return BadRequest("Erro na atualização do pedido"); }
+                else if (!confirmed || request.State == 2)
+                {
+                    if (!confirmed)
+                    {
+                        request.State = 4; // Estado 4 -> Pedido recusado pelo bar
+
+                        notification.Token = request.FirebaseToken;
+                        notification.Title = "SMARTBAR - RECUSA DE PEDIDO";
+                        notification.Message = $"O seu pedido efetuado a {request.DateRequest} foi recusado";
+
+                        await pushNotification(notification);
+                    }
+                    else
+                    {
+                        request.State = 3; // Estado 3 -> Pedido entregue e armazenado no histórico
+
+                        notification.Token = request.FirebaseToken;
+                        notification.Title = "SMARTBAR - Atualização de pedido";
+                        notification.Message = $"O seu pedido efetuado a {request.DateRequest} está pronto para levantamento";
+
+                        await pushNotification(notification);
+                    }
+
+                    HistoricModel historic = new()
+                    {
+                        IdClient = request.IdCliente,
+                        IdRequest = request.IdRequest,
+                        ProductAndQuantity = request.ProductAndQuantity,
+                        Horas = request.Horas,
+                        DateRequest = request.DateRequest,
+                        TotalPrice = request.Value,
+                        State = request.State
+                    };
+
+                    await _historicService.CreateAsync(historic);
+                    await _resquestService.DeleteAsync(idRequest);
+                    if (!confirmed) return Ok("Pedido recusado");
+                    else return Ok("Pedido pronto para levantamento");
+                }
+                else return BadRequest("Erro no estado do pedido");
             }
             return NotFound("Não tem autorização para alterar o estado do pedido");
+        }
+
+        async Task pushNotification(PushNotificationModel notification)
+        {
+            String GOOGLE_APPLICATION_CREDENTIALS_PATH = @"smartbar-10aed-firebase-adminsdk-g73xl-3c037deb60.json";
+
+            if(FirebaseApp.DefaultInstance == null)
+            {
+                FirebaseApp.Create(new AppOptions()
+                {
+                    Credential = GoogleCredential.FromFile(GOOGLE_APPLICATION_CREDENTIALS_PATH)
+                });
+            }
+                
+            var registrationToken = notification.Token;
+
+            var message = new Message()
+            {
+                Notification = new Notification()
+                {
+                    Title = notification.Title,
+                    Body = notification.Message
+                },
+                Token = registrationToken,
+            };
+            await FirebaseMessaging.DefaultInstance.SendAsync(message); 
         }
 
         private string GetUserType() { return this.User.Claims.First(i => i.Type == "userType").Value; }

@@ -45,7 +45,7 @@ class BarRequestsInProcessFragment(private val token: String?) : Fragment() {
 
         val buttonPageReload = binding.buttonUpdatePage
         buttonPageReload.setOnClickListener(){
-            val fragment = BarNewRequestsFragment(token)
+            val fragment = BarRequestsInProcessFragment(token)
             val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.fragmentContainerViewBarRequests, fragment)
             transaction.commit()

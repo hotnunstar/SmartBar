@@ -21,8 +21,6 @@ import kotlinx.coroutines.launch
 class HotFoodFragment(private val token:String?) : Fragment() {
     private lateinit var binding : FragmentHotFoodBinding
     private val viewModel : ViewModelProducts by viewModels()
-    //private var viewProgressBarHotFood = binding.viewProgressBarHotFood
-    //private var progressBarHotFood = binding.progressBarHotFood
     private lateinit var adapter: Adapter
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,17 +28,14 @@ class HotFoodFragment(private val token:String?) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHotFoodBinding.inflate(inflater,container,false)
+        binding.progressBarHotFood.visibility=View.VISIBLE
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getProductsHotFood(token)
-        //viewProgressBarHotFood.visibility=View.VISIBLE
-        //progressBarHotFood.visibility=View.VISIBLE
         SetupObserver()
-        //viewProgressBarHotFood.visibility=View.GONE
-        //progressBarHotFood.visibility=View.GONE
     }
     private fun loadList(products: ArrayList<Product>) {
         val list = binding.lvProducts
@@ -63,6 +58,7 @@ class HotFoodFragment(private val token:String?) : Fragment() {
     {
         if(pair.second =="")
         {
+            binding.progressBarHotFood.visibility=View.GONE
             loadList(pair.first)
             adapter.notifyDataSetChanged()
         } else

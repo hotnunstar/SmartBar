@@ -1,46 +1,40 @@
 package com.ipca.smartbar.client.cart
-
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import com.ipca.smartbar.R
 import com.ipca.smartbar.checkUserId
 import com.ipca.smartbar.client.cart.adapter.Adapter
+import com.ipca.smartbar.client.products.ClientProductsActivity
 import com.ipca.smartbar.client.products.Product
+import com.ipca.smartbar.client.products.ViewModelProducts
 import com.ipca.smartbar.client.products.api.Repository
 import com.ipca.smartbar.client.products.dataBase.AppDatabase
-import com.ipca.smartbar.client.profile.ClientProfileActivity
 import com.ipca.smartbar.databinding.FragmentProductsCardBinding
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.Date
 import kotlin.math.roundToInt
 
 
 class ProductsCardFragment(private val token:String?) : Fragment(){
-    private val spinnerOptionBar = arrayOf("Bar 1", "Bar 2")
     private lateinit var binding: FragmentProductsCardBinding
     private lateinit var adapter: Adapter
     var products = ArrayList<Product>()
+    var bares = ArrayList<BarProfileModel>()
+    private val viewModel : ViewModelProducts by viewModels()
     var preco=0.0
     var horasPedido :String=""
     var state:Int =1
@@ -57,7 +51,7 @@ class ProductsCardFragment(private val token:String?) : Fragment(){
     var localDateMinute = LocalDateTime.now().minute
     @RequiresApi(Build.VERSION_CODES.O)
     private val spinnerOptionHorario = popularSpinner(localDateHour,localDateMinute)
-
+    private var spinnerOptionBar = ArrayList<String>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,12 +64,18 @@ class ProductsCardFragment(private val token:String?) : Fragment(){
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        spinnerBar()
-        spinnerHoraPedido()
+        viewModel.getAllBares(token)
+        SetupObserver()
         retornaProdutosDb()
         binding.buttonConfirmarPedido.setOnClickListener {
 
-
+            for(barAux in bares)
+            {
+                if(barAux.description==bar)
+                {
+                    bar=barAux.id
+                }
+            }
             val listaFinal = CriaPair()
             var pedido = Pedido(
                 listProducts = listaFinal,
@@ -88,22 +88,52 @@ class ProductsCardFragment(private val token:String?) : Fragment(){
                 horas = horasPedido,
                 dateRequest = dateRequest
             )
-            if (listaFinal.size == 0) {
+            if(horasPedido !="") {
+
+                if (listaFinal.size == 0) {
+                    Toast.makeText(
+                        context,
+                        "Escolher produtos para efetuar a compra",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    var result: Pair<String, Boolean>
+                    lifecycleScope.launch(Dispatchers.IO)
+                    {
+
+                        result = Repository.confirmarPedido(pedido, token)
+                        controller = controlaResult(result)
+                        if (controller)
+                        {
+                            deleteProductFinal(products)
+                            val intent = Intent(context, ClientProductsActivity::class.java)
+                            startActivity(intent)
+                        }
+
+                    }
+                }
+            } else{
                 Toast.makeText(
                     context,
-                    "Escolher produtos para efetuar a compra",
+                    "Preenche as horas guloso",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else {
-                var result: Pair<String, Boolean>
-                lifecycleScope.launch(Dispatchers.IO)
-                {
-
-                    result = Repository.confirmarPedido(pedido, token)
-                    controller = controlaResult(result)
-                    if (controller) deleteProductFinal(products)
-                }
             }
+        }
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun SetupObserver()
+    {
+        viewModel.bares.observe(viewLifecycleOwner, Observer(::bindValues))
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun bindValues(pair:Pair<ArrayList<BarProfileModel>,String>)
+    {
+        if(pair.second=="")
+        {
+            bares=pair.first
+            spinnerOptionBar = popularSpinnerBares(bares)
+            spinnerBar()
         }
     }
 
@@ -148,7 +178,7 @@ class ProductsCardFragment(private val token:String?) : Fragment(){
     {
         val context = context as Context
         var spinnerBar = binding.spinnerChooseBar
-        val arrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, spinnerOptionBar )
+        val arrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, spinnerOptionBar)
         spinnerBar.adapter = arrayAdapter
 
         spinnerBar.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -163,6 +193,7 @@ class ProductsCardFragment(private val token:String?) : Fragment(){
                 bar = spinnerOptionBar[0]
             }
         }
+        spinnerHoraPedido()
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun spinnerHoraPedido()
@@ -185,6 +216,15 @@ class ProductsCardFragment(private val token:String?) : Fragment(){
                 horario = spinnerOptionHorario[0]
             }
         }
+    }
+    fun popularSpinnerBares(bares:ArrayList<BarProfileModel>):ArrayList<String>
+    {
+        val nomesBares = ArrayList<String>()
+        for (bar in bares)
+        {
+            nomesBares.add(bar.description)
+        }
+        return nomesBares
     }
     fun popularSpinner(hora:Int, minuto:Int):ArrayList<String>
     {

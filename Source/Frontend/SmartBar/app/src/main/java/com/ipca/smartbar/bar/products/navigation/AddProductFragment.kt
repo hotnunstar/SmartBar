@@ -90,8 +90,7 @@ class AddProductFragment(
 
     private fun postProduct(product: BarProductsModel){
         BarProductsRequests.postProduct(lifecycleScope, token, product){
-            val result = it
-            when (result){
+            when (it){
                 "OK" -> {
                     Toast.makeText(activity,"PRODUTO INSERIDO!", Toast.LENGTH_SHORT).show()
                     goToFragment()

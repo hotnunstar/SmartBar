@@ -27,6 +27,15 @@ public class RequestService
     public async Task<List<RequestModel>> GetAsync() =>
         await _requestCollection.Find(_ => true).ToListAsync();
 
+    /// <summary>
+    /// Obter todos os pedidos de determinado bar, por estado
+    /// </summary>
+    /// <param name="idBar"></param>
+    /// <param name="state"></param>
+    /// <returns>A lista dos pedidos</returns>
+    public async Task<List<RequestModel>> GetAsyncByBarAndState(string idBar, int state) =>
+        await _requestCollection.Find(x => x.IdBar == idBar && x.State == state).ToListAsync();
+
 
     /// <summary>
     /// Obter o Pedido por IdRequest
@@ -63,8 +72,6 @@ public class RequestService
 
     /// <summary>
     /// Atualizar um Pedido
-    /// 
-    /// --Trocar apenas o estado do pedido--
     /// </summary>
     /// <param name="idRequest"></param>
     /// <param name="updatedRequest"></param>
