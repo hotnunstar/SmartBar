@@ -9,11 +9,9 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
 import com.ipca.smartbar.*
 import com.ipca.smartbar.client.products.ClientProductsActivity
-import com.ipca.smartbar.bar.profile.BarProfileActivity
+import com.ipca.smartbar.bar.requests.BarRequestsActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                     if(checkUserType(token) == "COLABORADOR"){
-                        val intent = Intent(this@LoginActivity, BarProfileActivity::class.java)
+                        val intent = Intent(this@LoginActivity, BarRequestsActivity::class.java)
                         startActivity(intent)
                     }
                 }
@@ -84,7 +82,7 @@ class LoginActivity : AppCompatActivity() {
                                     startActivity(intent)
                                 }
                                 if (loginModel.userType == "COLABORADOR") {
-                                    val intent = Intent(this@LoginActivity, BarProfileActivity::class.java)
+                                    val intent = Intent(this@LoginActivity, BarRequestsActivity::class.java)
                                     startActivity(intent)
                                 }
                             }

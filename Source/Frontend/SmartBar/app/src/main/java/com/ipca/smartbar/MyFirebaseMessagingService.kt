@@ -1,4 +1,4 @@
-package com.ipca.smartbar.generic
+package com.ipca.smartbar
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

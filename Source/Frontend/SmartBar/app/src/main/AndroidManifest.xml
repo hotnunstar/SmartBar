@@ -31,7 +31,7 @@
         </activity>
 
         <service
-            android:name=".generic.MyFirebaseMessagingService"
+            android:name=".MyFirebaseMessagingService"
             android:directBootAware="true"
             android:exported="false">
             <intent-filter>
@@ -69,13 +69,6 @@
         </activity>
         <activity
             android:name=".bar.historic.BarHistoricDetailActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".client.notifications.ClientNotificationsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
