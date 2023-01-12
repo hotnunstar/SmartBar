@@ -1,6 +1,7 @@
 package com.ipca.smartbar.client.cart
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color.parseColor
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,7 +22,9 @@ import com.ipca.smartbar.client.products.Product
 import com.ipca.smartbar.client.products.ViewModelProducts
 import com.ipca.smartbar.client.products.api.Repository
 import com.ipca.smartbar.client.products.dataBase.AppDatabase
+import com.ipca.smartbar.client.profile.ClientProfileRequests
 import com.ipca.smartbar.databinding.FragmentProductsCardBinding
+import kotlinx.android.synthetic.main.fragment_add_product.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -257,6 +260,7 @@ class ProductsCardFragment(private val token:String?) : Fragment(){
     fun valorTotal(product: ArrayList<Product>)
     {
         var aux =0.0
+
         for(item in product)
         {
             aux += item.preco * item.quantity
@@ -264,7 +268,20 @@ class ProductsCardFragment(private val token:String?) : Fragment(){
         }
         preco=aux
         val roundoff = (preco*100).roundToInt().toDouble() / 100
-        binding.textViewTotalPrice.text =  roundoff.toString()
+        ClientProfileRequests.getUserProfile(lifecycleScope, token){
+            if(it.balance < aux)
+            {
+
+                binding.textViewTotalPrice.setTextColor(parseColor("#FF0000"))
+                binding.textViewTotalPrice.text =  "$roundoff €"
+            }
+            else
+            {
+                binding.textViewTotalPrice.setTextColor(parseColor("#000000"))
+                binding.textViewTotalPrice.text =  "$roundoff €"
+            }
+        }
+
     }
     fun apdateProduct(product:Product, products2: ArrayList<Product>){
     lifecycleScope.launch(Dispatchers.IO)

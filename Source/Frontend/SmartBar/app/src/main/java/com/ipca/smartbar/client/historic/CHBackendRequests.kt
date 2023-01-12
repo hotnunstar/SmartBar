@@ -1,15 +1,17 @@
 package com.ipca.smartbar.client.historic
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import com.ipca.smartbar.ApiServices
 import com.ipca.smartbar.Constants
+import com.ipca.smartbar.bar.requests.BarProductLineModel
+import com.ipca.smartbar.bar.products.BarProductsModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Retrofit
 
 object CHBackendRequests {
@@ -25,29 +27,76 @@ object CHBackendRequests {
                 .client(client)
                 .build()
 
-            val historic = ArrayList<ClientHistoricModel>()
+            val historics = ArrayList<ClientHistoricModel>()
             val service = retrofit.create(ApiServices::class.java)
             val response = service.getCHByClientID(token)
 
             if (response.isSuccessful){
                 val result = response.body()!!.string()
-                val jsonArray = JSONArray(result)
-                for (index in 0 until jsonArray.length()){
-                    Log.e("batatas", jsonArray.toString())
-                    val clientHistoricJSONObject = jsonArray.getJSONObject(index)
-                    val clientHistoric = ClientHistoricModel.fromJSON(clientHistoricJSONObject)
-                    historic.add(clientHistoric)
+                val jsonArrayHistoric = JSONArray(result)
+                for (index in 0 until jsonArrayHistoric.length()){
+                    //Log.e("batatas", jsonArrayHistoric.toString())
+                    val products = ArrayList<BarProductLineModel>()
+                    val jsonObject = jsonArrayHistoric[index] as JSONObject
+
+                    val idRequest = jsonObject.getString("idRequest")
+                    val idClient = jsonObject.getString("idClient")
+                    val jsonProductsLineArray = jsonObject.getJSONArray("productAndQuantity")
+                    val dateRequest = jsonObject.getString("dateRequest")
+                    val totalPrice = jsonObject.getDouble("totalPrice")
+                    val state = jsonObject.getString("state")
+                    val idBar = jsonObject.getString("idBar")
+                    val horas = jsonObject.getString("horas")
+
+                    for (i in 0 until jsonProductsLineArray.length()){
+                        val productsJSONObject = jsonProductsLineArray.getJSONObject(i)
+                        val product = BarProductLineModel.fromJSON(productsJSONObject)
+                        products.add(product)
+                    }
+                    val historic: ClientHistoricModel = (ClientHistoricModel(idRequest, idClient,
+                        products, dateRequest, totalPrice, state, idBar, horas))
+
+                    historics.add(historic)
 
                     scope.launch(Dispatchers.Main){
-                        callback(historic)
+                        callback(historics)
                     }
                 }
             }
             else{
                 scope.launch(Dispatchers.Main){
-                    callback(historic)
+                    callback(historics)
                 }
             }
         }
     }
+
+    fun getProductByID(
+        scope: CoroutineScope,
+        token: String?,
+        productsLines: List<BarProductLineModel>,
+        callback: (ArrayList<BarProductsModel>) -> Unit
+    ) {
+        scope.launch(Dispatchers.IO) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(Constants.baseurl)
+                .client(client)
+                .build()
+
+            val service = retrofit.create(ApiServices::class.java)
+            val products: ArrayList<BarProductsModel> = ArrayList()
+
+            for (index in productsLines.indices) {
+                val response = service.getProductByID(productsLines[index].idProduct, token)
+                if (response.isSuccessful) {
+                    val result = response.body()!!.string()
+                    val jsonObject = JSONObject(result)
+                    val product = BarProductsModel.fromJSON(jsonObject)
+                    products.add(product)
+                }
+            }
+            scope.launch(Dispatchers.Main) { callback(products) }
+        }
+    }
+
 }

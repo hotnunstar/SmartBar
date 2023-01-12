@@ -3,15 +3,18 @@ package com.ipca.smartbar.client.historic
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.google.gson.Gson
 import com.ipca.smartbar.R
 import com.ipca.smartbar.client.products.ClientProductsActivity
 import com.ipca.smartbar.client.cart.ClientCartActivity
@@ -25,8 +28,8 @@ class ClientHistoricActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityClientHistoricBinding
 
-    val adapter = CHAdapter()
-    var historic = arrayListOf<ClientHistoricModel>()
+    private val adapter = CHAdapter()
+    private var historic = arrayListOf<ClientHistoricModel>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +42,12 @@ class ClientHistoricActivity : AppCompatActivity() {
 
         CHBackendRequests.getHistoric(lifecycleScope, token){
             historic = it
+
+            if (it.size == 0)
+            {
+                Toast.makeText(this,"Não Existem Pedidos", Toast.LENGTH_LONG).show()
+            }
+
             adapter.notifyDataSetChanged()
         }
         binding.listViewClientHistoric.adapter = adapter
@@ -64,16 +73,18 @@ class ClientHistoricActivity : AppCompatActivity() {
             val tvDateRequestHist = rowView.findViewById<TextView>(R.id.tvDateRequestHist)
 
             val hist = historic[position]
-            tvRequestHist.text = hist.idRequest
-            tvTotalPriceHist.text = hist.totalPrice.toString()
-            tvDateRequestHist.text = hist.dateRequest
+            tvRequestHist.append("${hist.idRequest}")
+            tvTotalPriceHist.append("${hist.totalPrice}" + "€")
+            tvDateRequestHist.append("${hist.dateRequest}")
 
             rowView.setOnClickListener{
+                val gson = Gson()
                 val intent = Intent(this@ClientHistoricActivity, ClientHistoricDetailActivity::class.java)
-                intent.putExtra("request", tvRequestHist.text)
+
+                intent.putExtra("identifier", gson.toJson(hist))
+                Log.e("cebolas", gson.toJson(hist))
                 startActivity(intent)
             }
-
             return rowView
         }
     }

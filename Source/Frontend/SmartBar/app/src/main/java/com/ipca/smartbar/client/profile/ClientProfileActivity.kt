@@ -20,6 +20,7 @@ import com.ipca.smartbar.client.products.ClientProductsActivity
 import com.ipca.smartbar.deleteToken
 import com.ipca.smartbar.generic.LoginActivity
 import com.ipca.smartbar.getToken
+import kotlin.math.roundToInt
 
 class ClientProfileActivity : AppCompatActivity() {
 
@@ -40,7 +41,8 @@ class ClientProfileActivity : AppCompatActivity() {
         ClientProfileRequests.getUserProfile(lifecycleScope, token){
             if(it.email.isNotEmpty())
             {
-                val balance = it.balance.toString()+"€"
+                val roundoff = (it.balance*100).roundToInt().toDouble() / 100
+                val balance = roundoff.toString()+"€"
                 textViewClientBalance.text = balance
                 textViewClientName.text = it.name
                 textViewClientEmail.text = it.email

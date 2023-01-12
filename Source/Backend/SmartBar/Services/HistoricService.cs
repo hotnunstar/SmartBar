@@ -38,6 +38,23 @@ namespace SmartBar.Services
             await _historicCollection.Find(x => x.IdClient == idClient).ToListAsync();
 
         /// <summary>
+        /// Obter o Histórico de pedidos por idBar
+        /// </summary>
+        /// <param name="idBar"></param>
+        /// <returns></returns>
+        public async Task<List<HistoricModel>> GetAsyncByBar(string idBar) =>
+            await _historicCollection.Find(x => x.IdBar == idBar).ToListAsync();
+
+        /// <summary>
+        /// Obter o Histórico de pedidos por idBar e por dateRequest
+        /// </summary>
+        /// <param name="idBar"></param>
+        /// <param name="dateRequest"></param>
+        /// <returns></returns>
+        public async Task<List<HistoricModel>> GetAsyncByBarAndDate(string idBar, string dateRequest) =>
+            await _historicCollection.Find(x => x.IdBar == idBar && x.DateRequest == dateRequest).ToListAsync();
+
+        /// <summary>
         /// Criar um novo item ao Histórico
         /// </summary>
         /// <param name="newHistoric"></param>

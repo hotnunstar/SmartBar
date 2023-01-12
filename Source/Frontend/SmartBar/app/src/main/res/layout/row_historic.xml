@@ -6,51 +6,33 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Pedido"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/tvDateRequestHist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Data do pedido"
+        android:layout_marginTop="8dp"
+        android:text="DataPedido: "
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/tvRequestHist" />
 
     <TextView
         android:id="@+id/tvTotalPriceHist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:text="Preço"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/tvRequestHist"
-        app:layout_constraintTop_toTopOf="@+id/tvRequestHist" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="€"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/tvTotalPriceHist"
-        app:layout_constraintTop_toTopOf="@+id/tvTotalPriceHist" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Preço: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDateRequestHist" />
 
     <TextView
         android:id="@+id/tvRequestHist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="NºP"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toTopOf="@+id/textView6" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="IdPedido: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
