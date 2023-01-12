@@ -1,8 +1,7 @@
-package com.ipca.smartbar.client.historic
+package com.ipca.smartbar.bar.historic
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -13,38 +12,36 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import com.ipca.smartbar.R
+import com.ipca.smartbar.bar.products.BarProductsActivity
 import com.ipca.smartbar.bar.products.BarProductsModel
-import com.ipca.smartbar.client.cart.ClientCartActivity
-import com.ipca.smartbar.client.notifications.ClientNotificationsActivity
-import com.ipca.smartbar.client.products.ClientProductsActivity
-import com.ipca.smartbar.client.profile.ClientProfileActivity
-import com.ipca.smartbar.databinding.ActivityClientHistoricDetailBinding
+import com.ipca.smartbar.bar.profile.BarProfileActivity
+import com.ipca.smartbar.databinding.ActivityBarHistoricDetailBinding
 import com.ipca.smartbar.getToken
 
 
-class ClientHistoricDetailActivity: AppCompatActivity(){
+class BarHistoricDetailActivity: AppCompatActivity() {
 
-    private lateinit var binding: ActivityClientHistoricDetailBinding
+    private lateinit var binding: ActivityBarHistoricDetailBinding
 
-    private val adapter = CHDetailAdapter()
+    private val adapter = BHDetailAdapter()
     var products: ArrayList<BarProductsModel> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val gson = Gson()
-        val hist = gson.fromJson(intent.getStringExtra("identifier"), ClientHistoricModel::class.java)
+        val hist = gson.fromJson(intent.getStringExtra("identifier"), BarHistoricModel::class.java)
 
-        binding = ActivityClientHistoricDetailBinding.inflate(layoutInflater)
+        binding = ActivityBarHistoricDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val token = getToken()
-        CHBackendRequests.getProductByID(lifecycleScope, token, hist.productAndQuantity!!){
+        BHBackendRequests.getProductByID(lifecycleScope, token, hist.productAndQuantity!!){
             products = it
             adapter.notifyDataSetChanged()
 
         }
-        binding.lVClientHistoricProdDetail.adapter = adapter
+        binding.lVBarHistoricProdDetail.adapter = adapter
         val tvRequestHistDetail = binding.tvRequestHistDetail
         val tvDateRequestHistDetail = binding.tvDateRequestHistDetail
         val tvHorasHistDetail = binding.tvHorasHistDetail
@@ -59,7 +56,7 @@ class ClientHistoricDetailActivity: AppCompatActivity(){
 
     }
 
-    inner class CHDetailAdapter : BaseAdapter() {
+    inner class BHDetailAdapter : BaseAdapter() {
         override fun getCount(): Int {
             return products.size
         }
@@ -76,7 +73,7 @@ class ClientHistoricDetailActivity: AppCompatActivity(){
             val rowView = layoutInflater.inflate(R.layout.row_request_products_line, parent, false)
 
             val gson = Gson()
-            val hist = gson.fromJson(intent.getStringExtra("identifier"), ClientHistoricModel::class.java)
+            val hist = gson.fromJson(intent.getStringExtra("identifier"), BarHistoricModel::class.java)
 
             val textViewProductName = rowView.findViewById<TextView>(R.id.textViewProductLineName)
             val textViewProductQuantity = rowView.findViewById<TextView>(R.id.textViewProductLineQuantity)
@@ -93,43 +90,36 @@ class ClientHistoricDetailActivity: AppCompatActivity(){
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_client, menu)
+        menuInflater.inflate(R.menu.menu_bar, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         super.onOptionsItemSelected(item)
         return when(item.itemId) {
-            R.id.action_profile_client -> {
-                val intent = Intent(this@ClientHistoricDetailActivity, ClientProfileActivity::class.java)
+            R.id.action_profile_staff -> {
+                val intent = Intent(this@BarHistoricDetailActivity, BarProfileActivity::class.java)
                 startActivity(intent)
                 true
             }
-            R.id.action_products_client -> {
-                val intent = Intent(this@ClientHistoricDetailActivity, ClientProductsActivity::class.java)
-                startActivity(intent)
-                true
-
-            }
-            R.id.action_cart_client -> {
-                val intent = Intent(this@ClientHistoricDetailActivity, ClientCartActivity::class.java)
+            R.id.action_product_settings_staff -> {
+                val intent = Intent(this@BarHistoricDetailActivity, BarProductsActivity::class.java)
                 startActivity(intent)
                 true
             }
-            R.id.action_historic_client -> {
-                val intent = Intent(this@ClientHistoricDetailActivity, ClientHistoricActivity::class.java)
+            R.id.action_requests_staff -> {
+                val intent = Intent(this@BarHistoricDetailActivity, BarProfileActivity::class.java)
                 startActivity(intent)
                 true
             }
-            R.id.action_notifications_client -> {
-                val intent = Intent(this@ClientHistoricDetailActivity, ClientNotificationsActivity::class.java)
+            R.id.action_historic_staff -> {
+                val intent = Intent(this@BarHistoricDetailActivity, BarHistoricActivity::class.java)
                 startActivity(intent)
                 true
             }
-            else -> {
-                false
-            }
+            else -> false
         }
         return super.onOptionsItemSelected(item)
     }
 }
+

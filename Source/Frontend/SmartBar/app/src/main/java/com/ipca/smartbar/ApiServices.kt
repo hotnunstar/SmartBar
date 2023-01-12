@@ -39,8 +39,8 @@ interface ApiServices {
     //endregion
 
     //region Historic Bar
-    @GET("/api/Historic/GetHistoric")
-    suspend fun getAllHistoric(@Header("Authorization") token: String?): Response<ResponseBody>
+    @GET("/api/Historic/GetHistoricByBarAndDate")
+    suspend fun getBHByBarAndDate(@Query("dateReq") dateReq: String, @Header("Authorization") token: String?): Response<ResponseBody>
     //endregion
 
     //region Login
