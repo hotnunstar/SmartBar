@@ -32,7 +32,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"userType\": \"CLIENTE\",\r\n  \"email\": \"teste@alunos.ipca.pt\",\r\n  \"password\": \"teste\",\r\n  \"firebaseToken\": \"\"\r\n}",
+							"raw": "{\r\n  \"userType\": \"CLIENTE\",\r\n  \"email\": \"teste@alunos.ipca.pt\",\r\n  \"password\": \"teste\",\r\n  \"firebaseToken\": \"derRz8RQQvSgHq2VqKeV1T:APA91bGuH_JfHN_azrAfQH9pqFRumJxa4KAPqVK-2i3nnA8LYgFQTOxV-3DrPj2r2jNRmTYSg9TrPt924pwdL5K2DosJaudXBYq2bOmbF1b0U9B5UJkz3U9j_LDgiEAOPjwb20vFrjWa\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -76,7 +76,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"userType\": \"COLABORADOR\",\r\n  \"email\": \"bar1@baduarte.pt\",\r\n  \"password\": \"teste\",\r\n  \"firebaseToken\": \"\"\r\n}",
+							"raw": "{\r\n  \"userType\": \"COLABORADOR\",\r\n  \"email\": \"bar1@baduarte.pt\",\r\n  \"password\": \"teste\",\r\n  \"firebaseToken\": \"derRz8RQQvSgHq2VqKeV1T:APA91bGuH_JfHN_azrAfQH9pqFRumJxa4KAPqVK-2i3nnA8LYgFQTOxV-3DrPj2r2jNRmTYSg9TrPt924pwdL5K2DosJaudXBYq2bOmbF1b0U9B5UJkz3U9j_LDgiEAOPjwb20vFrjWa\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -494,7 +494,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": \"\",\r\n  \"name\": \"Postman Product Test{{ProductTry}}\",\r\n  \"picture\": \"picture\",\r\n  \"price\": 4.20,\r\n  \"stock\": 8,\r\n  \"type\": 2\r\n}",
+							"raw": "{\r\n  \"id\": \"\",\r\n  \"name\": \"Postman Product Test{{ProductTry}}\",\r\n  \"picture\": \"picture\",\r\n  \"price\": 4.20,\r\n  \"stock\": 50,\r\n  \"type\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -578,7 +578,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": \"{{productID}}\",\r\n  \"name\": \"Postman Product Test{{PreviousProduct}} EDITED\",\r\n  \"picture\": \"picture\",\r\n  \"price\": 4.20,\r\n  \"stock\": 8,\r\n  \"type\": 2\r\n}",
+							"raw": "{\r\n  \"id\": \"{{productID}}\",\r\n  \"name\": \"Postman Product Test{{PreviousProduct}} EDITED\",\r\n  \"picture\": \"picture\",\r\n  \"price\": 4.20,\r\n  \"stock\": 50,\r\n  \"type\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -815,7 +815,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"idRequest\": \"\",\r\n  \"idCliente\": \"{{ClientID}}\",\r\n  \"productAndQuantity\": [\r\n    {\r\n      \"idProduct\": \"{{productID}}\",\r\n      \"quantity\": 2\r\n    }\r\n  ],\r\n  \"datePickUp\": \"2023-01-06T16:02:00.908Z\",\r\n  \"dateRequest\": \"2023-01-06T16:02:00.908Z\",\r\n  \"value\": 2,\r\n  \"state\": 0,\r\n  \"firebaseToken\": \"string\"\r\n}",
+							"raw": "{\r\n  \"idRequest\": \"\",\r\n  \"idCliente\": \"{{ClientID}}\",\r\n  \"productAndQuantity\": [\r\n    {\r\n      \"idProduct\": \"{{productID}}\",\r\n      \"quantity\": 2\r\n    }\r\n  ],\r\n  \"dateRequest\": \"12/01/2023\",\r\n  \"value\": 2,\r\n  \"state\": 0,\r\n  \"firebaseToken\": \"derRz8RQQvSgHq2VqKeV1T:APA91bGuH_JfHN_azrAfQH9pqFRumJxa4KAPqVK-2i3nnA8LYgFQTOxV-3DrPj2r2jNRmTYSg9TrPt924pwdL5K2DosJaudXBYq2bOmbF1b0U9B5UJkz3U9j_LDgiEAOPjwb20vFrjWa\",\r\n  \"IdBar\": \"63beb551fd6b4264ac035a11\",\r\n  \"Horas\": \"16:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -881,7 +881,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Successful PUT request\", function () {\r",
-									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"    pm.response.to.have.status(200);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -902,18 +902,19 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/Request?idRequest={{RequestID}}",
+							"raw": "{{url}}/api/Request/{{RequestID}}?confirmed=true",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"Request"
+								"Request",
+								"{{RequestID}}"
 							],
 							"query": [
 								{
-									"key": "idRequest",
-									"value": "{{RequestID}}"
+									"key": "confirmed",
+									"value": "true"
 								}
 							]
 						},
@@ -1099,18 +1100,6 @@
 			"type": "string"
 		},
 		{
-			"key": "productID",
-			"value": ""
-		},
-		{
-			"key": "ClientToken",
-			"value": ""
-		},
-		{
-			"key": "ColaboratorToken",
-			"value": ""
-		},
-		{
 			"key": "UserTry",
 			"value": "1",
 			"type": "string"
@@ -1132,6 +1121,21 @@
 		},
 		{
 			"key": "RequestID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "ClientToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "ColaboratorToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "productID",
 			"value": "",
 			"type": "string"
 		}
