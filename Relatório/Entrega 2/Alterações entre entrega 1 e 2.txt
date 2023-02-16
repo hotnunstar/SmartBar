@@ -1,5 +1,0 @@
-Fazer referência à integração de SETR no projeto:
-- Explicar a aplicação do repositório e o seu funcionamento
-
-Alteração da descrição da base de dados a implementar:
-- Inicialmente era PostgreSQL e trocamos para MongoDB
