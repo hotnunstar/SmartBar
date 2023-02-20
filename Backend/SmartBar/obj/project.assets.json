@@ -1841,11 +1841,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Pessoal\\Projects\\SmartBar\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar.csproj",
+      "projectUniqueName": "D:\\Pessoal\\Projects\\Kotlin\\SmartBar\\Backend\\SmartBar\\SmartBar.csproj",
       "projectName": "SmartBar",
-      "projectPath": "D:\\Pessoal\\Projects\\SmartBar\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar.csproj",
+      "projectPath": "D:\\Pessoal\\Projects\\Kotlin\\SmartBar\\Backend\\SmartBar\\SmartBar.csproj",
       "packagesPath": "C:\\Users\\nu-no\\.nuget\\packages\\",
-      "outputPath": "D:\\Pessoal\\Projects\\SmartBar\\SmartBar\\Source\\Backend\\SmartBar\\obj\\",
+      "outputPath": "D:\\Pessoal\\Projects\\Kotlin\\SmartBar\\Backend\\SmartBar\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

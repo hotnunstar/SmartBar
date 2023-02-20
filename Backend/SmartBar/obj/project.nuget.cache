@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NR6cpX8uWItRfYK+fJTIx4vRKoNfOL5HDZpmJsXZxQX9wr8MipL0XYX45Og3JCROQQT43CZu3yx3xxnZWf5hbA==",
+  "dgSpecHash": "I4feR2jMYDqmTu0i4Q8iluIznnO4uHFlybvlKiL1WHDByj6bEGQBiPD+mnAljRKLGxHLtCDmxVnP032Y7xDQqw==",
   "success": true,
-  "projectFilePath": "D:\\Pessoal\\Projects\\SmartBar\\SmartBar\\Source\\Backend\\SmartBar\\SmartBar.csproj",
+  "projectFilePath": "D:\\Pessoal\\Projects\\Kotlin\\SmartBar\\Backend\\SmartBar\\SmartBar.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nu-no\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\nu-no\\.nuget\\packages\\firebaseadmin\\2.3.0\\firebaseadmin.2.3.0.nupkg.sha512",

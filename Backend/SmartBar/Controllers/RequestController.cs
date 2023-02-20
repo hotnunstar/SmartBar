@@ -215,7 +215,7 @@ namespace SmartBar.Controllers
 
         async Task pushNotification(PushNotificationModel notification)
         {
-            String GOOGLE_APPLICATION_CREDENTIALS_PATH = @"smartbar-10aed-firebase-adminsdk-g73xl-3c037deb60.json";
+            String GOOGLE_APPLICATION_CREDENTIALS_PATH = @"firebaseKeysJsonPath";
 
             if(FirebaseApp.DefaultInstance == null)
             {
